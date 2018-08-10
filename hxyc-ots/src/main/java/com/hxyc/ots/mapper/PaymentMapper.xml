@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxyc.ots.mapper.PaymentMapper" >
+  <resultMap id="BaseResultMap" type="com.hxyc.ots.model.Payment" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="settlement_id" property="settlementId" jdbcType="VARCHAR" />
+    <result column="payment_code" property="paymentCode" jdbcType="VARCHAR" />
+    <result column="approval_time" property="approvalTime" jdbcType="DATE" />
+    <result column="approval_status" property="approvalStatus" jdbcType="INTEGER" />
+    <result column="approval_remark" property="approvalRemark" jdbcType="VARCHAR" />
+    <result column="payment_time" property="paymentTime" jdbcType="DATE" />
+    <result column="payment_status" property="paymentStatus" jdbcType="INTEGER" />
+    <result column="payment_remark" property="paymentRemark" jdbcType="VARCHAR" />
+    <result column="payment_amount" property="paymentAmount" jdbcType="DOUBLE" />
+    <result column="credit_surplus_amount" property="creditSurplusAmount" jdbcType="DOUBLE" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="extendResultMap" type="com.hxyc.ots.vo.PaymentVO" extends="BaseResultMap">
+    <result column="company_short_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="settlement_code" property="settlementCode" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, settlement_id, payment_code, approval_time, approval_status, approval_remark, payment_time, payment_status, payment_remark,
+    payment_amount, credit_surplus_amount, remarks, status, create_by, create_time, update_by, 
+    update_time
+  </sql>
+
+  <select id="selectById" resultMap="extendResultMap" parameterType="java.lang.String" >
+    select 
+     pay.*,company_short_name,project_name,settlement_code
+    from t_payment pay left join t_settlement se on pay.settlement_id = se.id left join t_company comp on se.company_id = comp.id
+    left join t_project proj on se.project_id = proj.id
+    where pay.id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="select" resultMap="extendResultMap" parameterType="com.hxyc.ots.vo.PaymentVO" >
+    select
+    pay.*,company_short_name,project_name,settlement_code
+    from t_payment pay left join t_settlement se on pay.settlement_id = se.id left join t_company comp on se.company_id = comp.id
+    left join t_project proj on se.project_id = proj.id
+    <where>
+      <if test="settlementId != null" >
+        and settlement_id = #{settlementId,jdbcType=VARCHAR}
+      </if>
+      <if test="paymentCode != null" >
+        and payment_code = #{paymentCode,jdbcType=VARCHAR}
+      </if>
+      <if test="approvalTime != null" >
+        and approval_time = #{approvalTime,jdbcType=DATE}
+      </if>
+      <if test="approvalStatus != null" >
+        and approval_status = #{approvalStatus,jdbcType=INTEGER}
+      </if>
+      <if test="paymentTime != null" >
+        and payment_time = #{paymentTime,jdbcType=DATE}
+      </if>
+      <if test="paymentStatus != null" >
+        and payment_status = #{paymentStatus,jdbcType=INTEGER}
+      </if>
+      <if test="paymentAmount != null" >
+        and payment_amount = #{paymentAmount,jdbcType=DOUBLE}
+      </if>
+      <if test="creditSurplusAmount != null" >
+        and credit_surplus_amount = #{creditSurplusAmount,jdbcType=DOUBLE}
+      </if>
+      <if test="status != null" >
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from t_payment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.hxyc.ots.model.Payment" >
+    insert into t_payment (id, settlement_id, payment_code, 
+      approval_time, approval_status, approval_remark, payment_time,
+      payment_status, payment_remark, payment_amount, credit_surplus_amount,
+      remarks, status, create_by, 
+      create_time, update_by, update_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{settlementId,jdbcType=VARCHAR}, #{paymentCode,jdbcType=VARCHAR}, 
+      #{approvalTime,jdbcType=DATE}, #{approvalStatus,jdbcType=INTEGER}, #{approvalRemark,jdbcType=VARCHAR}, #{paymentTime,jdbcType=DATE},
+      #{paymentStatus,jdbcType=INTEGER}, #{paymentRemark,jdbcType=VARCHAR}, #{paymentAmount,jdbcType=DOUBLE}, #{creditSurplusAmount,jdbcType=DOUBLE},
+      #{remarks,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <update id="update" parameterType="com.hxyc.ots.model.Payment" >
+    update t_payment
+    <set >
+      <if test="settlementId != null" >
+        settlement_id = #{settlementId,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentCode != null" >
+        payment_code = #{paymentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalTime != null" >
+        approval_time = #{approvalTime,jdbcType=DATE},
+      </if>
+      <if test="approvalStatus != null" >
+        approval_status = #{approvalStatus,jdbcType=INTEGER},
+      </if>
+      <if test="approvalRemark != null" >
+        approval_remark = #{approvalRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentTime != null" >
+        payment_time = #{paymentTime,jdbcType=DATE},
+      </if>
+      <if test="paymentStatus != null" >
+        payment_status = #{paymentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymentRemark != null" >
+        payment_remark = #{paymentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentAmount != null" >
+        payment_amount = #{paymentAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="creditSurplusAmount != null" >
+        credit_surplus_amount = #{creditSurplusAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxjc.hxyc.mapper.HxjcMapper" >
+
+  <sql id="Base_Column_List" >
+    id, name, remark
+  </sql>
+
+  <!-- 投标保证金同步 vr -->
+  <select id="syncBidBond" resultType="com.hxjc.hxyc.model.SupplierDeposit">
+    select a.tenderid tenderId,
+      c.child_detailid childDetailId,
+      a.tendercode tenderCode,
+      a.tendername tenderName,
+      a.projectname projectName,
+      a.procstatename procStateName,
+      b.supplierid supplierId,
+      b.suppliername supplierName,
+      d.contactperson contactPerson,
+      d.mobile mobile,
+      d.email email,
+      b.acctype accType,
+      b.needamount needAmount,
+      b.payeeaccno payeeAccNo,
+      c.payeeaccname payeeAccName,
+      c.payeeseq payeesEq,
+      c.tranamount tranAmount,
+      c.trandate tranDate,
+      c.trantime tranTime,
+      c.draweepartyname draweePartyName,
+      c.draweeaccname draweeAccName,
+      c.draweeaccno draweeAccNo,
+      c.draweepartyid draweePartyId,
+      c.freetype freeType
+    from t_proc_tender a
+    inner join t_bank_child b on b.tenderid=a.tenderid
+    inner join t_bank_child_detail c on c.payeeaccno=b.payeeaccno
+    inner join t_sm_supplier d on d.supplierid=b.supplierid
+    where a.proctype=21 and a.purchasemode=3 and a.procstate=2164 and a.procstatename='招标完成'
+    and b.acctype='投标保证金' and c.freetype=0
+  </select>
+
+  <select id="findHxjcTest" resultType="com.hxjc.hxyc.model.HxjcTest" parameterType="java.lang.Long" useCache="false" >
+    select <include refid="Base_Column_List" /> from t_hxjc_test where id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

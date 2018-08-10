@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd-HH:mm:ss} %-5p [%c] - %m%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>D:/logs/hxyc.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>D:/logs/hxyc%i.log</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>10000</MaxIndex>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>1MB</MaxFileSize>
+		</triggeringPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{yyyy-MM-dd-HH:mm:ss} %-5p [%c] - %m%n</Pattern>
+			<charset>UTF-8</charset>
+		</layout>
+	</appender>
+
+	<root level="debug">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="logfile" />
+	</root>
+</configuration> 

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxyc.ots.mapper.ReceiptMapper" >
+  <resultMap id="BaseResultMap" type="com.hxyc.ots.model.Receipt" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="receipt_amount" property="receiptAmount" jdbcType="DOUBLE" />
+    <result column="receipt_time" property="receiptTime" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="VOResultMap" type="com.hxyc.ots.vo.ReceiptVO" extends="BaseResultMap">
+    <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, company_id, project_id, receipt_amount, receipt_time, remarks, status, create_by, 
+    create_time, update_by, update_time
+  </sql>
+
+  <!--收款信息列表 -->
+  <select id="listReceipt" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.ReceiptVO" >
+    select a.*, b.company_name companyName from t_receipt a
+    inner join t_company b on b.id=a.company_id and b.status=1
+    where a.status=1
+    <if test="receiptAmount != null and receiptAmount != ''" >
+      and a.receipt_amount= #{receiptAmount,jdbcType=VARCHAR}
+    </if>
+    <if test="companyId != null and companyId != ''" >
+      and a.company_id= #{companyId,jdbcType=VARCHAR}
+    </if>
+    <if test="startDate != null and startDate != '' and  endDate != null and endDate != '' " >
+      and a.receipt_time BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+    </if>
+    order by a.create_time desc
+  </select>
+
+  <!--根据ID获取收款信息 -->
+  <select id="getReceiptById" resultMap="VOResultMap" parameterType="java.lang.String" >
+    select a.*, b.company_name companyName from t_receipt a
+    inner join t_company b on b.id=a.company_id and b.status=1
+    where a.status=1 and a.id = #{id,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_receipt
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.hxyc.ots.model.Receipt" >
+    select
+    <include refid="Base_Column_List" />
+    from t_receipt
+    <where>
+      <if test="companyId != null" >
+        and company_id = #{companyId,jdbcType=VARCHAR}
+      </if>
+      <if test="projectId != null" >
+        and project_id = #{projectId,jdbcType=VARCHAR}
+      </if>
+      <if test="receiptAmount != null" >
+        and receipt_amount = #{receiptAmount,jdbcType=DOUBLE}
+      </if>
+      <if test="receiptTime != null" >
+        and receipt_time = #{receiptTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="status != null" >
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from t_receipt
+
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.hxyc.ots.model.Receipt" >
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into t_receipt (id, company_id, project_id, 
+      receipt_amount, receipt_time, remarks, 
+      status, create_by, create_time, 
+      update_by, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, 
+      #{receiptAmount,jdbcType=DOUBLE}, #{receiptTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.hxyc.ots.model.Receipt" >
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into t_receipt
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="receiptAmount != null" >
+        receipt_amount,
+      </if>
+      <if test="receiptTime != null" >
+        receipt_time,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptAmount != null" >
+        #{receiptAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="receiptTime != null" >
+        #{receiptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.hxyc.ots.model.Receipt" >
+    update t_receipt
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptAmount != null" >
+        receipt_amount = #{receiptAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="receiptTime != null" >
+        receipt_time = #{receiptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

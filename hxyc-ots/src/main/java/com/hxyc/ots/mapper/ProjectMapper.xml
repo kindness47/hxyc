@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxyc.ots.mapper.ProjectMapper" >
+  <resultMap id="BaseResultMap" type="com.hxyc.ots.model.Project" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="project_code" property="projectCode" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="supply_unit" property="supplyUnit" jdbcType="VARCHAR" />
+    <result column="contract_sign_time" property="contractSignTime" jdbcType="VARCHAR" />
+    <result column="supply_time" property="supplyTime" jdbcType="VARCHAR" />
+    <result column="contract_num" property="contractNum" jdbcType="VARCHAR" />
+    <result column="contract_amount" property="contractAmount" jdbcType="VARCHAR" />
+    <result column="settlement_model" property="settlementModel" jdbcType="VARCHAR" />
+    <result column="base_float_value" property="baseFloatValue" jdbcType="VARCHAR" />
+    <result column="extra_capital_amount" property="extraCapitalAmount" jdbcType="VARCHAR" />
+    <result column="capital_time_limit" property="capitalTimeLimit" jdbcType="VARCHAR" />
+    <result column="interest_rate" property="interestRate" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="VOResultMap" type="com.hxyc.ots.vo.ProjectVO" extends="BaseResultMap">
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="user_name" property="createPersonName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, company_id, project_name, project_code, year, supply_unit, contract_sign_time, 
+    supply_time, contract_num, contract_amount, settlement_model, base_float_value, extra_capital_amount, 
+    capital_time_limit, interest_rate, status, create_by, create_time, update_by, update_time
+  </sql>
+
+  <!-- 获取所有有效项目信息 -->
+  <select id="listProject" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.ProjectVO" >
+    select a.*, b.company_name from t_project a
+    inner join t_company b on b.id=a.company_id and b.status=1
+    where a.status=1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_project
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="select" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.ProjectVO" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_project
+    <where>
+      <if test="companyId != null" >
+        and company_id = #{companyId,jdbcType=VARCHAR}
+      </if>
+      <if test="projectName != null" >
+        and project_name like concat('%',concat(#{projectName,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="id != null" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+    <if test="pageStart != null and pageStart != 0 and pageEnd != null and pageEnd != 0">
+      limit #{pageStart,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.hxyc.ots.vo.ProjectVO" >
+    select count(1) from (
+    select
+    <include refid="Base_Column_List"/>
+    from t_project
+    <where>
+      <if test="companyId != null">
+        and company_id = #{companyId,jdbcType=VARCHAR}
+      </if>
+      <if test="projectName != null">
+        and project_name like concat('%',concat(#{projectName,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="id != null">
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+    )aa
+  </select>
+
+  <!-- 根据项目名称获取项目 -->
+  <select id="getProjectByName" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_project
+    where project_name = #{projectName,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_project
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.hxyc.ots.model.Project" >
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into t_project (id, company_id, project_name, 
+      project_code, year, supply_unit, 
+      contract_sign_time, supply_time, contract_num, 
+      contract_amount, settlement_model, base_float_value, 
+      extra_capital_amount, capital_time_limit, interest_rate, 
+      status, create_by, create_time, 
+      update_by, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, 
+      #{projectCode,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{supplyUnit,jdbcType=VARCHAR}, 
+      #{contractSignTime,jdbcType=VARCHAR}, #{supplyTime,jdbcType=VARCHAR}, #{contractNum,jdbcType=VARCHAR}, 
+      #{contractAmount,jdbcType=VARCHAR}, #{settlementModel,jdbcType=VARCHAR}, #{baseFloatValue,jdbcType=VARCHAR}, 
+      #{extraCapitalAmount,jdbcType=VARCHAR}, #{capitalTimeLimit,jdbcType=VARCHAR}, #{interestRate,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.hxyc.ots.model.Project" >
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into t_project
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="projectCode != null" >
+        project_code,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="supplyUnit != null" >
+        supply_unit,
+      </if>
+      <if test="contractSignTime != null" >
+        contract_sign_time,
+      </if>
+      <if test="supplyTime != null" >
+        supply_time,
+      </if>
+      <if test="contractNum != null" >
+        contract_num,
+      </if>
+      <if test="contractAmount != null" >
+        contract_amount,
+      </if>
+      <if test="settlementModel != null" >
+        settlement_model,
+      </if>
+      <if test="baseFloatValue != null" >
+        base_float_value,
+      </if>
+      <if test="extraCapitalAmount != null" >
+        extra_capital_amount,
+      </if>
+      <if test="capitalTimeLimit != null" >
+        capital_time_limit,
+      </if>
+      <if test="interestRate != null" >
+        interest_rate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCode != null" >
+        #{projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyUnit != null" >
+        #{supplyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="contractSignTime != null" >
+        #{contractSignTime,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyTime != null" >
+        #{supplyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNum != null" >
+        #{contractNum,jdbcType=VARCHAR},
+      </if>
+      <if test="contractAmount != null" >
+        #{contractAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementModel != null" >
+        #{settlementModel,jdbcType=VARCHAR},
+      </if>
+      <if test="baseFloatValue != null" >
+        #{baseFloatValue,jdbcType=VARCHAR},
+      </if>
+      <if test="extraCapitalAmount != null" >
+        #{extraCapitalAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalTimeLimit != null" >
+        #{capitalTimeLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="interestRate != null" >
+        #{interestRate,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hxyc.ots.model.Project" >
+    update t_project
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCode != null" >
+        project_code = #{projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyUnit != null" >
+        supply_unit = #{supplyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="contractSignTime != null" >
+        contract_sign_time = #{contractSignTime,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyTime != null" >
+        supply_time = #{supplyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNum != null" >
+        contract_num = #{contractNum,jdbcType=VARCHAR},
+      </if>
+      <if test="contractAmount != null" >
+        contract_amount = #{contractAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementModel != null" >
+        settlement_model = #{settlementModel,jdbcType=VARCHAR},
+      </if>
+      <if test="baseFloatValue != null" >
+        base_float_value = #{baseFloatValue,jdbcType=VARCHAR},
+      </if>
+      <if test="extraCapitalAmount != null" >
+        extra_capital_amount = #{extraCapitalAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalTimeLimit != null" >
+        capital_time_limit = #{capitalTimeLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="interestRate != null" >
+        interest_rate = #{interestRate,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

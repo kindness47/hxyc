@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxyc.ots.mapper.SettlementMapper" >
+  <resultMap id="BaseResultMap" type="com.hxyc.ots.model.Settlement" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="settlement_code" property="settlementCode" jdbcType="VARCHAR" />
+    <result column="supplier_settlement_time" property="supplierSettlementTime" jdbcType="DATE" />
+    <result column="supplier_settlement_status" property="supplierSettlementStatus" jdbcType="INTEGER" />
+    <result column="supplier_settlement_remark" property="supplierSettlementRemark" jdbcType="VARCHAR" />
+    <result column="settlement_delivery_time" property="settlementDeliveryTime" jdbcType="DATE" />
+    <result column="settlement_delivery_status" property="settlementDeliveryStatus" jdbcType="INTEGER" />
+    <result column="settlement_delivery_remark" property="settlementDeliveryRemark" jdbcType="VARCHAR" />
+    <result column="bill_delivery_time" property="billDeliveryTime" jdbcType="DATE" />
+    <result column="bill_delivery_status" property="billDeliveryStatus" jdbcType="INTEGER" />
+    <result column="bill_delivery_remark" property="billDeliveryRemark" jdbcType="VARCHAR" />
+    <result column="buyer_settlement_time" property="buyerSettlementTime" jdbcType="DATE" />
+    <result column="buyer_settlement_status" property="buyerSettlementStatus" jdbcType="INTEGER" />
+    <result column="buyer_settlement_remark" property="buyerSettlementRemark" jdbcType="VARCHAR" />
+    <result column="bill_open_time" property="billOpenTime" jdbcType="DATE" />
+    <result column="bill_open_status" property="billOpenStatus" jdbcType="INTEGER" />
+    <result column="bill_open_remark" property="billOpenRemark" jdbcType="VARCHAR" />
+    <result column="settlement_mode" property="settlementMode" jdbcType="INTEGER" />
+    <result column="settlement_amount" property="settlementAmount" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="extendResultMap" type="com.hxyc.ots.vo.SettlementVO" extends="BaseResultMap">
+    <result column="company_short_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="AduitResultMap" type="com.hxyc.ots.vo.OrderAduitVO" extends="BaseResultMap">
+    <result column="company_short_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="approval_time" property="approvalTime" jdbcType="DATE" />
+    <result column="approval_status" property="approvalStatus" jdbcType="INTEGER" />
+    <result column="approval_remark" property="approvalRemark" jdbcType="VARCHAR" />
+    <result column="payment_time" property="paymentTime" jdbcType="DATE" />
+    <result column="payment_status" property="paymentStatus" jdbcType="INTEGER" />
+    <result column="payment_remark" property="paymentRemark" jdbcType="VARCHAR" />
+    <result column="payment_amount" property="paymentAmount" jdbcType="DOUBLE" />
+    <result column="credit_surplus_amount" property="creditSurplusAmount" jdbcType="DOUBLE" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="payment_create_by" property="financialCerator" jdbcType="VARCHAR" />
+
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="delivery_time" property="deliveryTime" jdbcType="TIMESTAMP" />
+    <result column="delivery_status" property="deliveryStatus" jdbcType="INTEGER" />
+    <result column="receive_num" property="receiveNum" jdbcType="VARCHAR" />
+    <result column="quality" property="quality" jdbcType="INTEGER" />
+    <result column="service" property="service" jdbcType="INTEGER" />
+    <result column="order_exception_desc" property="orderExceptionDesc" jdbcType="VARCHAR" />
+    <result column="delivery_exception_desc" property="deliveryExceptionDesc" jdbcType="VARCHAR" />
+    <result column="order_create_by" property="orderCreator" jdbcType="VARCHAR" />
+
+    <result column="credit_code" property="creditCode" jdbcType="VARCHAR" />
+    <result column="open_amount" property="openAmount" jdbcType="DOUBLE" />
+    <result column="open_time" property="openTime" jdbcType="TIMESTAMP" />
+    <result column="rest_amount" property="restAmount" jdbcType="DOUBLE" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, order_id, company_id, project_id, settlement_code, supplier_settlement_time, supplier_settlement_status, supplier_settlement_remark,
+    settlement_delivery_time, settlement_delivery_status,settlement_delivery_remark, bill_delivery_time, bill_delivery_status, bill_delivery_remark,
+    buyer_settlement_time, buyer_settlement_status,buyer_settlement_remark, bill_open_time, bill_open_status, bill_open_remark,
+    settlement_mode, settlement_amount, status, create_by, create_time, update_by, update_time
+  </sql>
+
+  <select id="selectAduitOrder"  resultMap="AduitResultMap" parameterType="java.lang.String" >
+    select tod.order_code,tod.order_time,tod.order_status,tod.delivery_time,tod.delivery_status,tod.receive_num,tod.quality,tod.service,tod.order_exception_desc,tod.delivery_exception_desc
+    ,tod.create_by order_create_by,res.payment_time,res.settlement_mode,res.*
+    from (select * from t_order where project_id=#{projectId,jdbcType=VARCHAR}) tod
+    left join
+    (select
+          pay.approval_time,pay.`approval_status`,pay.`approval_remark`,pay.`credit_surplus_amount`,pay.`payment_amount`,pay.`payment_remark`,pay.`payment_status`,pay.`settlement_id`,pay.`remarks`,pay.`payment_time`,
+          se.*,
+          comp.company_short_name,
+          proj.project_name,
+          pay.`create_by` payment_create_by
+        from
+        t_settlement se
+
+          left join  t_payment pay
+            on pay.settlement_id = se.id
+          left join t_company comp
+            on se.company_id = comp.id
+          left join t_project proj
+            on se.project_id = proj.id
+    -- order by se.`settlement_mode` asc,pay.`payment_time` asc
+    )res on tod.order_code = res.order_id
+    order by delivery_time asc -- , res.settlement_mode asc,res.payment_time asc
+  </select>
+
+  <select id="selectById"  resultMap="extendResultMap" parameterType="java.lang.String" >
+    select 
+    se.*,company_name,project_name
+    from t_settlement se left join t_company comp on se.company_id = comp.id
+    left join t_project proj on se.project_id = proj.id
+    where se.id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="select" parameterType="com.hxyc.ots.vo.SettlementVO" resultMap="extendResultMap">
+  select
+  se.*,company_short_name,project_name
+  from t_settlement se left join t_company comp on se.company_id = comp.id
+  left join t_project proj on se.project_id = proj.id
+  <where>
+    <if test="orderId != null" >
+      and se.order_id = #{orderId,jdbcType=VARCHAR}
+    </if>
+    <if test="companyId != null" >
+      and se.company_id = #{companyId,jdbcType=VARCHAR}
+    </if>
+    <if test="projectId != null" >
+      and se.project_id = #{projectId,jdbcType=VARCHAR}
+    </if>
+    <if test="settlementCode != null">
+      and se.settlement_code like concat('%',concat(#{settlementCode,jdbcType=VARCHAR},'%'))
+    </if>
+    <if test="supplierSettlementTime != null" >
+      and se.supplier_settlement_time = #{supplierSettlementTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="supplierSettlementStatus != null" >
+      and se.supplier_settlement_status = #{supplierSettlementStatus,jdbcType=INTEGER}
+    </if>
+    <if test="settlementDeliveryTime != null" >
+      and se.settlement_delivery_time = #{settlementDeliveryTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="settlementDeliveryStatus != null" >
+      and se.settlement_delivery_status = #{settlementDeliveryStatus,jdbcType=INTEGER}
+    </if>
+    <if test="billDeliveryTime != null" >
+      and se.bill_delivery_time = #{billDeliveryTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="billDeliveryStatus != null" >
+      and se.bill_delivery_status = #{billDeliveryStatus,jdbcType=INTEGER}
+    </if>
+    <if test="buyerSettlementTime != null" >
+      and se.buyer_settlement_time = #{buyerSettlementTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="buyerSettlementStatus != null" >
+      and se.buyer_settlement_status = #{buyerSettlementStatus,jdbcType=INTEGER}
+    </if>
+    <if test="billOpenTime != null" >
+      and se.bill_open_time = #{billOpenTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="billOpenStatus != null" >
+      and se.bill_open_status = #{billOpenStatus,jdbcType=INTEGER}
+    </if>
+    <if test="settlementMode != null" >
+      and se.settlement_mode = #{settlementMode,jdbcType=INTEGER}
+    </if>
+    <if test="status != null" >
+      and se.status = #{status,jdbcType=INTEGER}
+    </if>
+  </where>
+  order by se.create_time desc
+  <if test="pageStart != null and pageStart != 0 and pageEnd != null and pageEnd != 0">
+    limit #{pageStart,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+  </if>
+</select>
+
+  <select id="selectCount" parameterType="com.hxyc.ots.vo.SettlementVO" resultType="java.lang.Integer">
+    select count(1) from (
+    select
+    se.*,company_short_name,project_name
+    from t_settlement se left join t_company comp on se.company_id = comp.id
+    left join t_project proj on se.project_id = proj.id
+    <where>
+      <if test="orderId != null" >
+        and se.order_id = #{orderId,jdbcType=VARCHAR}
+      </if>
+      <if test="companyId != null" >
+        and se.company_id = #{companyId,jdbcType=VARCHAR}
+      </if>
+      <if test="projectId != null" >
+        and se.project_id = #{projectId,jdbcType=VARCHAR}
+      </if>
+      <if test="settlementCode != null">
+        and se.settlement_code like concat('%',concat(#{settlementCode,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="supplierSettlementTime != null" >
+        and se.supplier_settlement_time = #{supplierSettlementTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="supplierSettlementStatus != null" >
+        and se.supplier_settlement_status = #{supplierSettlementStatus,jdbcType=INTEGER}
+      </if>
+      <if test="settlementDeliveryTime != null" >
+        and se.settlement_delivery_time = #{settlementDeliveryTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="settlementDeliveryStatus != null" >
+        and se.settlement_delivery_status = #{settlementDeliveryStatus,jdbcType=INTEGER}
+      </if>
+      <if test="billDeliveryTime != null" >
+        and se.bill_delivery_time = #{billDeliveryTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="billDeliveryStatus != null" >
+        and se.bill_delivery_status = #{billDeliveryStatus,jdbcType=INTEGER}
+      </if>
+      <if test="buyerSettlementTime != null" >
+        and se.buyer_settlement_time = #{buyerSettlementTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="buyerSettlementStatus != null" >
+        and se.buyer_settlement_status = #{buyerSettlementStatus,jdbcType=INTEGER}
+      </if>
+      <if test="billOpenTime != null" >
+        and se.bill_open_time = #{billOpenTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="billOpenStatus != null" >
+        and se.bill_open_status = #{billOpenStatus,jdbcType=INTEGER}
+      </if>
+      <if test="settlementMode != null" >
+        and se.settlement_mode = #{settlementMode,jdbcType=INTEGER}
+      </if>
+      <if test="status != null" >
+        and se.status = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+    order by se.create_time desc
+    )aa
+  </select>
+
+
+  <delete id="deleteBySettlementCode" parameterType="java.lang.String" >
+    delete from t_settlement
+    where settlement_code = #{settlementCode,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.hxyc.ots.model.Settlement" >
+    insert into t_settlement (id, order_id, company_id, project_id, settlement_code,
+      supplier_settlement_time, supplier_settlement_status, supplier_settlement_remark,
+      settlement_delivery_time, settlement_delivery_status, settlement_delivery_remark,
+      bill_delivery_time, bill_delivery_status, bill_delivery_remark,
+      buyer_settlement_time, buyer_settlement_status, buyer_settlement_remark,
+      bill_open_time, bill_open_status,bill_open_remark, settlement_mode,
+      settlement_amount, status, create_by, 
+      create_time, update_by, update_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{settlementCode,jdbcType=VARCHAR},
+      #{supplierSettlementTime,jdbcType=TIMESTAMP}, #{supplierSettlementStatus,jdbcType=INTEGER}, #{supplierSettlementRemark,jdbcType=VARCHAR},
+      #{settlementDeliveryTime,jdbcType=TIMESTAMP}, #{settlementDeliveryStatus,jdbcType=INTEGER}, #{settlementDeliveryRemark,jdbcType=VARCHAR},
+      #{billDeliveryTime,jdbcType=TIMESTAMP}, #{billDeliveryStatus,jdbcType=INTEGER}, #{billDeliveryRemark,jdbcType=VARCHAR},
+      #{buyerSettlementTime,jdbcType=TIMESTAMP}, #{buyerSettlementStatus,jdbcType=INTEGER}, #{buyerSettlementRemark,jdbcType=VARCHAR},
+      #{billOpenTime,jdbcType=TIMESTAMP}, #{billOpenStatus,jdbcType=INTEGER}, #{billOpenRemark,jdbcType=VARCHAR}, #{settlementMode,jdbcType=INTEGER},
+      #{settlementAmount,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <update id="update" parameterType="com.hxyc.ots.model.Settlement" >
+    update t_settlement
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+         company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+         project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementCode != null">
+       settlement_code = #{settlementCode,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierSettlementTime != null" >
+        supplier_settlement_time = #{supplierSettlementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="supplierSettlementStatus != null" >
+        supplier_settlement_status = #{supplierSettlementStatus,jdbcType=INTEGER},
+      </if>
+      <if test="supplierSettlementRemark != null" >
+        supplier_settlement_remark = #{supplierSettlementRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementDeliveryTime != null" >
+        settlement_delivery_time = #{settlementDeliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="settlementDeliveryStatus != null" >
+        settlement_delivery_status = #{settlementDeliveryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="settlementDeliveryRemark != null" >
+        settlement_delivery_remark = #{settlementDeliveryRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="billDeliveryTime != null" >
+        bill_delivery_time = #{billDeliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billDeliveryStatus != null" >
+        bill_delivery_status = #{billDeliveryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="billDeliveryRemark != null" >
+        bill_delivery_remark = #{billDeliveryRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerSettlementTime != null" >
+        buyer_settlement_time = #{buyerSettlementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyerSettlementStatus != null" >
+        buyer_settlement_status = #{buyerSettlementStatus,jdbcType=INTEGER},
+      </if>
+      <if test="buyerSettlementRemark != null" >
+        buyer_settlement_remark = #{buyerSettlementRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="billOpenTime != null" >
+        bill_open_time = #{billOpenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billOpenStatus != null" >
+        bill_open_status = #{billOpenStatus,jdbcType=INTEGER},
+      </if>
+      <if test="billOpenRemark != null" >
+        bill_open_remark = #{billOpenRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementMode != null" >
+        settlement_mode = #{settlementMode,jdbcType=INTEGER},
+      </if>
+      <if test="settlementAmount != null" >
+        settlement_amount = #{settlementAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </update>
+
+</mapper>

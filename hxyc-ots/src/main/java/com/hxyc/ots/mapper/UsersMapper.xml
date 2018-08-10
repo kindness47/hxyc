@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxyc.ots.mapper.UsersMapper" >
+  <resultMap id="BaseResultMap" type="com.hxyc.ots.model.Users" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="is_use" property="isUse" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="VOResultMap" type="com.hxyc.ots.vo.UserVO" extends="BaseResultMap">
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, user_name, account, passwd, is_use, status, create_by, create_time, update_by, 
+    update_time, role_name
+  </sql>
+
+  <!--用户信息列表-->
+  <select id="listUser" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.UserVO" >
+    select
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    where status=1
+    <if test="roleName != '超级管理员'" >
+    and (create_by=#{userName,jdbcType=VARCHAR} or user_name=#{userName,jdbcType=VARCHAR})
+  </if>
+    <if test="account != null and account != ''" >
+      and account like concat(concat('%',#{account,jdbcType=VARCHAR}),'%')
+    </if>
+    <if test="startDate != null and startDate != '' and  endDate != null and endDate != '' " >
+      and create_time BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <!-- 取对应账号用户信息 -->
+  <select id="getUserByAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    where account = #{account,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    where account = #{account,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="select" parameterType="com.hxyc.ots.model.Users" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    <where>
+      <if test="userName != null" >
+        and user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+      <if test="account != null" >
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <delete id="deleteByAccount" parameterType="java.lang.String" >
+    update t_sys_user
+    set status = 0
+    where account = #{account,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.hxyc.ots.model.Users" >
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into t_sys_user (id, user_name, account, 
+      passwd, is_use, status, 
+      create_by, create_time, update_by, 
+      update_time,role_name)
+    values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{passwd,jdbcType=VARCHAR}, #{isUse,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP},#{roleName,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.hxyc.ots.model.Users" >
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into t_sys_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="passwd != null" >
+        passwd,
+      </if>
+      <if test="isUse != null" >
+        is_use,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="isUse != null" >
+        #{isUse,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.hxyc.ots.model.Users" >
+    update t_sys_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="isUse != null" >
+        is_use = #{isUse,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <where>
+      <if test="id != null ">
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="account != null ">
+        and account = #{account,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.hxyc.ots.model.Users" >
+    update t_sys_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      is_use = #{isUse,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      role_name = #{roleName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxjc.hxyc.mapper.SupplierDepositMapper" >
+  <resultMap id="BaseResultMap" type="com.hxjc.hxyc.model.SupplierDeposit" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="tender_id" property="tenderId" jdbcType="VARCHAR" />
+    <result column="child_detail_id" property="childDetailId" jdbcType="VARCHAR" />
+    <result column="tender_code" property="tenderCode" jdbcType="VARCHAR" />
+    <result column="tender_name" property="tenderName" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="proc_state_name" property="procStateName" jdbcType="VARCHAR" />
+    <result column="supplier_id" property="supplierId" jdbcType="VARCHAR" />
+    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+    <result column="contact_person" property="contactPerson" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="acc_type" property="accType" jdbcType="VARCHAR" />
+    <result column="need_amount" property="needAmount" jdbcType="VARCHAR" />
+    <result column="payee_acc_no" property="payeeAccNo" jdbcType="VARCHAR" />
+    <result column="payee_acc_name" property="payeeAccName" jdbcType="VARCHAR" />
+    <result column="payees_eq" property="payeesEq" jdbcType="VARCHAR" />
+    <result column="tran_amount" property="tranAmount" jdbcType="VARCHAR" />
+    <result column="tran_date" property="tranDate" jdbcType="VARCHAR" />
+    <result column="tran_time" property="tranTime" jdbcType="VARCHAR" />
+    <result column="drawee_party_name" property="draweePartyName" jdbcType="VARCHAR" />
+    <result column="drawee_acc_name" property="draweeAccName" jdbcType="VARCHAR" />
+    <result column="drawee_acc_no" property="draweeAccNo" jdbcType="VARCHAR" />
+    <result column="drawee_party_id" property="draweePartyId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="deposit_status" property="depositStatus" jdbcType="CHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tender_id,child_detail_id, tender_code, tender_name, project_name, proc_state_name, supplier_id,
+    supplier_name, contact_person, mobile, email, acc_type, need_amount, payee_acc_no, 
+    payee_acc_name, payees_eq, tran_amount, tran_date, tran_time, drawee_party_name, drawee_acc_name, drawee_acc_no,
+    drawee_party_id, status, deposit_status, create_date, create_by, update_date, update_by
+  </sql>
+
+  <!-- 检查同步数据是否已经存在 -->
+  <select id="getSupplierDepositCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select count(*) from t_supplier_deposit where status=1 and tender_code = #{tenderCode,jdbcType=VARCHAR}
+    and child_detail_id=#{childDetailId,jdbcType=VARCHAR}
+  </select>
+
+
+  <!-- 获取投标保证金列表数据 -->
+  <select id="getSupplierDeposits" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from t_supplier_deposit where status=1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_supplier_deposit
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_supplier_deposit
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hxjc.hxyc.model.SupplierDeposit" >
+    insert into t_supplier_deposit (id, tender_id, child_detail_id,tender_code,
+      tender_name, project_name, proc_state_name, 
+      supplier_id, supplier_name, contact_person, 
+      mobile, email, acc_type, 
+      need_amount, payee_acc_no, payee_acc_name, 
+      payees_eq, tran_amount, tran_date, 
+      tran_time, drawee_party_name, drawee_acc_name, drawee_acc_no,
+      drawee_party_id, status, deposit_status, 
+      create_date, create_by, update_date, 
+      update_by)
+    values (#{id,jdbcType=BIGINT}, #{tenderId,jdbcType=VARCHAR},  #{childDetailId,jdbcType=VARCHAR}, #{tenderCode,jdbcType=VARCHAR},
+      #{tenderName,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{procStateName,jdbcType=VARCHAR}, 
+      #{supplierId,jdbcType=VARCHAR}, #{supplierName,jdbcType=VARCHAR}, #{contactPerson,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{accType,jdbcType=VARCHAR}, 
+      #{needAmount,jdbcType=VARCHAR}, #{payeeAccNo,jdbcType=VARCHAR}, #{payeeAccName,jdbcType=VARCHAR}, 
+      #{payeesEq,jdbcType=VARCHAR}, #{tranAmount,jdbcType=VARCHAR}, #{tranDate,jdbcType=VARCHAR}, 
+      #{tranTime,jdbcType=VARCHAR}, #{draweePartyName,jdbcType=VARCHAR}, #{draweeAccName,jdbcType=VARCHAR}, #{draweeAccNo,jdbcType=VARCHAR},
+      #{draweePartyId,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{depositStatus,jdbcType=CHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hxjc.hxyc.model.SupplierDeposit" >
+    insert into t_supplier_deposit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tenderId != null" >
+        tender_id,
+      </if>
+      <if test="childDetailId != null" >
+        child_detail_id,
+      </if>
+      <if test="tenderCode != null" >
+        tender_code,
+      </if>
+      <if test="tenderName != null" >
+        tender_name,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="procStateName != null" >
+        proc_state_name,
+      </if>
+      <if test="supplierId != null" >
+        supplier_id,
+      </if>
+      <if test="supplierName != null" >
+        supplier_name,
+      </if>
+      <if test="contactPerson != null" >
+        contact_person,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="accType != null" >
+        acc_type,
+      </if>
+      <if test="needAmount != null" >
+        need_amount,
+      </if>
+      <if test="payeeAccNo != null" >
+        payee_acc_no,
+      </if>
+      <if test="payeeAccName != null" >
+        payee_acc_name,
+      </if>
+      <if test="payeesEq != null" >
+        payees_eq,
+      </if>
+      <if test="tranAmount != null" >
+        tran_amount,
+      </if>
+      <if test="tranDate != null" >
+        tran_date,
+      </if>
+      <if test="tranTime != null" >
+        tran_time,
+      </if>
+      <if test="draweePartyName != null" >
+        drawee_party_name,
+      </if>
+      <if test="draweeAccName != null" >
+        drawee_acc_name,
+      </if>
+      <if test="draweeAccNo != null" >
+        drawee_acc_no,
+      </if>
+      <if test="draweePartyId != null" >
+        drawee_party_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="depositStatus != null" >
+        deposit_status,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tenderId != null" >
+        #{tenderId,jdbcType=VARCHAR},
+      </if>
+      <if test="childDetailId != null" >
+        #{childDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenderCode != null" >
+        #{tenderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tenderName != null" >
+        #{tenderName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="procStateName != null" >
+        #{procStateName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null" >
+        #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null" >
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null" >
+        #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="accType != null" >
+        #{accType,jdbcType=VARCHAR},
+      </if>
+      <if test="needAmount != null" >
+        #{needAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeAccNo != null" >
+        #{payeeAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeAccName != null" >
+        #{payeeAccName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeesEq != null" >
+        #{payeesEq,jdbcType=VARCHAR},
+      </if>
+      <if test="tranAmount != null" >
+        #{tranAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="tranDate != null" >
+        #{tranDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tranTime != null" >
+        #{tranTime,jdbcType=VARCHAR},
+      </if>
+      <if test="draweePartyName != null" >
+        #{draweePartyName,jdbcType=VARCHAR},
+      </if>
+      <if test="draweeAccName != null" >
+        #{draweeAccName,jdbcType=VARCHAR},
+      </if>
+      <if test="draweeAccNo != null" >
+        #{draweeAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="draweePartyId != null" >
+        #{draweePartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="depositStatus != null" >
+        #{depositStatus,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hxjc.hxyc.model.SupplierDeposit" >
+    update t_supplier_deposit
+    <set >
+      <if test="tenderId != null" >
+        tender_id = #{tenderId,jdbcType=VARCHAR},
+      </if>
+      <if test="childDetailId != null" >
+        child_detail_id = #{childDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenderCode != null" >
+        tender_code = #{tenderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tenderName != null" >
+        tender_name = #{tenderName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="procStateName != null" >
+        proc_state_name = #{procStateName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null" >
+        supplier_id = #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null" >
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null" >
+        contact_person = #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="accType != null" >
+        acc_type = #{accType,jdbcType=VARCHAR},
+      </if>
+      <if test="needAmount != null" >
+        need_amount = #{needAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeAccNo != null" >
+        payee_acc_no = #{payeeAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeAccName != null" >
+        payee_acc_name = #{payeeAccName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeesEq != null" >
+        payees_eq = #{payeesEq,jdbcType=VARCHAR},
+      </if>
+      <if test="tranAmount != null" >
+        tran_amount = #{tranAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="tranDate != null" >
+        tran_date = #{tranDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tranTime != null" >
+        tran_time = #{tranTime,jdbcType=VARCHAR},
+      </if>
+      <if test="draweePartyName != null" >
+        drawee_party_name = #{draweePartyName,jdbcType=VARCHAR},
+      </if>
+      <if test="draweeAccName != null" >
+        drawee_acc_name = #{draweeAccName,jdbcType=VARCHAR},
+      </if>
+      <if test="draweeAccNo != null" >
+        drawee_acc_no = #{draweeAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="draweePartyId != null" >
+        drawee_party_id = #{draweePartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="depositStatus != null" >
+        deposit_status = #{depositStatus,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hxjc.hxyc.model.SupplierDeposit" >
+    update t_supplier_deposit
+    set tender_id = #{tenderId,jdbcType=VARCHAR},
+      child_detail_id = #{childDetailId,jdbcType=VARCHAR},
+      tender_code = #{tenderCode,jdbcType=VARCHAR},
+      tender_name = #{tenderName,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      proc_state_name = #{procStateName,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=VARCHAR},
+      supplier_name = #{supplierName,jdbcType=VARCHAR},
+      contact_person = #{contactPerson,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      acc_type = #{accType,jdbcType=VARCHAR},
+      need_amount = #{needAmount,jdbcType=VARCHAR},
+      payee_acc_no = #{payeeAccNo,jdbcType=VARCHAR},
+      payee_acc_name = #{payeeAccName,jdbcType=VARCHAR},
+      payees_eq = #{payeesEq,jdbcType=VARCHAR},
+      tran_amount = #{tranAmount,jdbcType=VARCHAR},
+      tran_date = #{tranDate,jdbcType=VARCHAR},
+      tran_time = #{tranTime,jdbcType=VARCHAR},
+      drawee_party_name = #{draweePartyName,jdbcType=VARCHAR},
+      drawee_acc_name = #{draweeAccName,jdbcType=VARCHAR},
+      drawee_acc_no = #{draweeAccNo,jdbcType=VARCHAR},
+      drawee_party_id = #{draweePartyId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      deposit_status = #{depositStatus,jdbcType=CHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

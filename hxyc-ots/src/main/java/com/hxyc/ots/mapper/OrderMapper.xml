@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxyc.ots.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.hxyc.ots.model.Order" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="delivery_time" property="deliveryTime" jdbcType="TIMESTAMP" />
+    <result column="delivery_status" property="deliveryStatus" jdbcType="INTEGER" />
+    <result column="receive_num" property="receiveNum" jdbcType="VARCHAR" />
+    <result column="quality" property="quality" jdbcType="INTEGER" />
+    <result column="service" property="service" jdbcType="INTEGER" />
+    <result column="settlement_mode" property="settlementMode" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="order_exception_desc" property="orderExceptionDesc" jdbcType="VARCHAR" />
+    <result column="delivery_exception_desc" property="deliveryExceptionDesc" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="VOResultMap" type="com.hxyc.ots.vo.OrderVO" extends="BaseResultMap">
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, project_id, order_code, order_time, order_status, delivery_time, delivery_status, 
+    receive_num, quality, service, settlement_mode, status, create_by, create_time, update_by, 
+    update_time,order_exception_desc,delivery_exception_desc
+  </sql>
+
+  <!--订单信息列表-->
+  <select id="listOrder" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.OrderVO" >
+    select a.*, b.project_name, c.company_name from t_order a
+    inner join t_project b on b.id=a.project_id and b.status=1
+    inner join t_company c on c.id=b.company_id and c.status=1
+    where a.status=1
+    <if test="receiveNum != null and receiveNum != ''" >
+      and a.receive_num = #{receiveNum,jdbcType=VARCHAR}
+    </if>
+    <if test="startDate != null and startDate != '' and  endDate != null and endDate != '' " >
+      and a.order_time BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="selectById" resultMap="VOResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByProjectId" resultMap="VOResultMap" parameterType="java.lang.String" >
+    select
+    o.*,project_name
+    from t_order o left join t_project proj on o.project_id = proj.id
+    where o.project_id = #{projectId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="select" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.OrderVO" >
+    select
+    o.*,project_name
+    from t_order o left join t_project proj on o.project_id = proj.id
+    <where>
+      <if test="projectId != null">
+        and project_id = #{projectId,jdbcType=VARCHAR}
+      </if>
+      <if test="orderCode != null">
+        and order_code like concat('%',concat(#{orderCode,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="orderStatus != null">
+        and order_status = #{orderStatus,jdbcType=INTEGER}
+      </if>
+    </where>
+    <if test="pageStart != null and pageStart != 0 and pageEnd != null and pageEnd != 0">
+      limit #{pageStart,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.hxyc.ots.model.Order" >
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into t_order (id, project_id, order_code, 
+      order_time, order_status, delivery_time, 
+      delivery_status, receive_num, quality, 
+      service, settlement_mode, status, 
+      create_by, create_time, update_by, 
+      update_time,order_exception_desc,delivery_exception_desc)
+    values (#{id,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR}, 
+      #{orderTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=INTEGER}, #{deliveryTime,jdbcType=TIMESTAMP}, 
+      #{deliveryStatus,jdbcType=INTEGER}, #{receiveNum,jdbcType=VARCHAR}, #{quality,jdbcType=INTEGER}, 
+      #{service,jdbcType=INTEGER}, #{settlementMode,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP},#{orderExceptionDesc,jdbcType=VARCHAR},#{deliveryExceptionDesc,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.hxyc.ots.vo.OrderVO" >
+    select count(1) from (
+    select
+    o.*,project_name
+    from t_order o left join t_project proj on o.project_id = proj.id
+    <where>
+      <if test="projectId != null">
+        and project_id = #{projectId,jdbcType=VARCHAR}
+      </if>
+      <if test="orderCode != null">
+        and order_code like concat('%',concat(#{orderCode,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="orderTime != null">
+        and order_time = #{orderTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="orderStatus != null">
+        and order_status = #{orderStatus,jdbcType=INTEGER}
+      </if>
+      <if test="deliveryTime != null">
+        and delivery_time = #{deliveryTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="deliveryStatus != null">
+        and delivery_status = #{deliveryStatus,jdbcType=INTEGER}
+      </if>
+      <if test="receiveNum != null">
+        and receive_num = #{receiveNum,jdbcType=VARCHAR}
+      </if>
+      <if test="quality != null">
+        and quality = #{quality,jdbcType=INTEGER}
+      </if>
+      <if test="service != null">
+        and service = #{service,jdbcType=INTEGER}
+      </if>
+      <if test="settlementMode != null">
+        and settlement_mode = #{settlementMode,jdbcType=INTEGER}
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="id != null">
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+    )aa
+  </select>
+
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from t_order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <update id="update" parameterType="com.hxyc.ots.vo.OrderVO" >
+    update t_order
+    <set >
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null" >
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryTime != null" >
+        delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryStatus != null" >
+        delivery_status = #{deliveryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="receiveNum != null" >
+        receive_num = #{receiveNum,jdbcType=VARCHAR},
+      </if>
+      <if test="quality != null" >
+        quality = #{quality,jdbcType=INTEGER},
+      </if>
+      <if test="service != null" >
+        service = #{service,jdbcType=INTEGER},
+      </if>
+      <if test="settlementMode != null" >
+        settlement_mode = #{settlementMode,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderExceptionDesc != null" >
+        order_exception_desc = #{orderExceptionDesc,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryExceptionDesc != null" >
+        delivery_exception_desc = #{deliveryExceptionDesc,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

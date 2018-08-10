@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxyc.ots.mapper.MenuFuntionMapper" >
+  <resultMap id="BaseResultMap" type="com.hxyc.ots.model.MenuFuntion" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="menu_id" property="menuId" jdbcType="VARCHAR" />
+    <result column="function_id" property="functionId" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.hxyc.ots.model.MenuFuntion" >
+    insert into t_sys_menu_function (id, menu_id, function_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, #{functionId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hxyc.ots.model.MenuFuntion" >
+    insert into t_sys_menu_function
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="functionId != null" >
+        function_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="menuId != null" >
+        #{menuId,jdbcType=VARCHAR},
+      </if>
+      <if test="functionId != null" >
+        #{functionId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
