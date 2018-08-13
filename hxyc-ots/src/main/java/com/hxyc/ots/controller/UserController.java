@@ -67,7 +67,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/user-permission", method = RequestMethod.GET)
     public ModelAndView assignPermission(){
-        ModelAndView mav = new ModelAndView("user-permission");
+        ModelAndView mav = new ModelAndView("sysManage/user-permission");
         return mav;
     }
 
@@ -110,6 +110,7 @@ public class UserController extends BaseController {
             Users sessionUser = (Users) SysUtils.getSession().getAttribute("user");
             user.setCreateBy(sessionUser.getUserName());
             user.setCreateTime(new Date());
+            user.setStatus(1);
             userService.saveUser(user);
 
             return returnSuccess("新增成功！");

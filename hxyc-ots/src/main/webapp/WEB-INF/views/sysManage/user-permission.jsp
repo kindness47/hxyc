@@ -161,6 +161,14 @@
 							</dd>
 						</dl>
 						</shiro:hasPermission>
+						<shiro:hasPermission name="0206">
+							<dl class="cl permission-list2">
+								<dt>
+									<label class=""><input type="checkbox" value="0206" name="user-Character-1-0" id="0206">订单追踪</label>
+								</dt>
+
+							</dl>
+						</shiro:hasPermission>
 					</dd>
 				</dl>
 				</shiro:hasPermission>

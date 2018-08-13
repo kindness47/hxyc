@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,7 +64,7 @@ public class OrderAuditController extends BaseController {
         List<ReceiptVO> receiptVOList = receiptService.listReceipt(receiptParam);
         //列表信息
         List<OrderAduitVO> orderAduitVOList = orderAduitService.listAduitOrder(projectId);
-        //将开证收款信息放入列表list中 开证收款与列表数据无逻辑关系
+        //将开证信息放入列表list中 开证收款与列表数据无逻辑关系
         if (! CollectionUtils.isEmpty(creditVOList)){
             Integer j = 0;
             for(int i=0;i<orderAduitVOList.size();i++){
@@ -72,9 +73,17 @@ public class OrderAuditController extends BaseController {
                     CreditVO creditVO = creditVOList.get(j);
                     orderAduitVO.setOpenTime(creditVO.getOpenTime());
                     orderAduitVO.setOpenAmount(creditVO.getOpenAmount());
-                    System.out.println(creditVO.getOpenAmount());
                     j++;
                     if ( j >= creditVOList.size()) break;
+                }
+            }
+            if (CollectionUtils.isEmpty(orderAduitVOList)){
+                orderAduitVOList = new ArrayList<>();
+                for(int m = 0;m < creditVOList.size(); m++){
+                    OrderAduitVO orderAduitVO = new  OrderAduitVO();
+                    orderAduitVO.setOpenAmount(creditVOList.get(m).getOpenAmount());
+                    orderAduitVO.setOpenTime(creditVOList.get(m).getOpenTime());
+                    orderAduitVOList.add(orderAduitVO);
                 }
             }
         }

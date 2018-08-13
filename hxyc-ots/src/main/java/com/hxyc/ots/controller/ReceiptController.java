@@ -69,6 +69,7 @@ public class ReceiptController extends BaseController {
         if(StringUtils.isBlank(id)) {
             receipt.setCreateBy(SystemUtil.getLoginUserName());
             receipt.setCreateTime(new Date());
+            receipt.setStatus(1);
             receiptService.saveReceipt(receipt);
             return returnSuccess("新增成功！");
         } else {

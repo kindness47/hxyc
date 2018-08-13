@@ -182,11 +182,12 @@
                 </c:forEach>
                 </tbody>
                 <tbody id="xyz">
+                <c:set value="0" var="xyzindex"></c:set>
                 <c:forEach items="${orderAduitVOList}" var="orderAduitVO" varStatus="status">
                     <c:if test="${1==orderAduitVO.settlementMode}">
                     <tr class="text-c">
                         <td>
-                                ${status.index+1}
+                            <c:set value="${xyzindex+1}" var="xyzindex"></c:set> ${xyzindex}
                         </td>
                         <td>${orderAduitVO.openAmount}</td>
                         <td><f:formatDate value="${orderAduitVO.openTime}" pattern="yyyy-MM-dd"/></td>
@@ -233,11 +234,12 @@
                 </c:forEach>
                 </tbody>
                 <tbody id="daigou">
+                <c:set value="0" var="dgindex"></c:set>
                 <c:forEach items="${orderAduitVOList}" var="orderAduitVO" varStatus="status">
                     <c:if test="${2==orderAduitVO.settlementMode}">
                     <tr class="text-c">
                         <td>
-                                ${status.index+1}
+                            <c:set value="${dgindex+1}" var="dgindex"></c:set> ${dgindex}
                         </td>
                         <td></td>
                         <td></td>
@@ -284,11 +286,12 @@
                 </c:forEach>
                 </tbody>
                 <tbody id="liwai">
+                <c:set value="0" var="lwindex"></c:set>
                 <c:forEach items="${orderAduitVOList}" var="orderAduitVO" varStatus="status">
                     <c:if test="${3==orderAduitVO.settlementMode}">
                     <tr class="text-c">
                         <td>
-                                ${status.index+1}
+                            <c:set value="${lwindex+1}" var="lwindex"></c:set> ${lwindex}
                         </td>
                         <td></td>
                         <td></td>

@@ -84,7 +84,9 @@
 					<shiro:hasPermission name="0205">
                     	<li><a data-href="receipt-list" data-title="收款管理" href="javascript:void(0)">收款管理</a></li>
 					</shiro:hasPermission>
-					<li><a data-href="order-aduit" data-title="订单审查" href="javascript:void(0)">订单审查</a></li>
+					<shiro:hasPermission name="0206">
+					<li><a data-href="order-aduit" data-title="订单追踪" href="javascript:void(0)">订单追踪</a></li>
+					</shiro:hasPermission>
 
 				</ul>
 			</dd>

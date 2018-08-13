@@ -150,7 +150,7 @@
                     body.find("#projectName").val(obj.projectName);
                     body.find("#supplyUnit").val(obj.supplyUnit);
                     body.find("#contractSignTime").val(obj.contractSignTime);
-                    body.find("#supplyTime").val(obj.contractNum);
+                    body.find("#supplyTime").val(obj.supplyTime);
                     body.find("#contractNum").val(obj.contractNum);
                     body.find("#contractAmount").val(obj.contractAmount);
                     body.find("#settlementModel").val(obj.settlementModel);

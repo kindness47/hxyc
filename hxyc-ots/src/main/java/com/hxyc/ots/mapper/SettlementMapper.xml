@@ -95,9 +95,9 @@
             on se.company_id = comp.id
           left join t_project proj
             on se.project_id = proj.id
-    -- order by se.`settlement_mode` asc,pay.`payment_time` asc
+     -- order by se.`settlement_mode` asc,pay.`payment_time` asc
     )res on tod.order_code = res.order_id
-    order by delivery_time asc -- , res.settlement_mode asc,res.payment_time asc
+    order by delivery_time asc , res.settlement_mode asc,res.payment_time asc
   </select>
 
   <select id="selectById"  resultMap="extendResultMap" parameterType="java.lang.String" >
