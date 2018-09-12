@@ -104,14 +104,14 @@
                     <th width="100">开证金额(万元)</th>
                     <th width="100">开证日期</th>
                     <th width="50">结算模式</th>
-                    <th width="100">订单号</th>
+                    <th width="100" class="hidden">订单号</th>
                     <th width="100">订单时间</th>
                     <th width="100">交验时间</th>
                     <th width="20">异常否</th>
                     <th width="30">验收数量(T)</th>
                     <th width="20">质量</th>
                     <th width="20">服务</th>
-                    <th width="100">结算单号</th>
+                    <th width="100" class="hidden">结算单号</th>
                     <th width="100">结算时间</th>
                     <th width="20">异常否</th>
                     <th width="100">结算单据送达时间</th>
@@ -139,13 +139,13 @@
                            ${status.index+1}
                         </td>
                         <td>${orderAduitVO.openAmount}</td>
-                        <td><f:formatDate value="${orderAduitVO.openTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.openTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.settlementMode}">信用证</c:if><c:if test="${2==orderAduitVO.settlementMode}">代购</c:if><c:if test="${3==orderAduitVO.settlementMode}">信用证-例外</c:if>
                         </td>
-                        <td>${orderAduitVO.orderCode}</td>
-                        <td><f:formatDate value="${orderAduitVO.orderTime}" pattern="yyyy-MM-dd"/></td>
-                        <td><f:formatDate value="${orderAduitVO.deliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td class="hidden">${orderAduitVO.orderCode}</td>
+                        <td><f:formatDate value="${orderAduitVO.orderTime}" pattern="MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.deliveryTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.deliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${0==orderAduitVO.deliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.deliveryExceptionDesc}"><span style="color: red">×</span></a></c:if>
                         </td>
@@ -156,22 +156,22 @@
                         <td>
                             <c:if test="${1==orderAduitVO.service}"><span style="color: green">好</span></c:if><c:if test="${0==orderAduitVO.service}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title=""><span style="color: red">差</span></a></c:if>
                         </td>
-                        <td>${orderAduitVO.settlementCode}</td>
-                        <td><f:formatDate value="${orderAduitVO.supplierSettlementTime}" pattern="yyyy-MM-dd"/></td>
+                        <td class="hidden">${orderAduitVO.settlementCode}</td>
+                        <td><f:formatDate value="${orderAduitVO.supplierSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.supplierSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.supplierSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.supplierSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.settlementDeliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.settlementDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.settlementDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.settlementDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.settlementDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.buyerSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.buyerSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.buyerSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.approvalTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.approvalTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.approvalStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.approvalStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.approvalRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
-                        <td><f:formatDate value="${orderAduitVO.paymentTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.paymentTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.paymentRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
@@ -190,13 +190,13 @@
                             <c:set value="${xyzindex+1}" var="xyzindex"></c:set> ${xyzindex}
                         </td>
                         <td>${orderAduitVO.openAmount}</td>
-                        <td><f:formatDate value="${orderAduitVO.openTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.openTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.settlementMode}">信用证</c:if><c:if test="${2==orderAduitVO.settlementMode}">代购</c:if><c:if test="${3==orderAduitVO.settlementMode}">信用证-例外</c:if>
                         </td>
-                        <td>${orderAduitVO.orderCode}</td>
-                        <td><f:formatDate value="${orderAduitVO.orderTime}" pattern="yyyy-MM-dd"/></td>
-                        <td><f:formatDate value="${orderAduitVO.deliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td class="hidden">${orderAduitVO.orderCode}</td>
+                        <td><f:formatDate value="${orderAduitVO.orderTime}" pattern="MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.deliveryTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.deliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${0==orderAduitVO.deliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.deliveryExceptionDesc}"><span style="color: red">×</span></a></c:if>
                         </td>
@@ -207,22 +207,22 @@
                         <td>
                             <c:if test="${1==orderAduitVO.service}"><span style="color: green">好</span></c:if><c:if test="${0==orderAduitVO.service}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title=""><span style="color: red">差</span></a></c:if>
                         </td>
-                        <td>${orderAduitVO.settlementCode}</td>
-                        <td><f:formatDate value="${orderAduitVO.supplierSettlementTime}" pattern="yyyy-MM-dd"/></td>
+                        <td class="hidden">${orderAduitVO.settlementCode}</td>
+                        <td><f:formatDate value="${orderAduitVO.supplierSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.supplierSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.supplierSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.supplierSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.settlementDeliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.settlementDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.settlementDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.settlementDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.settlementDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.buyerSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.buyerSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.buyerSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.approvalTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.approvalTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.approvalStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.approvalStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.approvalRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
-                        <td><f:formatDate value="${orderAduitVO.paymentTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.paymentTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.paymentRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
@@ -246,9 +246,9 @@
                         <td>
                             <c:if test="${1==orderAduitVO.settlementMode}">信用证</c:if><c:if test="${2==orderAduitVO.settlementMode}">代购</c:if><c:if test="${3==orderAduitVO.settlementMode}">信用证-例外</c:if>
                         </td>
-                        <td>${orderAduitVO.orderCode}</td>
-                        <td><f:formatDate value="${orderAduitVO.orderTime}" pattern="yyyy-MM-dd"/></td>
-                        <td><f:formatDate value="${orderAduitVO.deliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td class="hidden">${orderAduitVO.orderCode}</td>
+                        <td><f:formatDate value="${orderAduitVO.orderTime}" pattern="MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.deliveryTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.deliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${0==orderAduitVO.deliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.deliveryExceptionDesc}"><span style="color: red">×</span></a></c:if>
                         </td>
@@ -259,22 +259,22 @@
                         <td>
                             <c:if test="${1==orderAduitVO.service}"><span style="color: green">好</span></c:if><c:if test="${0==orderAduitVO.service}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title=""><span style="color: red">差</span></a></c:if>
                         </td>
-                        <td>${orderAduitVO.settlementCode}</td>
-                        <td><f:formatDate value="${orderAduitVO.supplierSettlementTime}" pattern="yyyy-MM-dd"/></td>
+                        <td class="hidden">${orderAduitVO.settlementCode}</td>
+                        <td><f:formatDate value="${orderAduitVO.supplierSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.supplierSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.supplierSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.supplierSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.settlementDeliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.settlementDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.settlementDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.settlementDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.settlementDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.buyerSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.buyerSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.buyerSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.approvalTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.approvalTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.approvalStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.approvalStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.approvalRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
-                        <td><f:formatDate value="${orderAduitVO.paymentTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.paymentTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.paymentRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
@@ -298,9 +298,9 @@
                         <td>
                             <c:if test="${1==orderAduitVO.settlementMode}">信用证</c:if><c:if test="${2==orderAduitVO.settlementMode}">代购</c:if><c:if test="${3==orderAduitVO.settlementMode}">信用证-例外</c:if>
                         </td>
-                        <td>${orderAduitVO.orderCode}</td>
-                        <td><f:formatDate value="${orderAduitVO.orderTime}" pattern="yyyy-MM-dd"/></td>
-                        <td><f:formatDate value="${orderAduitVO.deliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td class="hidden">${orderAduitVO.orderCode}</td>
+                        <td><f:formatDate value="${orderAduitVO.orderTime}" pattern="MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.deliveryTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.deliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${0==orderAduitVO.deliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.deliveryExceptionDesc}"><span style="color: red">×</span></a></c:if>
                         </td>
@@ -311,22 +311,22 @@
                         <td>
                             <c:if test="${1==orderAduitVO.service}"><span style="color: green">好</span></c:if><c:if test="${0==orderAduitVO.service}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title=""><span style="color: red">差</span></a></c:if>
                         </td>
-                        <td>${orderAduitVO.settlementCode}</td>
-                        <td><f:formatDate value="${orderAduitVO.supplierSettlementTime}" pattern="yyyy-MM-dd"/></td>
+                        <td class="hidden">${orderAduitVO.settlementCode}</td>
+                        <td><f:formatDate value="${orderAduitVO.supplierSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.supplierSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.supplierSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.supplierSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.settlementDeliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.settlementDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.settlementDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.settlementDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.settlementDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.buyerSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.buyerSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.buyerSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td><f:formatDate value="${orderAduitVO.approvalTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.approvalTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.approvalStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.approvalStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.approvalRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
-                        <td><f:formatDate value="${orderAduitVO.paymentTime}" pattern="yyyy-MM-dd"/></td>
+                        <td><f:formatDate value="${orderAduitVO.paymentTime}" pattern="MM-dd"/></td>
                         <td>
                             <c:if test="${1==orderAduitVO.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.paymentRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
