@@ -96,7 +96,7 @@ public class ProjectController extends BaseController {
             if(StringUtils.isNotBlank(projectName)) {
                 Project projectObj = projectService.getProjectByName(projectName);
                 if(projectObj != null) {
-                    return returnValidateError("公司简称已经存在,请重新输入！");
+                    return returnValidateError("项目已经存在,请重新输入！");
                 }
             }
             project.setProjectCode(CodeUtils.getRuleCode("GCP"));
@@ -119,7 +119,7 @@ public class ProjectController extends BaseController {
             oldProject.setSupplyTime(project.getSupplyTime());
             oldProject.setContractNum(project.getContractNum());
             oldProject.setContractAmount(project.getContractAmount());
-            oldProject.setSettlementModel(project.getSettlementModel());
+            oldProject.setSettlementMode(project.getSettlementMode());
             oldProject.setBaseFloatValue(project.getBaseFloatValue());
             oldProject.setExtraCapitalAmount(project.getExtraCapitalAmount());
             oldProject.setCapitalTimeLimit(project.getCapitalTimeLimit());

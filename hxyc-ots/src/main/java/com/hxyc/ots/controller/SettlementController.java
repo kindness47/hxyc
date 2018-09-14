@@ -42,6 +42,10 @@ public class SettlementController extends BaseController {
      */
     @RequestMapping(value = "/settlement-list", method = RequestMethod.GET)
     public ModelAndView listSettlement(SettlementVO settlementVO){
+        settlementVO.setCreateBy(SystemUtil.getLoginUserName());
+        if (SystemUtil.getSessionUser().getRoleName().indexOf("管理")!=-1){
+            settlementVO.setCreateBy(null);
+        }
         ModelAndView mav = new ModelAndView("ots/settlement-list");
         List<SettlementVO> settlementVOList = settlementService.listSettlement(settlementVO);
         mav.addObject("settlementVOList", settlementVOList);

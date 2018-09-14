@@ -26,6 +26,9 @@ public class Order extends BaseModel {
     /**订单状态*/
     private Integer orderStatus;
 
+    /**订单批次号*/
+    private String orderBatchNo;
+
     /**交验时间*/
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
@@ -40,8 +43,14 @@ public class Order extends BaseModel {
     /**质量 1 服务好 0 服务差*/
     private Integer quality;
 
+    /**质量备注*/
+    private String qualityRemark;
+
     /**服务 1 服务好 0 服务差*/
     private Integer service;
+
+    /**服务备注*/
+    private String serviceRemark;
 
     /**结算方式： 1 信用证 2 列外 3 代购*/
     private Integer settlementMode;
@@ -125,14 +134,6 @@ public class Order extends BaseModel {
         this.service = service;
     }
 
-    public Integer getSettlementMode() {
-        return settlementMode;
-    }
-
-    public void setSettlementMode(Integer settlementMode) {
-        this.settlementMode = settlementMode;
-    }
-
     public String getOrderExceptionDesc() {
         return orderExceptionDesc;
     }
@@ -147,5 +148,37 @@ public class Order extends BaseModel {
 
     public void setDeliveryExceptionDesc(String deliveryExceptionDesc) {
         this.deliveryExceptionDesc = deliveryExceptionDesc;
+    }
+
+    public String getQualityRemark() {
+        return qualityRemark;
+    }
+
+    public void setQualityRemark(String qualityRemark) {
+        this.qualityRemark = qualityRemark;
+    }
+
+    public String getServiceRemark() {
+        return serviceRemark;
+    }
+
+    public void setServiceRemark(String serviceRemark) {
+        this.serviceRemark = serviceRemark;
+    }
+
+    public Integer getSettlementMode() {
+        return settlementMode;
+    }
+
+    public void setSettlementMode(Integer settlementMode) {
+        this.settlementMode = settlementMode;
+    }
+
+    public String getOrderBatchNo() {
+        return orderBatchNo;
+    }
+
+    public void setOrderBatchNo(String orderBatchNo) {
+        this.orderBatchNo = orderBatchNo;
     }
 }

@@ -41,6 +41,13 @@ public class CreditController extends BaseController {
         return mav;
     }
 
+    @RequestMapping(value = "/credit-select", method = RequestMethod.GET)
+    @ResponseBody
+    public Response listCreditSelect(CreditVO creditVO){
+        List<CreditVO> creditList = creditService.listCredit(creditVO);
+        return returnSuccess(creditList);
+    }
+
     /**
      * 功能描述:新增信用证
      * @Auther: 于金谷

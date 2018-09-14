@@ -8,6 +8,7 @@
     <result column="receipt_amount" property="receiptAmount" jdbcType="DOUBLE" />
     <result column="receipt_time" property="receiptTime" jdbcType="TIMESTAMP" />
     <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="receipt_balance" property="receiptBalance" jdbcType="DOUBLE" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -17,6 +18,7 @@
 
   <resultMap id="VOResultMap" type="com.hxyc.ots.vo.ReceiptVO" extends="BaseResultMap">
     <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+    <result column="projectName" property="projectName" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -26,8 +28,9 @@
 
   <!--收款信息列表 -->
   <select id="listReceipt" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.ReceiptVO" >
-    select a.*, b.company_name companyName from t_receipt a
+    select a.*, b.company_name companyName,c.project_name projectName from t_receipt a
     inner join t_company b on b.id=a.company_id and b.status=1
+    left join t_project c on a.project_id=c.id
     where a.status=1
     <if test="receiptAmount != null and receiptAmount != ''" >
       and a.receipt_amount= #{receiptAmount,jdbcType=VARCHAR}
@@ -35,10 +38,19 @@
     <if test="companyId != null and companyId != ''" >
       and a.company_id= #{companyId,jdbcType=VARCHAR}
     </if>
+    <if test="projectId != null" >
+      and a.project_id= #{projectId,jdbcType=VARCHAR}
+    </if>
     <if test="startDate != null and startDate != '' and  endDate != null and endDate != '' " >
       and a.receipt_time BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
     </if>
-    order by a.create_time desc
+    <if test="sortDesc != null and sortDesc != ''">
+      order by a.create_time ${sortDesc}
+    </if>
+    <if test="sortDesc == null or sortDesc == ''">
+      order by a.create_time desc
+    </if>
+
   </select>
 
   <!--根据ID获取收款信息 -->
@@ -90,11 +102,11 @@
       select replace(uuid(), '-', '') as id from dual
     </selectKey>
     insert into t_receipt (id, company_id, project_id, 
-      receipt_amount, receipt_time, remarks, 
+      receipt_amount, receipt_time, remarks, receipt_balance,
       status, create_by, create_time, 
       update_by, update_time)
     values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, 
-      #{receiptAmount,jdbcType=DOUBLE}, #{receiptTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, 
+      #{receiptAmount,jdbcType=DOUBLE}, #{receiptTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{receiptBalance,jdbcType=DOUBLE},
       #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -116,6 +128,9 @@
       </if>
       <if test="receiptAmount != null" >
         receipt_amount,
+      </if>
+      <if test="receiptBalance != null" >
+        receipt_balance,
       </if>
       <if test="receiptTime != null" >
         receipt_time,
@@ -151,6 +166,9 @@
       </if>
       <if test="receiptAmount != null" >
         #{receiptAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="receiptBalance != null" >
+        #{receiptBalance,jdbcType=DOUBLE},
       </if>
       <if test="receiptTime != null" >
         #{receiptTime,jdbcType=TIMESTAMP},
@@ -188,11 +206,17 @@
       <if test="receiptAmount != null" >
         receipt_amount = #{receiptAmount,jdbcType=DOUBLE},
       </if>
+      <if test="receiptAmount != null" >
+        receipt_amount = #{receiptAmount,jdbcType=DOUBLE},
+      </if>
       <if test="receiptTime != null" >
         receipt_time = #{receiptTime,jdbcType=TIMESTAMP},
       </if>
       <if test="remarks != null" >
         remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptBalance != null" >
+        receipt_balance = #{receiptBalance,jdbcType=DOUBLE},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},

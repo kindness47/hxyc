@@ -18,6 +18,9 @@ public class CreditVO extends Credit {
     /**开证公司名称*/
     private String companyName;
 
+    /**排序描述 desc  asc */
+    private String sortDesc;
+
     public String getCompanyName() {
         return companyName;
     }
@@ -40,5 +43,13 @@ public class CreditVO extends Credit {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getSortDesc() {
+        return sortDesc;
+    }
+
+    public void setSortDesc(String sortDesc) {
+        this.sortDesc = sortDesc;
     }
 }

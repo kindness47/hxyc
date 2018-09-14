@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
 	<!--[if IE 6]>
 	<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
@@ -47,7 +47,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2">菜单功能：</label>
 			<div class="formControls col-xs-10 col-sm-10">
-				<shiro:hasPermission name="01">
+				<shiro:hasPermission name="01" >
 					<dl class="permission-list">
 						<dt><label><input type="checkbox" value="01" name="BaseInfo" id="01">基础信息</label></dt>
 						<dd>
@@ -55,14 +55,14 @@
 								<dl class="cl permission-list2">
 									<dt><label class=""><input type="checkbox" value="0101" name="user-Character-0-0" id="0101">公司管理</label></dt>
 									<dd>
+										<shiro:hasPermission name="0101-0005">
+											<label class=""><input type="checkbox" value="0101-0005" name="user-Character-0-0-0" id="0101-0005">查看</label>
+										</shiro:hasPermission>
 										<shiro:hasPermission name="0101-0001">
 											<label class=""><input type="checkbox" value="0101-0001" name="user-Character-0-0-0" id="0101-0001">新增</label>
 										</shiro:hasPermission>
 										<shiro:hasPermission name="0101-0002">
 											<label class=""><input type="checkbox" value="0101-0002" name="user-Character-0-0-0" id="0101-0002">修改</label>
-										</shiro:hasPermission>
-										<shiro:hasPermission name="0101-0003">
-											<label class=""><input type="checkbox" value="0101-0003" name="user-Character-0-0-0" id="0101-0003">收款</label>
 										</shiro:hasPermission>
 										<shiro:hasPermission name="0101-0004">
 											<label class=""><input type="checkbox" value="0101-0004" name="user-Character-0-0-0" id="0101-0004">信用证</label>
@@ -75,11 +75,14 @@
 								<shiro:hasPermission name="0102">
 									<dt><label class=""><input type="checkbox" value="0102" name="user-Character-0-1" id="0102">信用证管理</label></dt>
 								</shiro:hasPermission>
-								<shiro:hasPermission name="0102-0002">
 								<dd>
-									<label class=""><input type="checkbox" value="0102-0002" name="user-Character-0-1-0" id="0102-0002">修改</label>
+									<shiro:hasPermission name="0102-0001">
+										<label class=""><input type="checkbox" value="0102-0001" name="user-Character-0-1-0" id="0102-0001">查看</label>
+									</shiro:hasPermission>
+									<shiro:hasPermission name="0102-0002">
+										<label class=""><input type="checkbox" value="0102-0002" name="user-Character-0-1-0" id="0102-0002">修改</label>
+									</shiro:hasPermission>
 								</dd>
-								</shiro:hasPermission>
 							</dl>
 							</shiro:hasPermission>
 						</dd>
@@ -95,11 +98,20 @@
 								<label class=""><input type="checkbox" value="0201" name="user-Character-1-0" id="0201">项目管理</label>
 							</dt>
 							<dd>
+								<shiro:hasPermission name="0201-0005">
+									<label class=""><input type="checkbox" value="0201-0005" name="user-Character-1-0-0" id="0201-0005">查看</label>
+								</shiro:hasPermission>
 								<shiro:hasPermission name="0201-0001">
 									<label class=""><input type="checkbox" value="0201-0001" name="user-Character-1-0-0" id="0201-0001">新增</label>
 								</shiro:hasPermission>
 								<shiro:hasPermission name="0201-0002">
 									<label class=""><input type="checkbox" value="0201-0002" name="user-Character-1-0-0" id="0201-0002">修改</label>
+								</shiro:hasPermission>
+								<shiro:hasPermission name="0201-0003">
+									<label class=""><input type="checkbox" value="0201-0003" name="user-Character-1-0-0" id="0201-0003">收款</label>
+								</shiro:hasPermission>
+								<shiro:hasPermission name="0201-0004">
+									<label class=""><input type="checkbox" value="0201-0004" name="user-Character-1-0-0" id="0201-0004">信用证</label>
 								</shiro:hasPermission>
 							</dd>
 						</dl>
@@ -110,8 +122,11 @@
 								<label class=""><input type="checkbox" value="0202" name="user-Character-1-0" id="0202">订单管理</label>
 							</dt>
 							<dd>
+								<shiro:hasPermission name="0202-0003">
+									<label class=""><input type="checkbox" value="0202-0003" name="user-Character-1-0-0" id="0202-0003">查看</label>
+								</shiro:hasPermission>
 								<shiro:hasPermission name="0202-0001">
-									<label class=""><input type="checkbox" value="0202-0001" name="user-Character-1-0-0" id="0202-0001">新增</label>
+									<label class=""><input type="checkbox" value="0202-0001" name="user-Character-1-0-0" id="0202-0001">订单录入</label>
 								</shiro:hasPermission>
 								<shiro:hasPermission name="0202-0002">
 									<label class=""><input type="checkbox" value="0202-0002" name="user-Character-1-0-0" id="0202-0002">修改</label>
@@ -125,6 +140,9 @@
 									<label class=""><input type="checkbox" value="0203" name="user-Character-1-0" id="0203">结算管理</label>
 								</dt>
 								<dd>
+									<shiro:hasPermission name="0203-0003">
+										<label class=""><input type="checkbox" value="0203-0003" name="user-Character-1-0-0" id="0203-0003">查看</label>
+									</shiro:hasPermission>
 									<shiro:hasPermission name="0203-0001">
 										<label class=""><input type="checkbox" value="0203-0001" name="user-Character-1-0-0" id="0203-0001">新增</label>
 									</shiro:hasPermission>
@@ -140,6 +158,9 @@
 								<label class=""><input type="checkbox" value="0204" name="user-Character-1-0" id="0204">支付管理</label>
 							</dt>
 							<dd>
+								<shiro:hasPermission name="0204-0003">
+									<label class=""><input type="checkbox" value="0204-0003" name="user-Character-1-0-0" id="0204-0003">查看</label>
+								</shiro:hasPermission>
 								<shiro:hasPermission name="0204-0001">
 									<label class=""><input type="checkbox" value="0204-0001" name="user-Character-1-0-0" id="0204-0001">新增</label>
 								</shiro:hasPermission>
@@ -155,6 +176,9 @@
 								<label class=""><input type="checkbox" value="0205" name="user-Character-1-0" id="0205">收款管理</label>
 							</dt>
 							<dd>
+								<shiro:hasPermission name="0205-0001">
+									<label class=""><input type="checkbox" value="0205-0001" name="0202-0002" id="0205-0001">查看</label>
+								</shiro:hasPermission>
 								<shiro:hasPermission name="0205-0002">
 									<label class=""><input type="checkbox" value="0205-0002" name="0202-0002" id="0205-0002">修改</label>
 								</shiro:hasPermission>
@@ -166,7 +190,11 @@
 								<dt>
 									<label class=""><input type="checkbox" value="0206" name="user-Character-1-0" id="0206">订单追踪</label>
 								</dt>
-
+								<dd>
+									<shiro:hasPermission name="0206-0001">
+										<label class=""><input type="checkbox" value="0206-0001" name="0202-0002" id="0206-0001">查看</label>
+									</shiro:hasPermission>
+								</dd>
 							</dl>
 						</shiro:hasPermission>
 					</dd>
@@ -182,6 +210,9 @@
 									<label class=""><input type="checkbox" value="0301" name="user-Character-1-0" id="0301">权限管理</label>
 								</dt>
 								<dd>
+									<shiro:hasPermission name="0301-0012">
+										<label class=""><input type="checkbox" value="0301-0012" name="user-Character-1-0-0" id="0301-0012">查看</label>
+									</shiro:hasPermission>
 									<shiro:hasPermission name="0301-0005">
 										<label class=""><input type="checkbox" value="0301-0005" name="user-Character-1-0-0" id="0301-0005">添加用户</label>
 									</shiro:hasPermission>
@@ -211,6 +242,11 @@
 								<dt>
 									<label class=""><input type="checkbox" value="0302" name="user-Character-1-0" id="0302">系统日志</label>
 								</dt>
+								<dd>
+									<shiro:hasPermission name="0302-0001">
+										<label class=""><input type="checkbox" value="0302-0001" name="0302-0001" id="0302-0001">查看</label>
+									</shiro:hasPermission>
+								</dd>
 							</dl>
 						</shiro:hasPermission>
 					</dd>
@@ -277,7 +313,7 @@ $(function(){
                 $(this).closest("dl").find("dt input:checkbox").prop("checked",false);
             }
             if(l2==0){
-                $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+                // $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
             }
         }
     });

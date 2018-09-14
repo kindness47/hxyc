@@ -21,6 +21,9 @@ public class Receipt extends BaseModel {
     /**收款金额*/
     private Double receiptAmount;
 
+    /**余额*/
+    private Double receiptBalance;
+
     /**收款时间*/
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
@@ -69,5 +72,11 @@ public class Receipt extends BaseModel {
         this.remarks = remarks == null ? null : remarks.trim();
     }
 
+    public Double getReceiptBalance() {
+        return receiptBalance;
+    }
 
+    public void setReceiptBalance(Double receiptBalance) {
+        this.receiptBalance = receiptBalance;
+    }
 }

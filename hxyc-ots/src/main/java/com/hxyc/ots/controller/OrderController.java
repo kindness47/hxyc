@@ -40,6 +40,10 @@ public class OrderController extends BaseController {
      */
     @RequestMapping(value = "/order-list", method = RequestMethod.GET)
     public ModelAndView listOrder(OrderVO orderVO){
+        orderVO.setCreateBy(SystemUtil.getLoginUserName());
+        if (SystemUtil.getSessionUser().getRoleName().indexOf("管理")!=-1){
+            orderVO.setCreateBy(null);
+        }
         ModelAndView mav = new ModelAndView("ots/order-list");
         List<OrderVO> orderList = orderService.listOrder(orderVO);
         mav.addObject("orderList", orderList);
@@ -60,7 +64,7 @@ public class OrderController extends BaseController {
         paramMap.put("count",total);
         orderVO.setPageStart((orderVO.getPage()-1)*orderVO.getLimit());
         orderVO.setPageEnd(orderVO.getPage()*orderVO.getLimit());
-        List<OrderVO> projectVOList = orderService.listOrder(orderVO);
+        List<OrderVO> projectVOList = orderService.getOrderList(orderVO);
         paramMap.put("data",projectVOList);
         return paramMap;
     }
@@ -109,6 +113,7 @@ public class OrderController extends BaseController {
             oldOrder.setService(order.getService());
             oldOrder.setUpdateBy(SystemUtil.getLoginUserName());
             oldOrder.setUpdateTime(new Date());
+            oldOrder.setOrderBatchNo(order.getOrderBatchNo());
             orderService.updateOrder(oldOrder);
 
             return returnSuccess("修改成功！");
@@ -116,6 +121,7 @@ public class OrderController extends BaseController {
             order.setOrderCode(CodeUtils.getRuleCode("JCO"));
             order.setCreateBy(SystemUtil.getLoginUserName());
             order.setCreateTime(new Date());
+            order.setStatus(1);
             orderService.saveOrder(order);
 
             return returnSuccess("新增成功！");

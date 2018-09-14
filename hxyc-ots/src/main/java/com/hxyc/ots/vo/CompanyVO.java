@@ -20,6 +20,9 @@ public class CompanyVO extends Company {
     /**上级公司名称*/
     private String parentCompanyName;
 
+    /**排序描述 desc  asc */
+    private String sortDesc;
+
     public String getParentCompanyName() {
         return parentCompanyName;
     }
@@ -42,5 +45,13 @@ public class CompanyVO extends Company {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getSortDesc() {
+        return sortDesc;
+    }
+
+    public void setSortDesc(String sortDesc) {
+        this.sortDesc = sortDesc;
     }
 }

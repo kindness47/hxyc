@@ -15,16 +15,20 @@
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/layui.css"  media="all">
 <link rel="stylesheet" href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <![endif]-->
 <title>订单审查</title>
+<style type="text/css">
+    .Hui-aside{position: absolute;top:44px;bottom:0;left:0;padding-top:10px;width:350px;z-index:99;overflow:auto; background-color:rgba(238,238,238,0.98);_background-color:rgb(238,238,238);border-right: 1px solid #e5e5e5}
+    .Hui-article-box{position: absolute;top:44px;right:0;bottom: 0;left:350px; overflow:hidden; z-index:1; background-color:#fff}
+</style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单跟踪 <span class="c-gray en">&gt;</span> 订单审查 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" onclick="location.replace(location.href)" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单跟踪 <span class="c-gray en">&gt;</span> 订单审查 <a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" onclick="location.replace(location.href)" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 
 <aside class="Hui-aside">
     <ul id="compDeptTree" class="ztree"></ul>
@@ -34,10 +38,16 @@
     <div id="iframe_box" class="Hui-article" style="margin-left: 20px">
         <div class="demoTable">
             搜索项目：
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="projectReload" autocomplete="off">
+            <div class="row cl">
+                <div class="form-group formControls col-xs-2 col-sm-2">
+                    <input class="layui-input" name="id" placeholder="输入公司名称" id="companyName" autocomplete="off">
+                </div>
+                <div class="form-group formControls col-xs-2 col-sm-2">
+                    <input class="layui-input" name="id" placeholder="输入项目名称" id="projectName" autocomplete="off">
+                </div>
+                <button class="layui-btn" data-type="reload">搜索</button>
             </div>
-            <button class="layui-btn" data-type="reload">搜索</button>
+
         </div>
         <table id="projectTable" class="layui-hide" lay-filter="demo"></table>
 
@@ -126,14 +136,20 @@
         });
         var t = $("#compDeptTree");
         t = $.fn.zTree.init(t, setting, zNodes);
-        t.expandAll(true);
+        //t.expandAll(true);
         var treeObj = $.fn.zTree.getZTreeObj("compDeptTree");
-        //返回一个根节点
-        var node = treeObj.getNodesByFilter(function (node) { return node.level == 0 }, true);
-        initProjectTable2(node.id);
+        var nodeList = treeObj.getNodes();
+        treeObj.expandNode(nodeList[0], true);
+        //默认返回所有项目信息
+        //var node = treeObj.getNodesByFilter(function (node) { return node.level == 0 }, true);
+        initProjectTable2('');
     }
 
     function initProjectTable2(compnayId) {
+        var requrl = '${hxycStatic}/project-list-by-param'
+        if ('' != compnayId){
+            requrl = '${hxycStatic}/project-list-by-param?companyId='+compnayId
+        }
         layui.use('table', function(){
             var laytable = layui.table;
             //渲染
@@ -141,14 +157,15 @@
                 elem: '#projectTable'
                 ,width: 850
                 ,height: 550
-                ,url: '${hxycStatic}/project-list-by-param?companyId='+compnayId
+                ,url: requrl
                 //,size: 'sm'
                 ,page: true
                 ,limit: 10
                 ,cols: [[
                     //{type: 'checkbox', fixed: 'left'},
                     {fixed: 'center', title:'操作', toolbar: '#view', width:80, fixed:true},
-                    {field:'projectName', title:'项目名称', width:200, sort: true}
+                    {field:'companyName', title:'公司名称', width:230, sort: true},
+                    {field:'projectName', title:'项目名称', width:350, sort: true}
                 ]]
             });
 
@@ -172,14 +189,16 @@
 
             var $ = layui.$, active = {
                 reload: function(){
-                    var projectReload = $('#projectReload');
+                    var projectName = $('#projectName');
+                    var companyName = $('#companyName');
                     //执行重载
                     laytable.reload('projectTable', {
                         page: {
                             curr: 1 //重新从第 1 页开始
                         }
                         ,where: {
-                            projectName: projectReload.val()
+                            projectName: projectName.val(),
+                            companyName: companyName.val(),
                         }
                     });
                 }

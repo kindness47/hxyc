@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
 	<!--[if IE 6]>
 	<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
@@ -27,8 +27,12 @@
 	<form class="form form-horizontal" id="form-credit-add" name="creditForm">
 		<input type="hidden" id="id" name="id" value="${credit.id}">
 		<input type="hidden" id="companyId" name="companyId" value="${credit.companyId}">
+		<input type="hidden" id="projectId" name="projectId" value="${credit.projectId}">
+		<input type="hidden" id="creditType" name="creditType" value="${credit.creditType}">
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3" style="text-align: right">开证公司：</label>
+			<label class="form-label col-xs-4 col-sm-3" style="text-align: right">
+				<div id="openCreditDiv" ></div>
+			</label>
 			<div id="companyNameDiv" class="formControls col-xs-8 col-sm-9" ></div>
 		</div>
 		<div class="row cl">

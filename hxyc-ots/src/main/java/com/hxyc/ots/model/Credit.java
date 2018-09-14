@@ -16,8 +16,14 @@ public class Credit extends BaseModel {
     /**公司ID*/
     private String companyId;
 
+    /**项目ID*/
+    private String projectId;
+
     /**信用证编码*/
     private String creditCode;
+
+    /**信用证类型 1 公司信用证 2 项目信用证*/
+    private Integer creditType;
 
     /**开证金额*/
     private Double openAmount;
@@ -69,5 +75,21 @@ public class Credit extends BaseModel {
 
     public void setRestAmount(Double restAmount) {
         this.restAmount = restAmount;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public Integer getCreditType() {
+        return creditType;
+    }
+
+    public void setCreditType(Integer creditType) {
+        this.creditType = creditType;
     }
 }

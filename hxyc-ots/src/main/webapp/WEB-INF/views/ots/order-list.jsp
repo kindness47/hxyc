@@ -15,19 +15,18 @@
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <![endif]-->
 <title>订单管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单跟踪 <span class="c-gray en">&gt;</span> 订单管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div><a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></div>
 <div class="page-container">
     <form id="searchForm" name="searchForm" method="get" action="order-list">
 	<div class="text-c"> 订单日期：
-		<input type="text" onclick="WdatePicker()" id="datemin" name="sta
-		rtDate"  class="input-text Wdate" readonly style="width:120px;">
+		<input type="text" onclick="WdatePicker()" id="datemin" name="startDate"  class="input-text Wdate" readonly style="width:120px;">
 		-
 		<input type="text" onclick="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}'})" id="datemax" name="endDate"  class="input-text Wdate" readonly style="width:120px;">
 		<input type="text" class="input-text" style="width:250px" name="receiveNum" placeholder="请输入验收数量">
@@ -36,7 +35,7 @@
     </form>
     <shiro:hasPermission name="0202-0001">
         <div class="cl pd-5 bg-1 bk-gray mt-20">
-            <a href="javascript:;" onclick="order_add('新增订单','order-add','','320')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增订单</a>
+            <a href="javascript:;" onclick="order_add('订单录入','order-add','','320')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 订单录入</a>
         </div>
     </shiro:hasPermission>
     <div class="clearfix"> </div>
@@ -45,14 +44,15 @@
             <thead>
                 <tr class="text-c">
                     <th width="80">操作</th>
-                    <th width="180">公司名称</th>
-                    <th width="180">项目名称</th>
-                    <th width="180">订单时间</th>
-                    <th width="180">校验时间</th>
-                    <th width="180">验收数量</th>
-                    <th width="180">质量</th>
-                    <th width="180">服务</th>
-                    <th width="180">创建日期</th>
+                    <th width="240">项目名称</th>
+                    <th width="120">订单编号</th>
+                    <th width="100">批次号</th>
+                    <th width="80">订单时间</th>
+                    <th width="80">校验时间</th>
+                    <th width="80">验收数量(吨)</th>
+                    <th width="40">质量</th>
+                    <th width="40">服务</th>
+                    <th width="120">创建日期</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,13 +63,23 @@
                                 <a title="修改" href="javascript:;" onclick="order_edit('修改','order-add','','320', '${order.id}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                             </shiro:hasPermission>
                         </td>
-                        <td>${order.companyName}</td>
                         <td>${order.projectName}</td>
+                        <td>${order.orderCode}</td>
+                        <td>${order.orderBatchNo}</td>
                         <td><f:formatDate value="${order.orderTime}" pattern="yyyy-MM-dd"/></td>
                         <td><f:formatDate value="${order.deliveryTime}" pattern="yyyy-MM-dd"/></td>
                         <td>${order.receiveNum}</td>
-                        <td>${order.quality}</td>
-                        <td>${order.service}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${order.quality == '0'}">差</c:when>
+                                <c:otherwise>好</c:otherwise>
+                            </c:choose>
+                        <td>
+                            <c:choose>
+                                <c:when test="${order.service == '0'}">差</c:when>
+                                <c:otherwise>好</c:otherwise>
+                            </c:choose>
+                        </td>
                         <td><f:formatDate value="${order.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                     </tr>
                 </c:forEach>
@@ -135,10 +145,16 @@
                     var optionText = body.find(optionId).text();
                     body.find("#select2-projectId-container").text(optionText);
                     body.find("#orderTime").val(obj.orderTime);
+                    body.find("#orderBatchNo").val(obj.orderBatchNo);
                     body.find("#orderExceptionDesc").val(obj.orderExceptionDesc);
                     body.find("#deliveryTime").val(obj.deliveryTime);
                     body.find("#deliveryExceptionDesc").val(obj.deliveryExceptionDesc);
                     body.find("#receiveNum").val(obj.receiveNum);
+                    body.find("#qualityRemark").val(obj.qualityRemark);
+                    body.find("#serviceRemark").val(obj.serviceRemark);
+                    body.find("#quality").val(obj.quality).trigger('change');
+                    body.find("#service").val(obj.service).trigger('change');
+                    body.find("#deliveryStatus").val(obj.deliveryStatus).trigger('change');
                 });
             }
         });

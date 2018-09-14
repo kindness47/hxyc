@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/layui.css"  media="all">
 	<link rel="stylesheet" type="text/css"  href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" />
@@ -28,6 +28,9 @@
 		.layui-table-page {
 			position:fixed;
 			width: 380px;
+		}
+		.modal-dialog{
+			width: 850px;
 		}
 	</style>
 </head>
@@ -70,11 +73,11 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算单据送达时间：</label>
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>供方结算单据送达时间：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="text" onfocus="WdatePicker({ maxDate:'#F{\'%y-%M-%d\'}' })" readonly value="<fmt:formatDate value="${settlementVO.settlementDeliveryTime}" pattern="yyyy-MM-dd" ></fmt:formatDate>" id="settlementDeliveryTime" name="settlementDeliveryTime" class="input-text Wdate">
 			</div>
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算单据送达状态：</label>
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>供方结算单据送达状态：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<select id="settlementDeliveryStatus" name="settlementDeliveryStatus">
 					<option value="1" <c:if test="${1==settlementVO.settlementDeliveryStatus}">selected</c:if>>正常</option>
@@ -84,11 +87,11 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>发票送达时间：</label>
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>供方发票送达时间：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="text" onfocus="WdatePicker({ maxDate:'#F{\'%y-%M-%d\'}' })" readonly value="<fmt:formatDate value="${settlementVO.billDeliveryTime}" pattern="yyyy-MM-dd" ></fmt:formatDate>" id="billDeliveryTime" name="billDeliveryTime" class="input-text Wdate">
 			</div>
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>发票送达状态：</label>
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>供方发票送达状态：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<select id="billDeliveryStatus" name="billDeliveryStatus">
 					<option value="1" <c:if test="${1==settlementVO.billDeliveryStatus}">selected</c:if>>正常</option>
@@ -111,20 +114,20 @@
 				<input type="text" class="input-text" value="${settlementVO.buyerSettlementRemark}" placeholder="情况说明" id="buyerSettlementRemark" name="buyerSettlementRemark">
 			</div>
 		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>发票开立时间：</label>
-			<div class="formControls col-xs-4 col-sm-4">
-				<input type="text" onfocus="WdatePicker({ maxDate:'#F{\'%y-%M-%d\'}' })" readonly value="<fmt:formatDate value="${settlementVO.billOpenTime}" pattern="yyyy-MM-dd" ></fmt:formatDate>" id="billOpenTime" name="billOpenTime" class="input-text Wdate">
-			</div>
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>发票开立状态：</label>
-			<div class="formControls col-xs-4 col-sm-4">
-				<select id="billOpenStatus" name="billOpenStatus">
-					<option value="1" <c:if test="${1==settlementVO.billOpenStatus}">selected</c:if>>正常</option>
-					<option value="2" <c:if test="${2==settlementVO.billOpenStatus}">selected</c:if>>异常</option>
-				</select>
-				<input type="text" class="input-text" value="${settlementVO.billOpenRemark}" placeholder="情况说明" id="billOpenRemark" name="billOpenRemark">
-			</div>
-		</div>
+		<%--<div class="row cl">--%>
+			<%--<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>发票开立时间：</label>--%>
+			<%--<div class="formControls col-xs-4 col-sm-4">--%>
+				<%--<input type="text" onfocus="WdatePicker({ maxDate:'#F{\'%y-%M-%d\'}' })" readonly value="<fmt:formatDate value="${settlementVO.billOpenTime}" pattern="yyyy-MM-dd" ></fmt:formatDate>" id="billOpenTime" name="billOpenTime" class="input-text Wdate">--%>
+			<%--</div>--%>
+			<%--<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>发票开立状态：</label>--%>
+			<%--<div class="formControls col-xs-4 col-sm-4">--%>
+				<%--<select id="billOpenStatus" name="billOpenStatus">--%>
+					<%--<option value="1" <c:if test="${1==settlementVO.billOpenStatus}">selected</c:if>>正常</option>--%>
+					<%--<option value="2" <c:if test="${2==settlementVO.billOpenStatus}">selected</c:if>>异常</option>--%>
+				<%--</select>--%>
+				<%--<input type="text" class="input-text" value="${settlementVO.billOpenRemark}" placeholder="情况说明" id="billOpenRemark" name="billOpenRemark">--%>
+			<%--</div>--%>
+		<%--</div>--%>
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算方式：</label>
 			<div class="formControls col-xs-4 col-sm-4">
@@ -169,7 +172,7 @@
 							<div class="demoTable">
 								搜索项目：
 								<div class="layui-inline">
-									<input class="layui-input" name="id" id="projectReload" autocomplete="off">
+									<input class="layui-input" name="id" placeholder="输入项目名称" id="projectReload" autocomplete="off">
 								</div>
 								<button class="layui-btn" data-type="reload">搜索</button>
 							</div>
@@ -202,7 +205,7 @@
 				<div class="demoTable">
 					搜索订单：
 					<div class="layui-inline">
-						<input class="layui-input" name="orderId" id="orderCodeReload" autocomplete="off">
+						<input class="layui-input" name="orderId" placeholder="输入订单号" id="orderCodeReload" autocomplete="off">
 					</div>
 					<button class="layui-btn" data-type="reload">搜索</button>
 				</div>
@@ -255,16 +258,21 @@ $(function(){
             type: 'post',
             dataType:'json',
             data: $("#form-settlement-add").serializeArray(),
+            beforeSend: function () {
+                $("#loading").modal('show');
+            },
             success: function(msg) {
                 parent.layer.msg(msg.message, {icon: 6, time: 1000}, function () {
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.location.reload();
                     parent.layer.close(index);
                 });
+                $("#loading").modal('show');
             },
             error:function (msg) {
                 //alert('失败，'+msg.message);
                 parent.layer.msg(msg.message, {icon: 5, time: 1000});
+                $("#loading").modal('show');
             }
         });
     });
@@ -329,25 +337,31 @@ $(function(){
         });
         var t = $("#projectDeptTree");
         t = $.fn.zTree.init(t, setting, zNodes);
-        t.expandAll(true);
+        //t.expandAll(true);
         var treeObj = $.fn.zTree.getZTreeObj("projectDeptTree");
+        var nodeList = treeObj.getNodes();
+        treeObj.expandNode(nodeList[0], true);
         //返回一个根节点
-        var node = treeObj.getNodesByFilter(function (node) { return node.level == 0 }, true);
-        initProjectTable2(node.id);
+        //var node = treeObj.getNodesByFilter(function (node) { return node.level == 0 }, true);
+        initProjectTable2('');
     }
 
 
 
 function initProjectTable2(compnayId) {
+    var requrl = '${hxycStatic}/project-list-by-param'
+    if ('' != compnayId){
+        requrl = '${hxycStatic}/project-list-by-param?companyId='+compnayId
+    }
     layui.use('table', function(){
         var laytable = layui.table;
 
         //渲染
         laytable.render({
             elem: '#projectPopTable'
-            ,width: 400
+            ,width: 500
             ,height: 350
-            ,url: '${hxycStatic}/project-list-by-param?companyId='+compnayId
+            ,url: requrl
             //,size: 'sm'
             ,page: true
             ,limit: 10
@@ -413,7 +427,7 @@ $("#orderNoSelect").click(function () {
         //渲染
         laytable.render({
             elem: '#orderPopTable'
-            ,width: 400
+            ,width: 650
             ,height: 350
             ,url: '${hxycStatic}/order-list-by-projId?projectId='+projectId
             //,size: 'sm'
@@ -423,7 +437,8 @@ $("#orderNoSelect").click(function () {
                 //{type: 'checkbox', fixed: 'left'},
                 {fixed: 'center', title:'选择', toolbar: '#barRadio1', width:60},
                 {field:'projectName', title:'项目名称', width:100},
-                {field:'orderCode', title:'订单号', width:200, sort: true}
+                {field:'orderCode', title:'订单号', width:350, sort: true},
+				{field:'orderBatchNo', title:'批次号', width:180}
             ]]
         });
 

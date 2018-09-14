@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="hxyc-web:war">
+    <output-path>$PROJECT_DIR$/hxyc-web/target</output-path>
+    <root id="archive" name="hxyc.war">
+      <element id="artifact" artifact-name="hxyc-web:war exploded" />
+    </root>
+  </artifact>
+</component>

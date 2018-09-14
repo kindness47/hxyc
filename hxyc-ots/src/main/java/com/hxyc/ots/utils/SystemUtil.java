@@ -33,4 +33,9 @@ public class SystemUtil {
         Users user = getSessionUser();
         return  user.getUserName();
     }
+
+    public static String getLoginUserAccount() {
+        Users user = getSessionUser();
+        return  user.getAccount();
+    }
 }

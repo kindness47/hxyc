@@ -37,7 +37,7 @@ public class Project extends BaseModel {
     private String contractAmount;
 
     /**结算模式*/
-    private String settlementModel;
+    private String settlementMode;
 
     /**基价浮动值*/
     private String baseFloatValue;
@@ -124,12 +124,12 @@ public class Project extends BaseModel {
         this.contractAmount = contractAmount == null ? null : contractAmount.trim();
     }
 
-    public String getSettlementModel() {
-        return settlementModel;
+    public String getSettlementMode() {
+        return settlementMode;
     }
 
-    public void setSettlementModel(String settlementModel) {
-        this.settlementModel = settlementModel == null ? null : settlementModel.trim();
+    public void setSettlementMode(String settlementMode) {
+        this.settlementMode = settlementMode;
     }
 
     public String getBaseFloatValue() {

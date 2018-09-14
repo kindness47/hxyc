@@ -4,6 +4,9 @@
   <resultMap id="BaseResultMap" type="com.hxyc.ots.model.Payment" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="settlement_id" property="settlementId" jdbcType="VARCHAR" />
+    <result column="bill_open_time" property="billOpenTime" jdbcType="DATE" />
+    <result column="bill_open_status" property="billOpenStatus" jdbcType="INTEGER" />
+    <result column="bill_open_remark" property="billOpenRemark" jdbcType="VARCHAR" />
     <result column="payment_code" property="paymentCode" jdbcType="VARCHAR" />
     <result column="approval_time" property="approvalTime" jdbcType="DATE" />
     <result column="approval_status" property="approvalStatus" jdbcType="INTEGER" />
@@ -12,6 +15,7 @@
     <result column="payment_status" property="paymentStatus" jdbcType="INTEGER" />
     <result column="payment_remark" property="paymentRemark" jdbcType="VARCHAR" />
     <result column="payment_amount" property="paymentAmount" jdbcType="DOUBLE" />
+    <result column="payment_source_id" property="paymentSourceId" jdbcType="VARCHAR" />
     <result column="credit_surplus_amount" property="creditSurplusAmount" jdbcType="DOUBLE" />
     <result column="remarks" property="remarks" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -25,17 +29,19 @@
     <result column="company_short_name" property="companyName" jdbcType="VARCHAR" />
     <result column="project_name" property="projectName" jdbcType="VARCHAR" />
     <result column="settlement_code" property="settlementCode" jdbcType="VARCHAR" />
+    <result column="settlement_mode" property="settlementMode" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, settlement_id, payment_code, approval_time, approval_status, approval_remark, payment_time, payment_status, payment_remark,
-    payment_amount, credit_surplus_amount, remarks, status, create_by, create_time, update_by, 
+    id, settlement_id, bill_open_time, bill_open_status, bill_open_remark,payment_code, approval_time, approval_status, approval_remark, payment_time, payment_status, payment_remark,
+    payment_amount, payment_source_id, credit_surplus_amount, remarks, status, create_by, create_time, update_by,
     update_time
   </sql>
 
   <select id="selectById" resultMap="extendResultMap" parameterType="java.lang.String" >
     select 
-     pay.*,company_short_name,project_name,settlement_code
+     pay.*,company_short_name,project_name,settlement_code,se.settlement_mode,se.project_id
     from t_payment pay left join t_settlement se on pay.settlement_id = se.id left join t_company comp on se.company_id = comp.id
     left join t_project proj on se.project_id = proj.id
     where pay.id = #{id,jdbcType=VARCHAR}
@@ -49,6 +55,15 @@
     <where>
       <if test="settlementId != null" >
         and settlement_id = #{settlementId,jdbcType=VARCHAR}
+      </if>
+      <if test="billOpenTime != null" >
+        and bill_open_time = #{billOpenTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="billOpenStatus != null" >
+        and bill_open_status = #{billOpenStatus,jdbcType=INTEGER}
+      </if>
+      <if test="projectName != null" >
+        and project_name like concat('%',concat(#{projectName,jdbcType=VARCHAR},'%'))
       </if>
       <if test="paymentCode != null" >
         and payment_code = #{paymentCode,jdbcType=VARCHAR}
@@ -74,6 +89,9 @@
       <if test="status != null" >
         and status = #{status,jdbcType=INTEGER}
       </if>
+      <if test="createBy != null" >
+        and pay.create_by = #{createBy,jdbcType=VARCHAR}
+      </if>
     </where>
   </select>
 
@@ -83,15 +101,16 @@
   </delete>
 
   <insert id="insert" parameterType="com.hxyc.ots.model.Payment" >
-    insert into t_payment (id, settlement_id, payment_code, 
+    insert into t_payment (id, settlement_id, bill_open_time, bill_open_status, bill_open_remark, payment_code,
       approval_time, approval_status, approval_remark, payment_time,
-      payment_status, payment_remark, payment_amount, credit_surplus_amount,
+      payment_status, payment_remark, payment_amount, payment_source_id, credit_surplus_amount,
       remarks, status, create_by, 
       create_time, update_by, update_time
       )
-    values (#{id,jdbcType=VARCHAR}, #{settlementId,jdbcType=VARCHAR}, #{paymentCode,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{settlementId,jdbcType=VARCHAR}, #{billOpenTime,jdbcType=TIMESTAMP}, #{billOpenStatus,jdbcType=INTEGER}, #{billOpenRemark,jdbcType=VARCHAR},
+      #{paymentCode,jdbcType=VARCHAR},
       #{approvalTime,jdbcType=DATE}, #{approvalStatus,jdbcType=INTEGER}, #{approvalRemark,jdbcType=VARCHAR}, #{paymentTime,jdbcType=DATE},
-      #{paymentStatus,jdbcType=INTEGER}, #{paymentRemark,jdbcType=VARCHAR}, #{paymentAmount,jdbcType=DOUBLE}, #{creditSurplusAmount,jdbcType=DOUBLE},
+      #{paymentStatus,jdbcType=INTEGER}, #{paymentRemark,jdbcType=VARCHAR}, #{paymentAmount,jdbcType=DOUBLE},#{paymentSourceId,jdbcType=VARCHAR}, #{creditSurplusAmount,jdbcType=DOUBLE},
       #{remarks,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
       )
@@ -105,6 +124,15 @@
       </if>
       <if test="paymentCode != null" >
         payment_code = #{paymentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="billOpenTime != null" >
+        bill_open_time = #{billOpenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billOpenStatus != null" >
+        bill_open_status = #{billOpenStatus,jdbcType=INTEGER},
+      </if>
+      <if test="billOpenRemark != null" >
+        bill_open_remark = #{billOpenRemark,jdbcType=VARCHAR},
       </if>
       <if test="approvalTime != null" >
         approval_time = #{approvalTime,jdbcType=DATE},
@@ -135,6 +163,9 @@
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="paymentSourceId != null ">
+        payment_source_id = #{paymentSourceId,jdbcType=VARCHAR},
       </if>
       <if test="updateBy != null" >
         update_by = #{updateBy,jdbcType=VARCHAR},

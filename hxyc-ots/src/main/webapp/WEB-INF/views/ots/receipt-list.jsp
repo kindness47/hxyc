@@ -15,14 +15,14 @@
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <![endif]-->
 <title>收款管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单跟踪 <span class="c-gray en">&gt;</span> 收款管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div><a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></div>
 <div class="page-container">
     <form id="searchForm" name="searchForm" method="get" action="receipt-list">
         <input type="hidden" id="companyId" name="companyId" value="">
@@ -40,6 +40,7 @@
             <thead>
                 <tr class="text-c">
                     <th width="100">操作</th>
+                    <th width="180">项目名称</th>
                     <th width="180">公司名称</th>
                     <th width="180">收款金额</th>
                     <th width="180">收款时期</th>
@@ -54,6 +55,7 @@
                                 <a title="修改收款信息" href="javascript:;" onclick="receipt_edit('修改收款信息','receipt-add','500','250','${receipt.id}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                             </shiro:hasPermission>
                         </td>
+                        <td>${receipt.projectName}</td>
                         <td>${receipt.companyName}</td>
                         <td>${receipt.receiptAmount}</td>
                         <td><f:formatDate value="${receipt.receiptTime}" pattern="yyyy-MM-dd"/></td>

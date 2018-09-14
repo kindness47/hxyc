@@ -2,10 +2,14 @@ package com.hxyc.ots.controller;
 
 import com.hxyc.ots.base.Response;
 import com.hxyc.ots.model.Payment;
+import com.hxyc.ots.service.CreditService;
 import com.hxyc.ots.service.PaymentService;
+import com.hxyc.ots.service.ReceiptService;
 import com.hxyc.ots.service.SettlementService;
 import com.hxyc.ots.utils.SystemUtil;
+import com.hxyc.ots.vo.CreditVO;
 import com.hxyc.ots.vo.PaymentVO;
+import com.hxyc.ots.vo.ReceiptVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +37,12 @@ public class PaymentController extends BaseController {
     @Autowired
     private SettlementService settlementService;
 
+    @Autowired
+    private CreditService creditService;
+
+    @Autowired
+    private ReceiptService receiptService;
+
     /**
      * 功能描述:支付信息列表
      * @Auther: 于金谷
@@ -39,6 +50,10 @@ public class PaymentController extends BaseController {
      */
     @RequestMapping(value = "/payment-list", method = RequestMethod.GET)
     public ModelAndView listPayment(PaymentVO paymentVO){
+        paymentVO.setCreateBy(SystemUtil.getLoginUserName());
+        if (SystemUtil.getSessionUser().getRoleName().indexOf("管理")!=-1){
+            paymentVO.setCreateBy(null);
+        }
         ModelAndView mav = new ModelAndView("ots/payment-list");
         List<PaymentVO> paymentList = paymentService.listPayment(paymentVO);
         mav.addObject("paymentList", paymentList);
@@ -67,6 +82,17 @@ public class PaymentController extends BaseController {
     public ModelAndView editPayment(String id){
         PaymentVO paymentVO = paymentService.getPayment(id);
         ModelAndView mav = new ModelAndView("ots/payment-add");
+        if (null != paymentVO.getSettlementMode() && 1 == paymentVO.getSettlementMode()){
+            CreditVO creditVO = new CreditVO();
+            creditVO.setProjectId(paymentVO.getProjectId());
+            List<CreditVO> creditVOList = creditService.listCredit(creditVO);
+            mav.addObject("creditVOList", creditVOList);
+        }else {
+            ReceiptVO receiptVO = new ReceiptVO();
+            receiptVO.setProjectId(paymentVO.getProjectId());
+            List<ReceiptVO> receiptVOList = receiptService.listReceipt(receiptVO);
+            mav.addObject("receiptVOList", receiptVOList);
+        }
         mav.addObject("paymentVO", paymentVO);
         return mav;
     }

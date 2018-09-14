@@ -39,6 +39,10 @@ public class SettlementVO extends Settlement {
      */
     private Integer pageEnd;
 
+
+    /**排序描述 desc  asc */
+    private String sortDesc;
+
     public String getCompanyName() {
         return companyName;
     }
@@ -85,6 +89,14 @@ public class SettlementVO extends Settlement {
 
     public void setPageEnd(Integer pageEnd) {
         this.pageEnd = pageEnd;
+    }
+
+    public String getSortDesc() {
+        return sortDesc;
+    }
+
+    public void setSortDesc(String sortDesc) {
+        this.sortDesc = sortDesc;
     }
 
     @Override

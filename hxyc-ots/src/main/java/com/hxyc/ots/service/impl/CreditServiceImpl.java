@@ -69,4 +69,17 @@ public class CreditServiceImpl implements CreditService {
     public void updateCredit(Credit credit) {
         creditMapper.updateByPrimaryKeySelective(credit);
     }
+
+    /**
+     * 修改信用证余额
+     * @param credit
+     * @Auther: bin.wu
+     * @Date create in 2018/8/21
+     */
+    public synchronized void updateCreditBalance(Credit credit){
+        if (0 > credit.getRestAmount()){
+            throw new RuntimeException("账户余额不能小于0");
+        }
+        creditMapper.updateByPrimaryKeySelective(credit);
+    }
 }

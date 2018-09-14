@@ -4,6 +4,9 @@ var TableDatatablesScroller = function () {
         var table = $('#companyTable');
 
         var oTable = table.dataTable({
+            "searching": false, // 隐藏收缩框
+            "bLengthChange": false,  //去掉每页显示多少条数据方法
+
             //"sScrollY": 230,
             "scroller": false,
            // "sScrollX": 640,

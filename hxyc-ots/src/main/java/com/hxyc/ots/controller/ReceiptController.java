@@ -44,6 +44,13 @@ public class ReceiptController extends BaseController {
         return mav;
     }
 
+    @RequestMapping(value = "/receipt-select", method = RequestMethod.GET)
+    @ResponseBody
+    public Response listReceiptSelect(ReceiptVO receiptVO){
+        List<ReceiptVO> receiptList = receiptService.listReceipt(receiptVO);
+        return returnSuccess(receiptList);
+    }
+
     /**
      * 功能描述:新增收款
      * @Auther: 于金谷
@@ -70,6 +77,7 @@ public class ReceiptController extends BaseController {
             receipt.setCreateBy(SystemUtil.getLoginUserName());
             receipt.setCreateTime(new Date());
             receipt.setStatus(1);
+            receipt.setReceiptBalance(receipt.getReceiptAmount());
             receiptService.saveReceipt(receipt);
             return returnSuccess("新增成功！");
         } else {

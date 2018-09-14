@@ -38,4 +38,11 @@ public interface CreditService {
      * @Date create in 2018/7/24 15:00
      */
     void updateCredit(Credit credit);
+
+    /**
+     * 修改信用证余额
+     * @Auther: bin.wu
+     * @Date create in 2018/8/21
+     */
+    void updateCreditBalance(Credit credit);
 }

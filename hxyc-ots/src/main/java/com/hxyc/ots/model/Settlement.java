@@ -63,16 +63,6 @@ public class Settlement extends BaseModel {
     /**需方结算备注*/
     private String buyerSettlementRemark;
 
-    /**发票开立时间*/
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date billOpenTime;
-
-    /**发票开立状态*/
-    private Integer billOpenStatus;
-
-    /**发票开立备注*/
-    private String billOpenRemark;
-
     /**结算方式 1信用证 2代购 3信用证-例外*/
     private Integer settlementMode;
 
@@ -159,22 +149,6 @@ public class Settlement extends BaseModel {
         this.buyerSettlementStatus = buyerSettlementStatus;
     }
 
-    public Date getBillOpenTime() {
-        return billOpenTime;
-    }
-
-    public void setBillOpenTime(Date billOpenTime) {
-        this.billOpenTime = billOpenTime;
-    }
-
-    public Integer getBillOpenStatus() {
-        return billOpenStatus;
-    }
-
-    public void setBillOpenStatus(Integer billOpenStatus) {
-        this.billOpenStatus = billOpenStatus;
-    }
-
     public Integer getSettlementMode() {
         return settlementMode;
     }
@@ -221,14 +195,6 @@ public class Settlement extends BaseModel {
 
     public void setBuyerSettlementRemark(String buyerSettlementRemark) {
         this.buyerSettlementRemark = buyerSettlementRemark;
-    }
-
-    public String getBillOpenRemark() {
-        return billOpenRemark;
-    }
-
-    public void setBillOpenRemark(String billOpenRemark) {
-        this.billOpenRemark = billOpenRemark;
     }
 
     public String getCompanyId() {

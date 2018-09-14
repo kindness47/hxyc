@@ -18,6 +18,12 @@ public class ReceiptVO extends Receipt {
     /**开证公司名称*/
     private String companyName;
 
+    /**项目名称*/
+    private String projectName;
+
+    /**排序描述 desc  asc */
+    private String sortDesc;
+
     public String getStartDate() {
         return startDate;
     }
@@ -40,5 +46,21 @@ public class ReceiptVO extends Receipt {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getSortDesc() {
+        return sortDesc;
+    }
+
+    public void setSortDesc(String sortDesc) {
+        this.sortDesc = sortDesc;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }

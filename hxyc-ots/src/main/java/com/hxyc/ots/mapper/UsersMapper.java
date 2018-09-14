@@ -1,12 +1,8 @@
 package com.hxyc.ots.mapper;
 
 import com.hxjc.core.utils.DataSource;
-import com.hxyc.ots.model.Permission;
 import com.hxyc.ots.model.Users;
 import com.hxyc.ots.vo.UserVO;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
-
-import java.util.List;
 
 import java.util.List;
 

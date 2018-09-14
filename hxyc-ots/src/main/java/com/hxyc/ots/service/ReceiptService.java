@@ -39,4 +39,11 @@ public interface ReceiptService {
      * @Date create in 2018/7/24 16:02
      */
     void updateReceipt(Receipt receipt);
+
+    /**
+     * 修改收款余额
+     * @Auther: bin.wu
+     * @Date create in 2018/8/21
+     */
+    void updateReceiptBanlance(Receipt receipt);
 }

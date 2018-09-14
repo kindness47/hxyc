@@ -14,6 +14,16 @@ public class Payment extends BaseModel {
     /**结算ID*/
     private String settlementId;
 
+    /**需方发票开立时间*/
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date billOpenTime;
+
+    /**需方发票开立状态*/
+    private Integer billOpenStatus;
+
+    /**需方发票开立备注*/
+    private String billOpenRemark;
+
     /**支付编码*/
     private String paymentCode;
 
@@ -45,6 +55,9 @@ public class Payment extends BaseModel {
 
     /**其它备注*/
     private String remarks;
+
+    /**支付源ID 为对应结算模式下的信用证或收款ID*/
+    private String paymentSourceId;
 
 
     public String getSettlementId() {
@@ -133,5 +146,37 @@ public class Payment extends BaseModel {
 
     public void setPaymentRemark(String paymentRemark) {
         this.paymentRemark = paymentRemark;
+    }
+
+    public Date getBillOpenTime() {
+        return billOpenTime;
+    }
+
+    public void setBillOpenTime(Date billOpenTime) {
+        this.billOpenTime = billOpenTime;
+    }
+
+    public Integer getBillOpenStatus() {
+        return billOpenStatus;
+    }
+
+    public void setBillOpenStatus(Integer billOpenStatus) {
+        this.billOpenStatus = billOpenStatus;
+    }
+
+    public String getBillOpenRemark() {
+        return billOpenRemark;
+    }
+
+    public void setBillOpenRemark(String billOpenRemark) {
+        this.billOpenRemark = billOpenRemark;
+    }
+
+    public String getPaymentSourceId() {
+        return paymentSourceId;
+    }
+
+    public void setPaymentSourceId(String paymentSourceId) {
+        this.paymentSourceId = paymentSourceId;
     }
 }

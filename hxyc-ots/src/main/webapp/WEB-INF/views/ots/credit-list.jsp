@@ -15,14 +15,14 @@
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <![endif]-->
 <title>信用证管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 基础信息 <span class="c-gray en">&gt;</span> 信用证管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div><a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></div>
 <div class="page-container">
     <form id="searchForm"  name="searchForm" action="credit-list" method="get">
         <input type="hidden" id="companyId" name="companyId" value="">
@@ -39,11 +39,12 @@
         <table id="creditTable" class="table table-border table-bordered table-hover table-bg table-sort">
             <thead>
                 <tr class="text-c">
-                    <th width="100">操作</th>
-                    <th width="180">开证公司</th>
-                    <th width="180">开证金额</th>
-                    <th width="180">开证时期</th>
-                    <th width="180">创建时间</th>
+                    <th width="80">操作</th>
+                    <th width="120">开证公司/项目</th>
+                    <th width="120">开证类型</th>
+                    <th width="120">开证金额</th>
+                    <th width="100">开证时期</th>
+                    <th width="160">创建时间</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,7 +53,13 @@
                         <td>
                             <a title="修改信用证" href="javascript:;" onclick="credit_edit('修改信用证','credit-add','500','250','${credit.id}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                         </td>
-                        <td>${credit.companyName}</td>
+                        <td><div class="text-deal">${credit.companyName}</div></td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${credit.creditType=='1'}">大证</c:when>
+                                <c:when test="${credit.creditType=='2'}">小证</c:when>
+                            </c:choose>
+                        </td>
                         <td>${credit.openAmount}</td>
                         <td><f:formatDate value="${credit.openTime}" pattern="yyyy-MM-dd"/></td>
                         <td><f:formatDate value="${credit.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -124,7 +131,13 @@
                 $.post(url, function(obj){
                     var body = layer.getChildFrame('body', index);
                     body.find("#id").val(obj.id);
-                    body.find("#companyId").val(obj.companyId);
+                    if(obj.creditType == '1') {
+                        body.find("#openCreditDiv").text("开证公司：");
+                        body.find("#companyId").val(obj.companyId);
+                    } else {
+                        body.find("#openCreditDiv").text("开证项目：");
+                        body.find("#projectId").val(obj.projectId);
+                    }
                     body.find("#companyNameDiv").text(obj.companyName);
                     body.find("#openAmount").val(obj.openAmount);
                     body.find("#openTime").val(obj.openTime);

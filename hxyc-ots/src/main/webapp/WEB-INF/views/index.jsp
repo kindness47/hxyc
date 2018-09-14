@@ -7,8 +7,6 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<link rel="Bookmark" href="/favicon.ico" >
-<link rel="Shortcut Icon" href="/favicon.ico" />
 <!--[if lt IE 9]>
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/html5shiv.js"></script>
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/respond.min.js"></script>
@@ -16,8 +14,8 @@
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css"/>
 <!--[if IE 6]>
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -29,7 +27,7 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="container-fluid cl">
 			<%--<a class="logo navbar-logo f-l mr-10 hidden-xs"><img src="${hxycStatic}/vendors/H-ui/static/h-ui.admin/images/logo.jpg" style="height:30px;"/></a>--%>
-			<a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">订单跟踪系统</a>
+			<a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">订单跟踪系统</a>
 			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 				<ul class="cl">
@@ -87,7 +85,6 @@
 					<shiro:hasPermission name="0206">
 					<li><a data-href="order-aduit" data-title="订单追踪" href="javascript:void(0)">订单追踪</a></li>
 					</shiro:hasPermission>
-
 				</ul>
 			</dd>
 		</dl>
@@ -115,11 +112,14 @@
 			<ul id="min_title_list" class="acrossTab cl">
 				<li class="active">
 					<span title="我的桌面" data-href="welcome.html">我的桌面</span>
-					<em></em></li>
-		</ul>
+					<em></em>
+				</li>
+			</ul>
+		</div>
+		<div class="Hui-tabNav-more btn-group">
+			<a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a>
+		</div>
 	</div>
-		<div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a></div>
-</div>
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display:none" class="loading"></div>
@@ -155,7 +155,7 @@ $(function(){
 function user_mod(title,url,w,h){
     layer_show(title,url,w,h);
 }
-</script> 
+</script>
 
 </body>
 </html>

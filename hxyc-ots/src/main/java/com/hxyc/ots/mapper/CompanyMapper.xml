@@ -35,6 +35,7 @@
     <if test="startDate != null and startDate != '' and  endDate != null and endDate != '' " >
       and a.create_time BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
     </if>
+    order by a.level,a.sort
   </select>
 
   <!-- 获取公司名称或公司简称是否存在 -->

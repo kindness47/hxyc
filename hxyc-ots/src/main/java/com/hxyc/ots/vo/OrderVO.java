@@ -41,7 +41,8 @@ public class OrderVO  extends Order {
     /**结束时间*/
     private String endDate;
 
-
+    /**排序描述 desc  asc */
+    private String sortDesc;
 
     public String getCompanyName() {
         return companyName;
@@ -105,5 +106,13 @@ public class OrderVO  extends Order {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getSortDesc() {
+        return sortDesc;
+    }
+
+    public void setSortDesc(String sortDesc) {
+        this.sortDesc = sortDesc;
     }
 }

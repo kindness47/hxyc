@@ -19,7 +19,15 @@ public class PaymentVO extends Payment {
      */
     private String projectName;
 
+    private String projectId;
+
     private String settlementCode;
+
+    /**结算方式 1信用证 2代购 3信用证-例外*/
+    private Integer settlementMode;
+
+    /**排序描述 desc  asc */
+    private String sortDesc;
 
     public String getCompanyName() {
         return companyName;
@@ -43,5 +51,29 @@ public class PaymentVO extends Payment {
 
     public void setSettlementCode(String settlementCode) {
         this.settlementCode = settlementCode;
+    }
+
+    public Integer getSettlementMode() {
+        return settlementMode;
+    }
+
+    public void setSettlementMode(Integer settlementMode) {
+        this.settlementMode = settlementMode;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getSortDesc() {
+        return sortDesc;
+    }
+
+    public void setSortDesc(String sortDesc) {
+        this.sortDesc = sortDesc;
     }
 }

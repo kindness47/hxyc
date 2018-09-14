@@ -4,7 +4,9 @@
   <resultMap id="BaseResultMap" type="com.hxyc.ots.model.Credit" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
     <result column="credit_code" property="creditCode" jdbcType="VARCHAR" />
+    <result column="credit_type" property="creditType" jdbcType="INTEGER" />
     <result column="open_amount" property="openAmount" jdbcType="DOUBLE" />
     <result column="open_time" property="openTime" jdbcType="TIMESTAMP" />
     <result column="rest_amount" property="restAmount" jdbcType="DOUBLE" />
@@ -19,7 +21,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, company_id, credit_code, open_amount, open_time, rest_amount, status, create_by, 
+    id, company_id,project_id, credit_code, credit_type, open_amount, open_time, rest_amount, status, create_by,
     create_time, update_by, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -37,13 +39,21 @@
     <if test="companyId != null" >
       and a.company_id= #{companyId,jdbcType=VARCHAR}
     </if>
+    <if test="projectId != null" >
+      and a.project_id= #{projectId,jdbcType=VARCHAR}
+    </if>
     <if test="openAmount != null and openAmount != ''" >
       and a.open_amount= #{openAmount,jdbcType=VARCHAR}
     </if>
     <if test="startDate != null and startDate != '' and  endDate != null and endDate != '' " >
       and a.open_time BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
     </if>
-    order by a.create_time desc
+    <if test="sortDesc != null and sortDesc != ''">
+      order by a.create_time ${sortDesc}
+    </if>
+    <if test="sortDesc == null or sortDesc == ''">
+      order by a.create_time desc
+    </if>
   </select>
 
   <!--根据ID获取信用证信息 -->
@@ -62,12 +72,12 @@
     <selectKey keyProperty="id" resultType="string" order="BEFORE">
       select replace(uuid(), '-', '') as id from dual
     </selectKey>
-    insert into t_credit (id, company_id, credit_code, 
+    insert into t_credit (id, company_id, project_id, credit_code, credit_type,
       open_amount, open_time, rest_amount, 
       status, create_by, create_time, 
       update_by, update_time)
-    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR}, 
-      #{openAmount,jdbcType=DOUBLE}, #{openTime,jdbcType=TIMESTAMP}, #{restAmount,jdbcType=DOUBLE}, 
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR},  #{projectId,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR},
+    #{creditType,jdbcType=INTEGER}, #{openAmount,jdbcType=DOUBLE}, #{openTime,jdbcType=TIMESTAMP}, #{restAmount,jdbcType=DOUBLE},
       #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -84,8 +94,14 @@
       <if test="companyId != null" >
         company_id,
       </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
       <if test="creditCode != null" >
         credit_code,
+      </if>
+      <if test="creditType != null" >
+        credit_type,
       </if>
       <if test="openAmount != null" >
         open_amount,
@@ -119,8 +135,14 @@
       <if test="companyId != null" >
         #{companyId,jdbcType=VARCHAR},
       </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=VARCHAR},
+      </if>
       <if test="creditCode != null" >
         #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="creditType != null" >
+        #{creditType,jdbcType=INTEGER},
       </if>
       <if test="openAmount != null" >
         #{openAmount,jdbcType=DOUBLE},
@@ -154,8 +176,14 @@
       <if test="companyId != null" >
         company_id = #{companyId,jdbcType=VARCHAR},
       </if>
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
       <if test="creditCode != null" >
         credit_code = #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="creditType != null" >
+        credit_type = #{creditType,jdbcType=INTEGER},
       </if>
       <if test="openAmount != null" >
         open_amount = #{openAmount,jdbcType=DOUBLE},
@@ -187,7 +215,9 @@
   <update id="updateByPrimaryKey" parameterType="com.hxyc.ots.model.Credit" >
     update t_credit
     set company_id = #{companyId,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=VARCHAR},
       credit_code = #{creditCode,jdbcType=VARCHAR},
+      credit_type = #{creditType,jdbcType=INTEGER},
       open_amount = #{openAmount,jdbcType=DOUBLE},
       open_time = #{openTime,jdbcType=TIMESTAMP},
       rest_amount = #{restAmount,jdbcType=DOUBLE},

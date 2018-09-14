@@ -15,14 +15,14 @@
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <![endif]-->
 <title>公司管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 基础信息 <span class="c-gray en">&gt;</span> 公司管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div><a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></div>
 <div class="page-container">
     <form id="searchForm" name="searchForm" method="get" action="company-list">
     <input type="hidden" id="companyId" name="companyId" value="">
@@ -59,9 +59,6 @@
                         <td>
                             <shiro:hasPermission name="0101-0004">
                                 <a title="新增信用证" href="javascript:;" onclick="credit_add('新增信用证','credit-add','500','250','${companyVO.id}','${companyVO.companyName}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe70d;</i></a>
-                            </shiro:hasPermission>
-                            <shiro:hasPermission name="0101-0003">
-                                <a title="收款" href="javascript:;" onclick="receipt_add('新增收款','receipt-add','500','250','${companyVO.id}','${companyVO.companyName}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe63a;</i></a>
                             </shiro:hasPermission>
                             <shiro:hasPermission name="0101-0002">
                                 <a title="修改" href="javascript:;" onclick="company_edit('修改','company-add','','320', '${companyVO.id}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
@@ -126,36 +123,8 @@
             success:function (layero, index) {
                 var body = layer.getChildFrame('body', index);
                 body.find("#companyId").val(companyId);
-                body.find("#companyNameDiv").text(companyName);
-            }
-        });
-    }
-
-    /*新增收款*/
-    function receipt_add(title,url,w,h,companyId, companyName){
-        if (title == null || title == '') {
-            title=false;
-        };
-        if (url == null || url == '') {
-            url="404.html";
-        };
-        if (w == null || w == '') {
-            w=800;
-        };
-        if (h == null || h == '') {
-            h=($(window).height() - 50);
-        };
-        layer.open({
-            type: 2,
-            area: [w+'px', h +'px'],
-            fix: false, //不固定
-            maxmin: true,
-            shade:0.4,
-            title: title,
-            content: url,
-            success:function (layero, index) {
-                var body = layer.getChildFrame('body', index);
-                body.find("#companyId").val(companyId);
+                body.find("#creditType").val("1");
+                body.find("#openCreditDiv").text("开证公司：");
                 body.find("#companyNameDiv").text(companyName);
             }
         });

@@ -128,3 +128,13 @@ h4{line-height:30px}
 
 /*错误消息提示*/
 form input.error { border: 1px solid red; }
+
+/*于金谷 2018/8/22 新增*/
+.text-deal {
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	word-break: break-all; /* 追加这一行代码 */
+}

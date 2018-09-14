@@ -4,16 +4,18 @@ var TableDatatablesScroller = function () {
         var table = $('#settlementTable');
 
         var oTable = table.dataTable({
+            "searching": false, // 隐藏收缩框
+            "bLengthChange": false,  //去掉每页显示多少条数据方法
             //"sScrollY": 230,
-            "scroller": false,
-           // "sScrollX": 640,
+            "scroller": true,
+            "sScrollX": 1700,
             "bStateSave": true,
 
             // 载入数据时，是否显示‘进度’提示
             "bProcessing": true,
 
             "pageLength": 10,
-            "order": [[18, 'desc']],
+            "order": [[16, 'desc']],
             "aoColumnDefs": [
                 //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
                 {"orderable":false,"aTargets":[0]}// 制定列不参与排序

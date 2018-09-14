@@ -111,6 +111,7 @@ public class UserController extends BaseController {
             user.setCreateBy(sessionUser.getUserName());
             user.setCreateTime(new Date());
             user.setStatus(1);
+            user.setIsUse(1);
             userService.saveUser(user);
 
             return returnSuccess("新增成功！");

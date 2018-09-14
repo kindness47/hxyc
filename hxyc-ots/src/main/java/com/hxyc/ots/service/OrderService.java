@@ -28,6 +28,14 @@ public interface OrderService {
     List<OrderVO> listOrderByProjectId(String projectId);
 
     /**
+     * 根据条件获取订单列表
+     * @param orderVO
+     * @Auther: bin.wu
+     * @return
+     */
+    List<OrderVO> getOrderList(OrderVO orderVO);
+
+    /**
      * 根据条件获取项目总数
      * @param orderVO
      * @Auther: bin.wu

@@ -6,12 +6,15 @@
     <result column="project_id" property="projectId" jdbcType="VARCHAR" />
     <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
     <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="order_batch_no" property="orderBatchNo" jdbcType="VARCHAR" />
     <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
     <result column="delivery_time" property="deliveryTime" jdbcType="TIMESTAMP" />
     <result column="delivery_status" property="deliveryStatus" jdbcType="INTEGER" />
     <result column="receive_num" property="receiveNum" jdbcType="VARCHAR" />
     <result column="quality" property="quality" jdbcType="INTEGER" />
+    <result column="quality_remark" property="qualityRemark" jdbcType="VARCHAR" />
     <result column="service" property="service" jdbcType="INTEGER" />
+    <result column="service_remark" property="serviceRemark" jdbcType="VARCHAR" />
     <result column="settlement_mode" property="settlementMode" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
@@ -28,22 +31,28 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, project_id, order_code, order_time, order_status, delivery_time, delivery_status, 
-    receive_num, quality, service, settlement_mode, status, create_by, create_time, update_by, 
+    id, project_id, order_code, order_time, order_batch_no, order_status, delivery_time, delivery_status,
+    receive_num, quality,quality_remark, service, service_remark, settlement_mode, status, create_by, create_time, update_by,
     update_time,order_exception_desc,delivery_exception_desc
   </sql>
 
   <!--订单信息列表-->
   <select id="listOrder" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.OrderVO" >
     select a.*, b.project_name, c.company_name from t_order a
-    inner join t_project b on b.id=a.project_id and b.status=1
-    inner join t_company c on c.id=b.company_id and c.status=1
+    left join t_project b on b.id=a.project_id and b.status=1
+    left join t_company c on c.id=b.company_id and c.status=1
     where a.status=1
     <if test="receiveNum != null and receiveNum != ''" >
       and a.receive_num = #{receiveNum,jdbcType=VARCHAR}
     </if>
     <if test="startDate != null and startDate != '' and  endDate != null and endDate != '' " >
       and a.order_time BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+    </if>
+    <if test="createBy != null" >
+      and a.create_by = #{createBy,jdbcType=VARCHAR}
+    </if>
+    <if test="projectId != null">
+      and project_id = #{projectId,jdbcType=VARCHAR}
     </if>
   </select>
 
@@ -72,13 +81,18 @@
       <if test="orderCode != null">
         and order_code like concat('%',concat(#{orderCode,jdbcType=VARCHAR},'%'))
       </if>
+      <if test="projectName != null">
+        and project_name like concat('%',concat(#{projectName,jdbcType=VARCHAR},'%'))
+      </if>
       <if test="orderStatus != null">
         and order_status = #{orderStatus,jdbcType=INTEGER}
       </if>
     </where>
-    <if test="pageStart != null and pageStart != 0 and pageEnd != null and pageEnd != 0">
+      order by o.create_time desc
+    <if test="pageStart != null and pageEnd != null and pageEnd != 0">
       limit #{pageStart,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
     </if>
+
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
@@ -91,15 +105,15 @@
       select replace(uuid(), '-', '') as id from dual
     </selectKey>
     insert into t_order (id, project_id, order_code, 
-      order_time, order_status, delivery_time, 
-      delivery_status, receive_num, quality, 
-      service, settlement_mode, status, 
+      order_time, order_batch_no, order_status, delivery_time,
+      delivery_status, receive_num, quality, quality_remark,
+      service, service_remark, settlement_mode, status,
       create_by, create_time, update_by, 
       update_time,order_exception_desc,delivery_exception_desc)
     values (#{id,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR}, 
-      #{orderTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=INTEGER}, #{deliveryTime,jdbcType=TIMESTAMP}, 
-      #{deliveryStatus,jdbcType=INTEGER}, #{receiveNum,jdbcType=VARCHAR}, #{quality,jdbcType=INTEGER}, 
-      #{service,jdbcType=INTEGER}, #{settlementMode,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{orderTime,jdbcType=TIMESTAMP}, #{orderBatchNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER}, #{deliveryTime,jdbcType=TIMESTAMP},
+      #{deliveryStatus,jdbcType=INTEGER}, #{receiveNum,jdbcType=VARCHAR}, #{quality,jdbcType=INTEGER}, #{qualityRemark,jdbcType=VARCHAR},
+      #{service,jdbcType=INTEGER}, #{serviceRemark,jdbcType=VARCHAR}, #{settlementMode,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP},#{orderExceptionDesc,jdbcType=VARCHAR},#{deliveryExceptionDesc,jdbcType=VARCHAR})
   </insert>
@@ -118,6 +132,9 @@
       </if>
       <if test="orderTime != null">
         and order_time = #{orderTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="projectName != null">
+        and project_name like concat('%',concat(#{projectName,jdbcType=VARCHAR},'%'))
       </if>
       <if test="orderStatus != null">
         and order_status = #{orderStatus,jdbcType=INTEGER}
@@ -182,8 +199,14 @@
       <if test="quality != null" >
         quality = #{quality,jdbcType=INTEGER},
       </if>
+      <if test="qualityRemark != null" >
+        quality_remark = #{qualityRemark,jdbcType=VARCHAR},
+      </if>
       <if test="service != null" >
         service = #{service,jdbcType=INTEGER},
+      </if>
+      <if test="serviceRemark != null" >
+        service_remark = #{serviceRemark,jdbcType=VARCHAR},
       </if>
       <if test="settlementMode != null" >
         settlement_mode = #{settlementMode,jdbcType=INTEGER},
@@ -208,6 +231,9 @@
       </if>
       <if test="deliveryExceptionDesc != null" >
         delivery_exception_desc = #{deliveryExceptionDesc,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderBatchNo != null">
+        order_batch_no = #{orderBatchNo,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}

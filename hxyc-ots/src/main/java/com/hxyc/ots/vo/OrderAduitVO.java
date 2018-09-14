@@ -25,6 +25,16 @@ public class OrderAduitVO extends Settlement {
 
     //========支付部分==========
 
+    /**需方发票开立时间*/
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date billOpenTime;
+
+    /**需方发票开立状态*/
+    private Integer billOpenStatus;
+
+    /**需方发票开立备注*/
+    private String billOpenRemark;
+
     /**审批完成时间*/
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date approvalTime;
@@ -46,7 +56,7 @@ public class OrderAduitVO extends Settlement {
     private String paymentRemark;
 
     /**付款金额*/
-    private Double paymentAmount;
+    private Float paymentAmount;
 
     /**信用证余额*/
     private Double creditSurplusAmount;
@@ -74,13 +84,19 @@ public class OrderAduitVO extends Settlement {
     private Integer deliveryStatus;
 
     /**验收数量*/
-    private String receiveNum;
+    private Float receiveNum;
 
     /**质量 1 服务好 0 服务差*/
     private Integer quality;
 
+    /**质量备注*/
+    private String qualityRemark;
+
     /**服务 1 服务好 0 服务差*/
     private Integer service;
+
+    /**服务备注*/
+    private String serviceRemark;
 
     /**订单异常描述*/
     private String orderExceptionDesc;
@@ -97,11 +113,21 @@ public class OrderAduitVO extends Settlement {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date openTime;
 
+    /**收款金额*/
+    private Double receiptAmount;
+
+    /**收款日期*/
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date receiptTime;
+
     /**订单责任人*/
     private String orderCreator;
 
     /**财务责任人*/
     private String financialCerator;
+
+    /**项目责任人*/
+    private String projectCreator;
 
     public String getOrderCreator() {
         return orderCreator;
@@ -183,13 +209,6 @@ public class OrderAduitVO extends Settlement {
         this.paymentRemark = paymentRemark;
     }
 
-    public Double getPaymentAmount() {
-        return paymentAmount;
-    }
-
-    public void setPaymentAmount(Double paymentAmount) {
-        this.paymentAmount = paymentAmount;
-    }
 
     public Double getCreditSurplusAmount() {
         return creditSurplusAmount;
@@ -247,11 +266,19 @@ public class OrderAduitVO extends Settlement {
         this.deliveryStatus = deliveryStatus;
     }
 
-    public String getReceiveNum() {
+    public Float getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public void setPaymentAmount(Float paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+    public Float getReceiveNum() {
         return receiveNum;
     }
 
-    public void setReceiveNum(String receiveNum) {
+    public void setReceiveNum(Float receiveNum) {
         this.receiveNum = receiveNum;
     }
 
@@ -301,5 +328,69 @@ public class OrderAduitVO extends Settlement {
 
     public void setOpenTime(Date openTime) {
         this.openTime = openTime;
+    }
+
+    public Date getBillOpenTime() {
+        return billOpenTime;
+    }
+
+    public void setBillOpenTime(Date billOpenTime) {
+        this.billOpenTime = billOpenTime;
+    }
+
+    public Integer getBillOpenStatus() {
+        return billOpenStatus;
+    }
+
+    public void setBillOpenStatus(Integer billOpenStatus) {
+        this.billOpenStatus = billOpenStatus;
+    }
+
+    public String getBillOpenRemark() {
+        return billOpenRemark;
+    }
+
+    public void setBillOpenRemark(String billOpenRemark) {
+        this.billOpenRemark = billOpenRemark;
+    }
+
+    public Double getReceiptAmount() {
+        return receiptAmount;
+    }
+
+    public void setReceiptAmount(Double receiptAmount) {
+        this.receiptAmount = receiptAmount;
+    }
+
+    public Date getReceiptTime() {
+        return receiptTime;
+    }
+
+    public void setReceiptTime(Date receiptTime) {
+        this.receiptTime = receiptTime;
+    }
+
+    public String getProjectCreator() {
+        return projectCreator;
+    }
+
+    public void setProjectCreator(String projectCreator) {
+        this.projectCreator = projectCreator;
+    }
+
+    public String getQualityRemark() {
+        return qualityRemark;
+    }
+
+    public void setQualityRemark(String qualityRemark) {
+        this.qualityRemark = qualityRemark;
+    }
+
+    public String getServiceRemark() {
+        return serviceRemark;
+    }
+
+    public void setServiceRemark(String serviceRemark) {
+        this.serviceRemark = serviceRemark;
     }
 }

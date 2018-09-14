@@ -4,6 +4,9 @@ var TableDatatablesScroller = function () {
         var table = $('#creditTable');
 
         var oTable = table.dataTable({
+            "searching": false, // 隐藏收缩框
+            "bLengthChange": false,  //去掉每页显示多少条数据方法
+
             //"sScrollY": 230,
             "scroller": false,
            // "sScrollX": 640,
@@ -13,7 +16,7 @@ var TableDatatablesScroller = function () {
             "bProcessing": true,
 
             "pageLength": 10,
-            "order": [[4, 'desc']],
+            "order": [4, 'desc'],
             "aoColumnDefs": [
                 //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
                 {"orderable":false,"aTargets":[0]}// 制定列不参与排序

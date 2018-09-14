@@ -9,6 +9,12 @@ import com.hxyc.ots.model.Project;
  */
 public class ProjectVO extends Project {
 
+    /**开始时间*/
+    private String startDate;
+
+    /**结束时间*/
+    private String endDate;
+
     /** 公司名称*/
     private String companyName;
 
@@ -34,6 +40,9 @@ public class ProjectVO extends Project {
      * 分页结束数
      */
     private Integer pageEnd;
+
+    /**排序描述 desc  asc */
+    private String sortDesc;
 
     public String getCompanyName() {
         return companyName;
@@ -81,5 +90,29 @@ public class ProjectVO extends Project {
 
     public void setPageEnd(Integer pageEnd) {
         this.pageEnd = pageEnd;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getSortDesc() {
+        return sortDesc;
+    }
+
+    public void setSortDesc(String sortDesc) {
+        this.sortDesc = sortDesc;
     }
 }
