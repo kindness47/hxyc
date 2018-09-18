@@ -4,6 +4,7 @@ import com.hxyc.ots.model.Project;
 import com.hxyc.ots.model.Receipt;
 import com.hxyc.ots.service.*;
 import com.hxyc.ots.vo.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -73,103 +74,46 @@ public class OrderAuditController extends BaseController {
         List<OrderAduitVO> daigouOrderAduitVOList = orderAduitVOList.stream()
                 .filter(orderAduitVO -> null != orderAduitVO.getSettlementMode() && 2 == orderAduitVO.getSettlementMode())
                 .collect(Collectors.toList());
-        List<OrderAduitVO> daigouFukuanVOList = new ArrayList<>();
-        daigouFukuanVOList.addAll(daigouOrderAduitVOList);
 
         List<OrderAduitVO> liwaiOrderAduitVOList = orderAduitVOList.stream()
                 .filter(orderAduitVO -> null != orderAduitVO.getSettlementMode() && 3 == orderAduitVO.getSettlementMode())
                 .collect(Collectors.toList());
 
-        List<OrderAduitVO> liwaiFukuanVOList = new ArrayList<>();
-        liwaiFukuanVOList.addAll(liwaiOrderAduitVOList);
-
-
         //将开证信息放入列表list中 开证收款与列表数据无逻辑关系
-        if (! CollectionUtils.isEmpty(creditVOList)){
-            for(int i=0;i<creditVOList.size();i++){
-                if (CollectionUtils.isEmpty(xyzOrderAduitVOList)){
-                    xyzOrderAduitVOList = new ArrayList<>();
-                    for(int m = 0;m < creditVOList.size(); m++){
-                        OrderAduitVO orderAduitVO = new  OrderAduitVO();
-                        orderAduitVO.setOpenAmount(creditVOList.get(m).getOpenAmount());
-                        orderAduitVO.setOpenTime(creditVOList.get(m).getOpenTime());
-                        xyzOrderAduitVOList.add(orderAduitVO);
-                    }
-                    break;
-                }
-                if (i < xyzOrderAduitVOList.size()) {
-                    OrderAduitVO orderAduitVO = xyzOrderAduitVOList.get(i);
-                    CreditVO creditVO = creditVOList.get(i);
-                    orderAduitVO.setOpenTime(creditVO.getOpenTime());
-                    orderAduitVO.setOpenAmount(creditVO.getOpenAmount());
-                }else {
-                    OrderAduitVO orderAduitVO = new  OrderAduitVO();
-                    CreditVO creditVO = creditVOList.get(i);
-                    orderAduitVO.setOpenTime(creditVO.getOpenTime());
-                    orderAduitVO.setOpenAmount(creditVO.getOpenAmount());
-                    xyzOrderAduitVOList.add(orderAduitVO);
-                }
-            }
+        orderAduitService.putCreditInfoIntoOrderAduitVO(creditVOList,xyzOrderAduitVOList);
 
-        }
+        //付款信息查询
+        List<PaymentVO> paymentVOList = null;
+        PaymentVO paymentVO = new PaymentVO();
+        paymentVO.setProjectId(projectId);
+
+
         //代购放入收款信息
-        List<AduitVO> daigouAduitVOList = new ArrayList<>();
-        if (! CollectionUtils.isEmpty(receiptVOList)){
-            for(int n=0;n<receiptVOList.size();n++){
-                if (CollectionUtils.isEmpty(daigouFukuanVOList)){
-                    daigouFukuanVOList = new ArrayList<>();
-                    for(int p = 0;p < receiptVOList.size(); p++){
-                        OrderAduitVO orderAduitVO = new  OrderAduitVO();
-                        orderAduitVO.setReceiptAmount(receiptVOList.get(p).getReceiptAmount());
-                        orderAduitVO.setReceiptTime(receiptVOList.get(p).getReceiptTime());
-                        daigouFukuanVOList.add(orderAduitVO);
-                    }
-                    break;
-                }
-                if (n < daigouFukuanVOList.size()){
-                    OrderAduitVO orderAduitVO = daigouFukuanVOList.get(n);
-                    ReceiptVO receiptVO = receiptVOList.get(n);
-                    orderAduitVO.setReceiptTime(receiptVO.getReceiptTime());
-                    orderAduitVO.setReceiptAmount(receiptVO.getReceiptAmount());
-                }else {
-                    OrderAduitVO orderAduitVO = new  OrderAduitVO();
-                    ReceiptVO receiptVO = receiptVOList.get(n);
-                    orderAduitVO.setReceiptTime(receiptVO.getReceiptTime());
-                    orderAduitVO.setReceiptAmount(receiptVO.getReceiptAmount());
-                    daigouFukuanVOList.add(orderAduitVO);
-                }
-            }
-
+        List<OrderAduitVO> daigouFukuanVOList = new ArrayList<>();
+        paymentVO.setSettlementMode(2);
+        paymentVOList = orderAduitService.getPaymentRecordList(paymentVO);
+        if (! CollectionUtils.isEmpty(paymentVOList)){
+            paymentVOList.forEach(payItem->{
+                OrderAduitVO orderAduitVO = new OrderAduitVO();
+                BeanUtils.copyProperties(payItem,orderAduitVO);
+                daigouFukuanVOList.add(orderAduitVO);
+            });
         }
+        orderAduitService.putReceiptInfoIntoOrderAduitVO(receiptVOList,daigouFukuanVOList);
+
         //例外放入收款信息
-        if (! CollectionUtils.isEmpty(receiptVOList)){
-            for(int n=0;n<receiptVOList.size();n++){
-                if (CollectionUtils.isEmpty(liwaiFukuanVOList)){
-                    liwaiFukuanVOList = new ArrayList<>();
-                    for(int p = 0;p < receiptVOList.size(); p++){
-                        OrderAduitVO orderAduitVO = new  OrderAduitVO();
-                        orderAduitVO.setReceiptAmount(receiptVOList.get(p).getReceiptAmount());
-                        orderAduitVO.setReceiptTime(receiptVOList.get(p).getReceiptTime());
-                        liwaiFukuanVOList.add(orderAduitVO);
-                    }
-                    break;
-                }
-                if (n < liwaiFukuanVOList.size()) {
-                    OrderAduitVO orderAduitVO = liwaiFukuanVOList.get(n);
-                    ReceiptVO receiptVO = receiptVOList.get(n);
-                    orderAduitVO.setReceiptTime(receiptVO.getReceiptTime());
-                    orderAduitVO.setReceiptAmount(receiptVO.getReceiptAmount());
-                }else {
-                    OrderAduitVO orderAduitVO = new  OrderAduitVO();
-                    ReceiptVO receiptVO = receiptVOList.get(n);
-                    orderAduitVO.setReceiptTime(receiptVO.getReceiptTime());
-                    orderAduitVO.setReceiptAmount(receiptVO.getReceiptAmount());
-                    liwaiFukuanVOList.add(orderAduitVO);
-                }
-
-            }
-
+        List<OrderAduitVO> liwaiFukuanVOList = new ArrayList<>();
+        paymentVO.setSettlementMode(3);
+        paymentVOList = orderAduitService.getPaymentRecordList(paymentVO);
+        if (! CollectionUtils.isEmpty(paymentVOList)){
+            paymentVOList.forEach(payItem->{
+                OrderAduitVO orderAduitVO = new OrderAduitVO();
+                BeanUtils.copyProperties(payItem,orderAduitVO);
+                liwaiFukuanVOList.add(orderAduitVO);
+            });
         }
+        orderAduitService.putReceiptInfoIntoOrderAduitVO(receiptVOList,liwaiFukuanVOList);
+
         ModelAndView mav = new ModelAndView("ots/order-aduit-list");
         mav.addObject("project", project);
         if (! CollectionUtils.isEmpty(orderAduitVOList)){

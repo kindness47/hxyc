@@ -49,7 +49,7 @@
 
   <select id="select" resultMap="extendResultMap" parameterType="com.hxyc.ots.vo.PaymentVO" >
     select
-    pay.*,company_short_name,project_name,settlement_code
+    pay.*,company_short_name,project_name,settlement_code,se.project_id,se.settlement_mode
     from t_payment pay left join t_settlement se on pay.settlement_id = se.id left join t_company comp on se.company_id = comp.id
     left join t_project proj on se.project_id = proj.id
     <where>
@@ -67,6 +67,12 @@
       </if>
       <if test="paymentCode != null" >
         and payment_code = #{paymentCode,jdbcType=VARCHAR}
+      </if>
+      <if test="settlementMode != null" >
+        and se.settlement_mode = #{settlementMode,jdbcType=INTEGER}
+      </if>
+      <if test="projectId != null" >
+        and se.project_id = #{projectId,jdbcType=VARCHAR}
       </if>
       <if test="approvalTime != null" >
         and approval_time = #{approvalTime,jdbcType=DATE}

@@ -21,6 +21,9 @@ public class PaymentVO extends Payment {
 
     private String projectId;
 
+    /**
+     * 结算单号
+     */
     private String settlementCode;
 
     /**结算方式 1信用证 2代购 3信用证-例外*/
