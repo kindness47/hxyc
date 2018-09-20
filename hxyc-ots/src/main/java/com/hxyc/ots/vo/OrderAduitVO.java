@@ -56,7 +56,7 @@ public class OrderAduitVO extends Settlement {
     private String paymentRemark;
 
     /**付款金额*/
-    private Float paymentAmount;
+    private Double paymentAmount;
 
     /**信用证余额*/
     private Double creditSurplusAmount;
@@ -266,11 +266,11 @@ public class OrderAduitVO extends Settlement {
         this.deliveryStatus = deliveryStatus;
     }
 
-    public Float getPaymentAmount() {
+    public Double getPaymentAmount() {
         return paymentAmount;
     }
 
-    public void setPaymentAmount(Float paymentAmount) {
+    public void setPaymentAmount(Double paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 

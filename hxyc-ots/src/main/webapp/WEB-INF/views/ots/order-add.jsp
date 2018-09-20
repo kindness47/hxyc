@@ -57,7 +57,7 @@
 			<div class="form-group formControls col-xs-4 col-sm-4">
 				<input type="text"  onclick="WdatePicker()" readonly id="orderTime" name="orderTime" class="input-text Wdate">
 			</div>
-			<label class="form-label col-xs-2 col-sm-2">验收数量：</label>
+			<label class="form-label col-xs-2 col-sm-2">验收数量(T)：</label>
 			<div class="form-group formControls col-xs-4 col-sm-4">
 				<input type="text" class="input-text" value="${order.receiveNum}" placeholder="请输入验证数量" id="receiveNum" name="receiveNum">
 			</div>
