@@ -7,7 +7,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1e2d9ad-cbab-4e36-853d-7947b4a65e25" name="Default" comment="" />
+    <list default="true" id="e1e2d9ad-cbab-4e36-853d-7947b4a65e25" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp" afterPath="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp" />
+    </list>
     <ignored path="$PROJECT_DIR$/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,7 +36,7 @@
         <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/controller/OrderAuditController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="387">
-              <caret line="72" column="0" lean-forward="true" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+              <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -43,17 +46,53 @@
         <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/service/OrderAduitService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="443">
-              <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+              <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order-aduit-list.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="order-aduit-list.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/order-aduit-list.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="461" column="5" lean-forward="true" selection-start-line="461" selection-start-column="5" selection-end-line="461" selection-end-column="5" />
+            <state relative-caret-position="340">
+              <caret line="458" column="28" lean-forward="false" selection-start-line="458" selection-start-column="28" selection-end-line="458" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settlement-list.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="679">
+              <caret line="77" column="28" lean-forward="false" selection-start-line="77" selection-start-column="28" selection-end-line="77" selection-end-column="59" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#3;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="payment-list.jsp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/payment-list.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="713">
+              <caret line="78" column="57" lean-forward="true" selection-start-line="78" selection-start-column="57" selection-end-line="78" selection-end-column="57" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#12;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settlement-add.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-add.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="379">
+              <caret line="151" column="10" lean-forward="true" selection-start-line="151" selection-start-column="10" selection-end-line="151" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -128,9 +167,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/service/impl/SettlementServiceImpl.java" />
-        <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/mapper/SettlementMapper.xml" />
-        <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/vo/SettlementVO.java" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/controller/SettlementController.java" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/service/impl/ProjectServiceImpl.java" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/service/ProjectService.java" />
@@ -139,7 +175,6 @@
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/service/OrderService.java" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/mapper/OrderMapper.java" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/controller/OrderController.java" />
-        <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-add.jsp" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/payment-add.jsp" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/mapper/UsersMapper.java" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/resources/properties/config.properties" />
@@ -179,6 +214,10 @@
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/vo/OrderAduitVO.java" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/order-add.jsp" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/sql/ots.sql" />
+        <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/js/ots/css/ots-table.css" />
+        <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp" />
+        <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-add.jsp" />
+        <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/payment-list.jsp" />
       </list>
     </option>
   </component>
@@ -323,6 +362,198 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hxyc-ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hxyc-ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hxyc-ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hxyc-ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hxyc-ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hxyc-ots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ots" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -875,10 +1106,9 @@
     </configuration>
     <configuration default="false" name="tomcat8" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.13" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8">
       <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
-      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
-      <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="hxyc-ots:war exploded">
+        <artifact name="hxyc-ots:war">
           <settings>
             <option name="CONTEXT_PATH" value="/ots" />
           </settings>
@@ -944,7 +1174,6 @@
       <method>
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="hxyc-ots:war exploded" />
           <artifact name="hxyc-ots:war" />
         </option>
       </method>
@@ -981,7 +1210,7 @@
       <workItem from="1534380957637" duration="1617000" />
       <workItem from="1534465521765" duration="14688000" />
       <workItem from="1536893794457" duration="2642000" />
-      <workItem from="1537234622280" duration="13761000" />
+      <workItem from="1537234622280" duration="18992000" />
     </task>
     <task id="LOCAL-00001" summary="订单跟踪信用证，收款业务逻辑修改">
       <created>1534326022154</created>
@@ -1001,7 +1230,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="248896000" />
+    <option name="totallyTimeSpent" value="254127000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1118,48 +1347,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/credit-add.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="46" column="173" lean-forward="true" selection-start-line="46" selection-start-column="140" selection-end-line="46" selection-end-column="173" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/sysManage/user-permission.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2136">
-          <caret line="128" column="140" lean-forward="false" selection-start-line="128" selection-start-column="140" selection-end-line="128" selection-end-column="140" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/model/BaseModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="66" column="0" lean-forward="true" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/js/ots/order-table.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="15" lean-forward="false" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/vendors/metronic4.5.2/pages/scripts/components-bootstrap-select.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="212" lean-forward="false" selection-start-line="0" selection-start-column="212" selection-end-line="0" selection-end-column="212" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="18" selection-end-column="107" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/mapper/CompanyMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -1375,26 +1562,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/project-list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="98" column="28" lean-forward="true" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/receipt-add.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="25" column="32" lean-forward="true" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-add.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2210">
-          <caret line="130" column="28" lean-forward="true" selection-start-line="130" selection-start-column="28" selection-end-line="130" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -1460,7 +1631,7 @@
     <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/service/OrderAduitService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="443">
-          <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+          <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1505,7 +1676,7 @@
     <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/controller/OrderAuditController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="387">
-          <caret line="72" column="0" lean-forward="true" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+          <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1520,9 +1691,79 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/order-aduit-list.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="461" column="5" lean-forward="true" selection-start-line="461" selection-start-column="5" selection-end-line="461" selection-end-column="5" />
+        <state relative-caret-position="340">
+          <caret line="458" column="28" lean-forward="false" selection-start-line="458" selection-start-column="28" selection-end-line="458" selection-end-column="28" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/project-list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="77" column="59" lean-forward="false" selection-start-line="77" selection-start-column="28" selection-end-line="77" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_112/src.zip!/java/lang/ref/ReferenceQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/js/ots/settlement-table.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="29" lean-forward="true" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/js/ots/css/ots-table.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="17" lean-forward="true" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/js/ots/payment-table.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="29" lean-forward="true" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-add.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="151" column="10" lean-forward="true" selection-start-line="151" selection-start-column="10" selection-end-line="151" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="679">
+          <caret line="77" column="28" lean-forward="false" selection-start-line="77" selection-start-column="28" selection-end-line="77" selection-end-column="59" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#3;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/payment-list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="713">
+          <caret line="78" column="57" lean-forward="true" selection-start-line="78" selection-start-column="57" selection-end-line="78" selection-end-column="57" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#12;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

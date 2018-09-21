@@ -137,7 +137,7 @@
 					<option value="3" <c:if test="${3==settlementVO.settlementMode}">selected</c:if>>信用证-例外</option>
 				</select>
 			</div>
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算金额(万元)：</label>
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算金额(元)：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="text" class="input-text" value="${settlementVO.settlementAmount}" placeholder="" id="settlementAmount" name="settlementAmount">
 			</div>
