@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/ots-table.css" />
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <![endif]-->
 <title>支付管理</title>
@@ -42,8 +43,8 @@
         <table id="paymentTable" class="table table-border table-bordered table-hover table-bg table-sort">
             <thead>
                 <tr class="text-c">
-                    <th width="100">操作</th>
-                    <th width="100">公司名称</th>
+                    <th width="80">操作</th>
+                    <th width="80">公司名称</th>
                     <th width="100">项目名称</th>
                     <th width="100">结算单号</th>
                     <th width="100">需方发票开立时间</th>
@@ -52,11 +53,11 @@
                     <th width="30">异常否</th>
                     <th width="100">付款时间</th>
                     <th width="30">异常否</th>
-                    <th width="30">付款金额(万元)</th>
-                    <th width="30">余额(万元)</th>
-                    <th width="100">其他备注</th>
-                    <th width="80">创建人</th>
-                    <th width="100">创建时间</th>
+                    <th width="80">付款金额(万元)</th>
+                    <th width="80">余额(万元)</th>
+                    <th width="80">其他备注</th>
+                    <th width="120">创建人</th>
+                    <th width="120">创建时间</th>
 
                 </tr>
             </thead>
@@ -66,8 +67,8 @@
                         <td>
                             <a title="编辑" href="javascript:;" onclick="payment_edit('编辑','payment-edit?id=${payment.id}','1000','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                         </td>
-                        <td>${payment.companyName}</td>
-                        <td>${payment.projectName}</td>
+                        <td><span class="long-text-hidden" style="width:60px;">${payment.companyName}</span></td>
+                        <td><span class="long-text-hidden">${payment.projectName}</span></td>
                         <td>${payment.settlementCode}</td>
                         <td><f:formatDate value="${payment.billOpenTime}" pattern="yyyy-MM-dd"/></td>
                         <td><c:if test="${1==payment.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==payment.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${payment.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
@@ -77,7 +78,7 @@
                         <td><c:if test="${1==payment.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==payment.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${payment.paymentRemark}"><span style="color: red">×</span></a></c:if></td>
                         <td>${payment.paymentAmount}</td>
                         <td>${payment.creditSurplusAmount}</td>
-                        <td>${payment.remarks}</td>
+                        <td><span class="long-text-hidden" style="width: 100px">${payment.remarks}</span></td>
                         <td>${payment.createBy}</td>
                         <td><f:formatDate value="${payment.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                     </tr>
