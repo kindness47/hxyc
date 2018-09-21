@@ -9,6 +9,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e1e2d9ad-cbab-4e36-853d-7947b4a65e25" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+<<<<<<< HEAD
+=======
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp" afterPath="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
     </list>
     <ignored path="$PROJECT_DIR$/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,18 +48,67 @@
       <file leaf-file-name="OrderAduitService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/service/OrderAduitService.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="205">
               <caret line="15" column="22" lean-forward="true" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+=======
+            <state relative-caret-position="443">
+              <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="payment-list.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/payment-list.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="288">
               <caret line="71" column="58" lean-forward="true" selection-start-line="71" selection-start-column="58" selection-end-line="71" selection-end-column="58" />
+=======
+      <file leaf-file-name="order-aduit-list.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/order-aduit-list.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="458" column="28" lean-forward="false" selection-start-line="458" selection-start-column="28" selection-end-line="458" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settlement-list.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="679">
+              <caret line="77" column="28" lean-forward="false" selection-start-line="77" selection-start-column="28" selection-end-line="77" selection-end-column="59" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#3;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="payment-list.jsp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/payment-list.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="713">
+              <caret line="78" column="57" lean-forward="true" selection-start-line="78" selection-start-column="57" selection-end-line="78" selection-end-column="57" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#12;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settlement-add.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-add.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="379">
+              <caret line="151" column="10" lean-forward="true" selection-start-line="151" selection-start-column="10" selection-end-line="151" selection-end-column="10" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
               <folding />
             </state>
           </provider>
@@ -179,9 +232,15 @@
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/order-add.jsp" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/sql/ots.sql" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/js/ots/css/ots-table.css" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-add.jsp" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/payment-list.jsp" />
         <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp" />
+=======
+        <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp" />
+        <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-add.jsp" />
+        <option value="$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/payment-list.jsp" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
       </list>
     </option>
   </component>
@@ -468,6 +527,7 @@
               <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+<<<<<<< HEAD
             <PATH_ELEMENT>
               <option name="myItemId" value="ots" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -510,6 +570,8 @@
               <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+=======
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1216,7 +1278,11 @@
       <workItem from="1534380957637" duration="1617000" />
       <workItem from="1534465521765" duration="14688000" />
       <workItem from="1536893794457" duration="2642000" />
+<<<<<<< HEAD
       <workItem from="1537234622280" duration="21013000" />
+=======
+      <workItem from="1537234622280" duration="18992000" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
     </task>
     <task id="LOCAL-00001" summary="订单跟踪信用证，收款业务逻辑修改">
       <created>1534326022154</created>
@@ -1236,7 +1302,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="256148000" />
+=======
+    <option name="totallyTimeSpent" value="254127000" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1634,6 +1704,17 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/service/OrderAduitService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
     <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/model/Payment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
@@ -1731,36 +1812,83 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="458" column="28" lean-forward="false" selection-start-line="458" selection-start-column="28" selection-end-line="458" selection-end-column="28" />
+<<<<<<< HEAD
+=======
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/project-list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="77" column="59" lean-forward="false" selection-start-line="77" selection-start-column="28" selection-end-line="77" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_112/src.zip!/java/lang/ref/ReferenceQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/java/com/hxyc/ots/service/OrderAduitService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="205">
           <caret line="15" column="22" lean-forward="true" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+=======
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/js/ots/settlement-table.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="29" lean-forward="true" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/js/ots/css/ots-table.css">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="68">
           <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+=======
+        <state relative-caret-position="136">
+          <caret line="8" column="17" lean-forward="true" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/payment-list.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="71" column="58" lean-forward="true" selection-start-line="71" selection-start-column="58" selection-end-line="71" selection-end-column="58" />
+=======
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/js/ots/payment-table.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="29" lean-forward="true" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-add.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="151" column="10" lean-forward="true" selection-start-line="151" selection-start-column="10" selection-end-line="151" selection-end-column="10" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/settlement-list.jsp">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="306">
           <caret line="90" column="57" lean-forward="true" selection-start-line="90" selection-start-column="57" selection-end-line="90" selection-end-column="57" />
           <folding>
@@ -1769,6 +1897,24 @@
             <element signature="n#style#0;n#span#0;n#td#3;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#td#16;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+=======
+        <state relative-caret-position="679">
+          <caret line="77" column="28" lean-forward="false" selection-start-line="77" selection-start-column="28" selection-end-line="77" selection-end-column="59" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#3;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hxyc-ots/src/main/webapp/WEB-INF/views/ots/payment-list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="713">
+          <caret line="78" column="57" lean-forward="true" selection-start-line="78" selection-start-column="57" selection-end-line="78" selection-end-column="57" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#12;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+>>>>>>> f305826629a9bca37a929836c73b6ec3694a0b78
           </folding>
         </state>
       </provider>
