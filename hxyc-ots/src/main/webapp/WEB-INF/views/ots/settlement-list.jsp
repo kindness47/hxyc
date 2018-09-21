@@ -60,7 +60,7 @@
                     <%--<th width="100">需方发票开立时间</th>--%>
                     <%--<th width="30">异常否</th>--%>
                     <th width="80">结算方式</th>
-                    <th width="160">结算金额(元)</th>
+                    <th width="140">结算金额(元)</th>
                     <th width="100">创建人</th>
                     <th width="120">创建时间</th>
 
