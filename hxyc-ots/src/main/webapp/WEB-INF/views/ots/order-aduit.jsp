@@ -104,6 +104,10 @@
     };
 
     function findCompanyProject(event, treeId, treeNode, clickFlag) {
+        if (treeNode.level == 0){
+            initProjectTable2('');
+            return;
+        }
         initProjectTable2(treeNode.id);
     }
 

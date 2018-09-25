@@ -153,7 +153,7 @@ CREATE TABLE `t_receipt` (
 DROP TABLE IF EXISTS `t_settlement`;
 
 CREATE TABLE `t_settlement` (
-  `id` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '涓婚敭ID uuid',
+  `id` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '主键ID uuid',
   `order_id` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT '订单号',
   `company_id` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT '公司ID',
   `project_id` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT '项目ID',
@@ -171,7 +171,7 @@ CREATE TABLE `t_settlement` (
   `buyer_settlement_status` int(11) DEFAULT NULL COMMENT '需方结算状态 1-正常 2-异常',
   `buyer_settlement_remark` varchar(1000) COLLATE utf8_bin DEFAULT NULL COMMENT '需方结算备注',
   `settlement_mode` int(11) DEFAULT NULL COMMENT '结算方式 1-信用证 2-代购 3-信用证例外',
-  `settlement_amount` double DEFAULT NULL COMMENT '结算金额（万元）',
+  `settlement_amount` double DEFAULT NULL COMMENT '结算金额（元）',
   `status` int(11) DEFAULT '1' COMMENT '状态',
   `create_by` varchar(30) COLLATE utf8_bin DEFAULT NULL COMMENT '创建人',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
