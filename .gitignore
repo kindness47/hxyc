@@ -7,6 +7,12 @@
 /hxyc-service/target
 /hxyc-web/target
 
+.idea
+*.iws
+*.iml
+*.ipr
+.mvn
+mvnw*
 .classpath
 .project
 .settings      
