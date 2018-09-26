@@ -50,10 +50,10 @@ public class PaymentController extends BaseController {
      */
     @RequestMapping(value = "/payment-list", method = RequestMethod.GET)
     public ModelAndView listPayment(PaymentVO paymentVO){
-        paymentVO.setCreateBy(SystemUtil.getLoginUserName());
-        if (SystemUtil.getSessionUser().getRoleName().indexOf("管理")!=-1){
-            paymentVO.setCreateBy(null);
-        }
+//        paymentVO.setCreateBy(SystemUtil.getLoginUserName());
+//        if (SystemUtil.getSessionUser().getRoleName().indexOf("管理")!=-1){
+//            paymentVO.setCreateBy(null);
+//        }//由于财务涉及多人操作统一数据,暂时取消18-09-26
         ModelAndView mav = new ModelAndView("ots/payment-list");
         List<PaymentVO> paymentList = paymentService.listPayment(paymentVO);
         mav.addObject("paymentList", paymentList);
