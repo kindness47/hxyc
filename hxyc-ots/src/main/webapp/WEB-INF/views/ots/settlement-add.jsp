@@ -364,7 +364,7 @@ function initProjectTable2(compnayId) {
             ,url: requrl
             //,size: 'sm'
             ,page: true
-            ,limit: 10
+            ,limit: 8
             ,cols: [[
                 //{type: 'checkbox', fixed: 'left'},
                 {fixed: 'center', title:'选择', toolbar: '#barRadio', width:50},
@@ -432,7 +432,7 @@ $("#orderNoSelect").click(function () {
             ,url: '${hxycStatic}/order-list-by-projId?projectId='+projectId
             //,size: 'sm'
             ,page: true
-            ,limit: 10
+            ,limit: 8
             ,cols: [[
                 //{type: 'checkbox', fixed: 'left'},
                 {fixed: 'center', title:'选择', toolbar: '#barRadio1', width:60},

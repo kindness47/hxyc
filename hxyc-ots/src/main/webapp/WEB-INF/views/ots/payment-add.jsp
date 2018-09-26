@@ -422,7 +422,7 @@ function initSettlementTable2(compnayId) {
             ,url: requrl
             //,size: 'sm'
             ,page: true
-            ,limit: 10
+            ,limit: 8
             ,cols: [[
                 //{type: 'checkbox', fixed: 'left'},
                 {fixed: 'center', title:'选择', toolbar: '#barRadio', width:50},
