@@ -208,9 +208,6 @@
       <if test="id != null ">
         and id = #{id,jdbcType=VARCHAR}
       </if>
-      <if test="account != null ">
-        and account = #{account,jdbcType=VARCHAR}
-      </if>
     </where>
   </update>
 

@@ -232,6 +232,9 @@ public class UserController extends BaseController {
             userVO.setUpdateBy(SystemUtil.getLoginUserName());
             userVO.setUpdateTime(new Date());
         }
+        if (StringUtils.isBlank(userVO.getId())){
+            return returnValidateError("用户ID能为空！");
+        }
         int result = userService.updateUser(userVO);
         if(result > 0){
             return returnSuccess("修改成功！");

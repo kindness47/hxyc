@@ -428,14 +428,14 @@ $("#orderNoSelect").click(function () {
         laytable.render({
             elem: '#orderPopTable'
             ,width: 650
-            ,height: 350
+            ,height: 360
             ,url: '${hxycStatic}/order-list-by-projId?projectId='+projectId
             //,size: 'sm'
             ,page: true
             ,limit: 8
             ,cols: [[
                 //{type: 'checkbox', fixed: 'left'},
-                {fixed: 'center', title:'选择', toolbar: '#barRadio1', width:60},
+                {fixed: 'center', title:'选择', toolbar: '#barRadio1', width:50},
                 {field:'projectName', title:'项目名称', width:100},
                 {field:'orderCode', title:'订单号', width:350, sort: true},
 				{field:'orderBatchNo', title:'批次号', width:180}
