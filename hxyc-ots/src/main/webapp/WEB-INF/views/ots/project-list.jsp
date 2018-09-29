@@ -50,7 +50,7 @@
                     <th width="80">年份</th>
                     <th width="120">供应单位</th>
                     <th width="100">签订时间</th>
-                    <th width="200">供货时间</th>
+                    <th width="120">供货时间</th>
                     <th width="80">合同数量（T）</th>
                     <th width="80">合同金额（万元）</th>
                     <th width="100">结算模式</th>
@@ -80,7 +80,7 @@
                         <td>${project.year}</td>
                         <td><span class="long-text-hidden">${project.supplyUnit}</span></td>
                         <td>${project.contractSignTime}</td>
-                        <td><span class="long-text-hidden">${project.supplyTime}</span></td>
+                        <td><span class="long-text-hidden" style="width: 80px">${project.supplyTime}</span></td>
                         <td>${project.contractNum}</td>
                         <td>${project.contractAmount}</td>
                         <td>
