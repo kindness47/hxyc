@@ -70,8 +70,8 @@
             height: 315px;
             margin-top: -2px;
         }
-        xyz daigou liwai daigoufukuan liwaifukuan{
-            height: 315px;
+        .scroll-table-content-height{
+            height: 270px;
         }
     </style>
 </head>
@@ -139,7 +139,7 @@
             </thead>
         </table>
         </div>
-        <div class="pre-scrollable scroll-table-body">
+        <div class="pre-scrollable scroll-table-body scroll-table-content-height">
         <table class="table table-border table-bordered table-hover table-bg table-sort">
             <tbody id="daigoufukuan">
             <c:forEach items="${daigouFukuanVOList}" var="receipt"  varStatus="rstatus">
@@ -246,7 +246,7 @@
                 </thead>
             </table>
             </div>
-            <div class="pre-scrollable scroll-table-body">
+            <div class="pre-scrollable scroll-table-body scroll-table-content-height">
                 <table class="table table-border table-bordered table-hover table-bg table-sort">
                 <tbody id="init">
                 <c:forEach items="${orderAduitVOList}" var="orderAduitVO" varStatus="status">
