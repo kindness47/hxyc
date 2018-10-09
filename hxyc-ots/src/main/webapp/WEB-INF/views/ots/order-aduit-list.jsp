@@ -70,6 +70,9 @@
             height: 315px;
             margin-top: -2px;
         }
+        xyz daigou liwai daigoufukuan liwaifukuan{
+            height: 315px;
+        }
     </style>
 </head>
 <body>
