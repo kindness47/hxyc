@@ -67,7 +67,7 @@
         }
         .scroll-table-body{
             width: 1700px;
-            height: 330px;
+            height: 315px;
             margin-top: -2px;
         }
     </style>
@@ -108,12 +108,13 @@
     <div class="clearfix"> </div>
     <!-- 订单及结算信息部分-->
     <div style="margin: 5 5;" id="mynav">
-        <span><a class="myspan bgcolor" onclick="init();">全部</a></span><span><a class="myspan" onclick="xyz();">信用证</a></span>
+        <%--<span><a class="myspan bgcolor" onclick="init();">全部</a></span>--%>
+        <span><a class="myspan" onclick="xyz();">信用证</a></span>
         <span><a class="myspan" onclick="daigou();">代购</a></span><span><a class="myspan" onclick="liwai();">例外</a></span>
     </div>
     <!-- 收款信息部分-->
     <div class="clearfix"> </div>
-    <div class="mt-20" id="fukuaninfo" style="height:330px;">
+    <div class="mt-20" id="fukuaninfo" style="height:315px;">
         <div>
         <span style="font-weight: bold">付款信息：</span>
         <table id="" class="table table-border table-bordered table-hover table-bg scroll-table-head">
@@ -192,7 +193,7 @@
     </div>
 
     <div class="clearfix"> </div>
-        <div class="mt-20" style="height:330px;">
+        <div class="mt-20" style="height:315px;">
             <div>
             <table id="orderAduitTable" class="table table-border table-bordered table-hover table-bg table-sort scroll-table-head">
                 <thead>
@@ -442,7 +443,8 @@
 <script type="text/javascript">
     $(function(){
         $("[data-toggle='tooltip']").tooltip();
-        init();
+//        init();
+        xyz();
         $("#mynav a").on("click",function(){
             $("#mynav a").removeClass("bgcolor");
             $(this).addClass("bgcolor");
