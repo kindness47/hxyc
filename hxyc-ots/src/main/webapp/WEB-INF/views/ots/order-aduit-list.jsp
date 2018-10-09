@@ -112,7 +112,7 @@
     <!-- 订单及结算信息部分-->
     <div style="margin: 5 5;" id="mynav">
         <%--<span><a class="myspan bgcolor" onclick="init();">全部</a></span>--%>
-        <span><a class="myspan" onclick="xyz();">信用证</a></span>
+        <span><a class="myspan bgcolor" onclick="xyz();">信用证</a></span>
         <span><a class="myspan" onclick="daigou();">代购</a></span><span><a class="myspan" onclick="liwai();">例外</a></span>
     </div>
     <!-- 收款信息部分-->
