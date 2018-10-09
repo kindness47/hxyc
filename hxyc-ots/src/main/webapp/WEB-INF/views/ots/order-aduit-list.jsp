@@ -67,7 +67,7 @@
         }
         .scroll-table-body{
             width: 1700px;
-            height: 400px;
+            height: 330px;
             margin-top: -2px;
         }
     </style>
@@ -113,7 +113,7 @@
     </div>
     <!-- 收款信息部分-->
     <div class="clearfix"> </div>
-    <div class="mt-20" id="fukuaninfo">
+    <div class="mt-20" id="fukuaninfo" style="height:330px;">
         <div>
         <span style="font-weight: bold">付款信息：</span>
         <table id="" class="table table-border table-bordered table-hover table-bg scroll-table-head">
@@ -192,7 +192,7 @@
     </div>
 
     <div class="clearfix"> </div>
-        <div class="mt-20">
+        <div class="mt-20" style="height:330px;">
             <div>
             <table id="orderAduitTable" class="table table-border table-bordered table-hover table-bg table-sort scroll-table-head">
                 <thead>

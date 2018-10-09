@@ -99,6 +99,7 @@
         and pay.create_by = #{createBy,jdbcType=VARCHAR}
       </if>
     </where>
+    order by bill_open_time asc
   </select>
 
   <delete id="delete" parameterType="java.lang.String" >
