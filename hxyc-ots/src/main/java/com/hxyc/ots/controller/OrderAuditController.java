@@ -4,6 +4,8 @@ import com.hxyc.ots.model.Project;
 import com.hxyc.ots.model.Receipt;
 import com.hxyc.ots.service.*;
 import com.hxyc.ots.vo.*;
+import java.util.Collection;
+import java.util.Collections;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -117,10 +119,17 @@ public class OrderAuditController extends BaseController {
         ModelAndView mav = new ModelAndView("ots/order-aduit-list");
         mav.addObject("project", project);
         if (! CollectionUtils.isEmpty(orderAduitVOList)){
-            OrderAduitVO orderAduitVO = orderAduitVOList.get(0);
-            mav.addObject("orderCreator", orderAduitVO.getOrderCreator());
-            mav.addObject("settlementCreator", orderAduitVO.getCreateBy());
-            orderAduitVOList.stream().forEach(item->{
+            List<OrderAduitVO> itemList = new ArrayList<>();
+            itemList.addAll(orderAduitVOList);
+            Collections.reverse(itemList);
+            mav.addObject("orderCreator", itemList.get(0).getOrderCreator());
+            itemList.stream().forEach(item->{
+                if (! StringUtils.isEmpty(item.getCreateBy())){
+                    mav.addObject("settlementCreator", item.getCreateBy());
+                }
+                return;
+            });
+            itemList.stream().forEach(item->{
                 if (! StringUtils.isEmpty(item.getFinancialCerator())){
                     mav.addObject("financialCerator", item.getFinancialCerator());
                 }
