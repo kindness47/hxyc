@@ -169,7 +169,7 @@
                     //{type: 'checkbox', fixed: 'left'},
                     {fixed: 'center', title:'操作', toolbar: '#view', width:80, fixed:true},
                     {field:'companyName', title:'公司名称', width:230, sort: true},
-                    {field:'projectName', title:'项目名称', width:350, sort: true}
+                    {field:'projectName', title:'项目名称', width:380, sort: true}
                 ]]
             });
 

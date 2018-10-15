@@ -40,12 +40,12 @@
 		<input type="hidden" id="id" name="id" value="${paymentVO.id}" />
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算单号(点击选择)：</label>
-			<div class="formControls col-xs-4 col-sm-4">
+			<div class="formControls col-xs-6 col-sm-6">
 				<input type="text" class="input-text hidden" value="${paymentVO.settlementId}" placeholder="" id="settlementId" name="settlementId">
 				<input type="text" class="input-text" readonly id="settlementCodeSelect" placeholder="选择结算单" value="${paymentVO.settlementCode}" />
 			</div>
-			<label class="form-label col-xs-3 col-sm-3"><span class="c-red"></span>结算模式(不可选仅展示信息)：</label>
-			<div class="formControls col-xs-3 col-sm-3">
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red"></span>结算模式(仅展示信息)：</label>
+			<div class="formControls col-xs-2 col-sm-2">
 				<select id="settlementMode" name="settlementMode" disabled class="selectpicker" style="height: 32px;">
 					<option value="0" selected></option>
 					<option value="1" <c:if test="${1==paymentVO.settlementMode}">selected</c:if>>信用证</option>
@@ -427,7 +427,7 @@ function initSettlementTable2(compnayId) {
                 //{type: 'checkbox', fixed: 'left'},
                 {fixed: 'center', title:'选择', toolbar: '#barRadio', width:50},
                 {field:'projectName', title:'项目名称', width:150},
-                {field:'settlementCode', title:'结算单号', width:350, sort: true}
+                {field:'settlementCode', title:'结算单号', width:380, sort: true}
             ]]
         });
 
