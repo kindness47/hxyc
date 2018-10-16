@@ -160,7 +160,8 @@
                         <c:if test="${1==receipt.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.paymentRemark}"><span style="color: red">×</span></a></c:if>
                     </td>
                     <td width="80">${receipt.paymentAmount}</td>
-                    <td width="80">${receipt.creditSurplusAmount}</td>
+                    <%--<td width="80">${receipt.creditSurplusAmount}</td>--%>
+                    <td width="80"></td>
                     <td width="120"><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${receipt.remarks}">${receipt.remarks}</a></td>
                 </tr>
             </c:forEach>
@@ -185,7 +186,8 @@
                         <c:if test="${1==receipt.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.paymentRemark}"><span style="color: red">×</span></a></c:if>
                     </td>
                     <td width="80">${receipt.paymentAmount}</td>
-                    <td width="80">${receipt.creditSurplusAmount}</td>
+                        <%--<td width="80">${receipt.creditSurplusAmount}</td>--%>
+                    <td width="80"></td>
                     <td width="120"><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${receipt.remarks}">${receipt.remarks}</a></td>
                 </tr>
             </c:forEach>
@@ -294,7 +296,8 @@
                             <c:if test="${1==orderAduitVO.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.paymentRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
                         <td>${orderAduitVO.paymentAmount}</td>
-                        <td>${orderAduitVO.creditSurplusAmount}</td>
+                        <%--<td>${orderAduitVO.creditSurplusAmount}</td>--%>
+                        <td></td>
                         <td><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.remarks}">${orderAduitVO.remarks}</a></td>
                     </tr>
                 </c:forEach>
@@ -344,7 +347,8 @@
                             <c:if test="${1==orderAduitVO.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.paymentRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
                         <td>${orderAduitVO.paymentAmount}</td>
-                        <td>${orderAduitVO.creditSurplusAmount}</td>
+                            <%--<td>${orderAduitVO.creditSurplusAmount}</td>--%>
+                        <td></td>
                         <td><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.remarks}">${orderAduitVO.remarks}</a></td>
                     </tr>
                 </c:forEach>
@@ -501,9 +505,9 @@
         return value == '' || value == null || value.length == 0 || value.trim() == '';
     }
 
-    var xyzTotalRow = [0,0,0];//1,6,23
-    var liwaiTotalRow = [0,0,0];//6;fk:1,9
-    var daigouTotalRow = [0,0,0];//6;fk:1,9
+    var xyzTotalRow = [0,0,0,0];//1,6,26
+    var liwaiTotalRow = [0,0,0,0];//6;fk:1,9
+    var daigouTotalRow = [0,0,0,0];//6;fk:1,9
 
     //信用证合计
     $('#xyz tr').each(function() {
@@ -523,9 +527,9 @@
             }
         });
     });
-
+    xyzTotalRow[3] = parseFloat(xyzTotalRow[0]) - parseFloat(xyzTotalRow[2]);
     $('#xyzTotalRow').append('<td>合计</td><td>'+xyzTotalRow[0].toFixed(fixLength)+'</td><td></td><td></td><td></td><td></td><td>'+xyzTotalRow[1].toFixed(fixLength)+'</td><td></td><td></td><td></td><td></td><td></td>' +
-        '<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>'+xyzTotalRow[2].toFixed(fixLength)+'</td><td></td><td></td>');
+        '<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>'+xyzTotalRow[2].toFixed(fixLength)+'</td><td>'+xyzTotalRow[3].toFixed(fixLength)+'</td><td></td>');
 
     //代购合计
     $('#daigou tr').each(function() {
@@ -544,7 +548,8 @@
             daigouTotalRow[2] += checkIsNaN($(this).text())?parseFloat(0):parseFloat($(this).text());
         });
     });
-    $('#daigoufukuanTotalRow').append('<td>合计</td><td>'+daigouTotalRow[1].toFixed(fixLength)+'</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>'+daigouTotalRow[2].toFixed(fixLength)+'</td><td></td><td></td>');
+    daigouTotalRow[3] = parseFloat(daigouTotalRow[1]) - parseFloat(daigouTotalRow[2]);
+    $('#daigoufukuanTotalRow').append('<td>合计</td><td>'+daigouTotalRow[1].toFixed(fixLength)+'</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>'+daigouTotalRow[2].toFixed(fixLength)+'</td><td>'+daigouTotalRow[3].toFixed(fixLength)+'</td><td></td>');
 
     //例外合计
     $('#liwai tr').each(function() {
@@ -562,8 +567,10 @@
         $(this).find('td:eq(9)').each(function(){
             liwaiTotalRow[2] += checkIsNaN($(this).text())?parseFloat(0):parseFloat($(this).text());
         });
+
     });
-    $('#liwaifukuanTotalRow').append('<td>合计</td><td>'+liwaiTotalRow[1].toFixed(fixLength)+'</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>'+liwaiTotalRow[2].toFixed(fixLength)+'</td><td></td><td></td>');
+        liwaiTotalRow[3] = parseFloat(liwaiTotalRow[1]) - parseFloat(liwaiTotalRow[2]);
+    $('#liwaifukuanTotalRow').append('<td>合计</td><td>'+liwaiTotalRow[1].toFixed(fixLength)+'</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>'+liwaiTotalRow[2].toFixed(fixLength)+'</td><td>'+liwaiTotalRow[3].toFixed(fixLength)+'</td><td></td>');
 
 
 </script>
