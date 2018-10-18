@@ -267,12 +267,12 @@ $(function(){
                     parent.location.reload();
                     parent.layer.close(index);
                 });
-                $("#loading").modal('show');
+                $("#loading").modal('hide');
             },
             error:function (msg) {
                 //alert('失败，'+msg.message);
                 parent.layer.msg(msg.message, {icon: 5, time: 1000});
-                $("#loading").modal('show');
+                $("#loading").modal('hide');
             }
         });
     });
