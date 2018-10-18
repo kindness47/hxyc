@@ -113,7 +113,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>付款金额(万元)：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<input type="text" class="input-text" value="${paymentVO.paymentAmount}" placeholder="" id="paymentAmount" name="paymentAmount" onblur="computeRest()">
+				<input type="text" class="input-text" value="${paymentVO.paymentAmount}" placeholder="" id="paymentAmount" name="paymentAmount" onkeyup="computeRest()">
 			</div>
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>余额(万元)：</label>
 			<div class="formControls col-xs-4 col-sm-4">
@@ -221,12 +221,12 @@ $(function(){
                     parent.location.reload();
                     parent.layer.close(index);
                 });
-                $("#loading").modal('show');
+                $("#loading").modal('hide');
             },
 			error:function (msg) {
 				//alert('失败，'+msg.message);
                 parent.layer.msg(msg.message, {icon: 5, time: 1000});
-                $("#loading").modal('show');
+                $("#loading").modal('hide');
             }
         });
     });
@@ -248,7 +248,7 @@ function computeRest() {
         layer.msg('付款金额不能大于余额！');
         $("#paymentAmount").val('');
         $("#creditSurplusAmount").val(originAmount);
-        return;
+        return false;
 	}
     $("#creditSurplusAmount").val(restAmount.toFixed(2));
 }
