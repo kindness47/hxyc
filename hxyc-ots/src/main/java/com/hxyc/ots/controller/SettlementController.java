@@ -65,7 +65,7 @@ public class SettlementController extends BaseController {
         Integer total = settlementService.getCount(settlementVO);
         paramMap.put("count",total);
         settlementVO.setPageStart((settlementVO.getPage()-1)*settlementVO.getLimit());
-        settlementVO.setPageEnd(settlementVO.getPage()*settlementVO.getLimit());
+        settlementVO.setPageEnd(settlementVO.getLimit());
         List<SettlementVO> settlementVOList = settlementService.listSettlement(settlementVO);
         paramMap.put("data",settlementVOList);
         return paramMap;

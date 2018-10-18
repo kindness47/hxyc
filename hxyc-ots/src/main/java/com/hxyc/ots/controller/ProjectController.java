@@ -60,7 +60,7 @@ public class ProjectController extends BaseController {
         Integer total = projectService.getCount(projectVO);
         paramMap.put("count",total);
         projectVO.setPageStart((projectVO.getPage()-1)*projectVO.getLimit());
-        projectVO.setPageEnd(projectVO.getPage()*projectVO.getLimit());
+        projectVO.setPageEnd(projectVO.getLimit());
         List<ProjectVO> projectVOList = projectService.listProjectByParam(projectVO);
         paramMap.put("data",projectVOList);
         return paramMap;

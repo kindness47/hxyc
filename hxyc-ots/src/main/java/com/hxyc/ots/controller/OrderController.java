@@ -63,7 +63,7 @@ public class OrderController extends BaseController {
         Integer total = orderService.getCount(orderVO);
         paramMap.put("count",total);
         orderVO.setPageStart((orderVO.getPage()-1)*orderVO.getLimit());
-        orderVO.setPageEnd(orderVO.getPage()*orderVO.getLimit());
+        orderVO.setPageEnd(orderVO.getLimit());
         List<OrderVO> projectVOList = orderService.getOrderList(orderVO);
         paramMap.put("data",projectVOList);
         return paramMap;
