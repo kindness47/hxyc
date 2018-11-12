@@ -1,15 +1,16 @@
 package com.hxyc.ots.controller;
 
 import com.hxjc.core.utils.CodeUtils;
+import com.hxjc.core.utils.PoiExcelExport;
 import com.hxyc.ots.base.Constants;
 import com.hxyc.ots.base.Response;
 import com.hxyc.ots.model.Project;
-import com.hxyc.ots.model.Users;
 import com.hxyc.ots.service.CompanyService;
 import com.hxyc.ots.service.ProjectService;
 import com.hxyc.ots.service.UserService;
 import com.hxyc.ots.utils.SystemUtil;
 import com.hxyc.ots.vo.CompanyVO;
+import com.hxyc.ots.vo.ProjectExcelVO;
 import com.hxyc.ots.vo.ProjectVO;
 import com.hxyc.ots.vo.UserVO;
 import org.apache.commons.lang3.StringUtils;
@@ -21,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Author: 于金谷
@@ -163,5 +164,56 @@ public class ProjectController extends BaseController {
     public Project getProjectById(@PathVariable("id") String id) {
         Project project = projectService.getProjectById(id);
         return project;
+    }
+
+    /**
+     * 功能描述: 导出项目信息
+     * @Auther: 于金谷
+     * @Date create in 2018/7/20 16:59
+     */
+    @ResponseBody
+    @RequestMapping(value = "/project/exportExcel")
+    public void exportExcel(HttpServletRequest request, HttpServletResponse response) {
+        String titleColumn[] = {"companyName","projectName","year","supplyUnit","contractSignTime","supplyTime","contractNum","contractAmount","settlementMode",
+                "baseFloatValue","extraCapitalAmount","capitalTimeLimit","interestRate","createTime"};
+        String titleName[] = {"公司名称", "项目名称", "年份","供应单位","签订时间","供货时间","合同数量（T）","合同金额（万元）","结算模式","裸价浮动值（元）",
+                "垫资额","垫资期限","利息标准","创建时间"};
+        int titleSize[] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20};
+
+        List<ProjectExcelVO> list = new ArrayList<>();
+        PoiExcelExport excelExport = new PoiExcelExport(request,response,"项目信息","sheet1");
+        List<ProjectVO> projectList = projectService.listProject(new ProjectVO());
+        for (ProjectVO vo : projectList) {
+            ProjectExcelVO excelVO = new ProjectExcelVO();
+            excelVO.setCompanyName(vo.getCompanyName());
+            excelVO.setProjectName(vo.getProjectName());
+            excelVO.setYear(vo.getYear());
+            excelVO.setSupplyUnit(vo.getSupplyUnit());
+            excelVO.setContractSignTime(vo.getContractSignTime());
+            excelVO.setSupplyTime(vo.getSupplyTime());
+            excelVO.setContractNum(vo.getContractNum());
+            excelVO.setContractAmount(vo.getContractAmount());
+            String settlementMode = vo.getSettlementMode();
+            if (StringUtils.isNotBlank(settlementMode)) {
+                switch (settlementMode) {
+                    case Constants.TWO_STR:
+                        excelVO.setSettlementMode(Constants.DAIGOU);
+                        break;
+                    case Constants.THREE_STR:
+                        excelVO.setSettlementMode(Constants.XINYONGZHENG_LIWAI);
+                        break;
+                    default:
+                        excelVO.setSettlementMode(Constants.XINYONGZHENG);
+                        break;
+                }
+            }
+            excelVO.setBaseFloatValue(vo.getBaseFloatValue());
+            excelVO.setExtraCapitalAmount(vo.getExtraCapitalAmount());
+            excelVO.setCapitalTimeLimit(vo.getCapitalTimeLimit());
+            excelVO.setInterestRate(vo.getInterestRate());
+            excelVO.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(vo.getCreateTime()));
+            list.add(excelVO);
+        }
+        excelExport.writeExcel(titleColumn, titleName, titleSize, list);
     }
 }

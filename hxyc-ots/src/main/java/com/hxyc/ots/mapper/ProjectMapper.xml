@@ -51,6 +51,7 @@
     <if test="startDate != null and startDate != '' and  endDate != null and endDate != '' " >
       and a.create_time BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
     </if>
+    order by a.create_time desc
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >

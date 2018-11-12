@@ -113,6 +113,7 @@
 								<shiro:hasPermission name="0201-0004">
 									<label class=""><input type="checkbox" value="0201-0004" name="user-Character-1-0-0" id="0201-0004">信用证</label>
 								</shiro:hasPermission>
+								<label class=""><input type="checkbox" value="0201-0006" name="user-Character-1-0-0" id="0201-0006">导出</label>
 							</dd>
 						</dl>
 						</shiro:hasPermission>
@@ -131,6 +132,7 @@
 								<shiro:hasPermission name="0202-0002">
 									<label class=""><input type="checkbox" value="0202-0002" name="user-Character-1-0-0" id="0202-0002">修改</label>
 								</shiro:hasPermission>
+								<label class=""><input type="checkbox" value="0202-0004" name="user-Character-1-0-0" id="0202-0004">导出</label>
 							</dd>
 						</dl>
 						</shiro:hasPermission>

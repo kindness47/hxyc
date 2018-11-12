@@ -32,6 +32,7 @@
 		<input type="text" onclick="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}'})" id="datemax" name="endDate"  class="input-text Wdate" readonly style="width:120px;">
 		<input type="text" class="input-text" style="width:250px" name="receiveNum" placeholder="请输入验收数量">
 		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+        <a href="order/exportExcel" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 导出</a>
 	</div>
     </form>
     <shiro:hasPermission name="0202-0001">

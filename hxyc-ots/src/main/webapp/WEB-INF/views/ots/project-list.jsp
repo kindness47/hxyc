@@ -31,6 +31,7 @@
         <input type="text" onclick="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}'})" id="datemax" name="endDate"  class="input-text Wdate" readonly style="width:120px;">
 		<input type="text" class="input-text" id="projectName" name="projectName" style="width:250px" placeholder="输入项目名称">
 		<button type="submit" class="btn btn-success radius"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+        <a href="project/exportExcel" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 导出</a>
 	</div>
     </form>
     <shiro:hasPermission name="0201-0001">
