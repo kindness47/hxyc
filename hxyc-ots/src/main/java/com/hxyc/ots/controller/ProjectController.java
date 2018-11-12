@@ -1,13 +1,17 @@
 package com.hxyc.ots.controller;
 
 import com.hxjc.core.utils.CodeUtils;
+import com.hxyc.ots.base.Constants;
 import com.hxyc.ots.base.Response;
 import com.hxyc.ots.model.Project;
+import com.hxyc.ots.model.Users;
 import com.hxyc.ots.service.CompanyService;
 import com.hxyc.ots.service.ProjectService;
+import com.hxyc.ots.service.UserService;
 import com.hxyc.ots.utils.SystemUtil;
 import com.hxyc.ots.vo.CompanyVO;
 import com.hxyc.ots.vo.ProjectVO;
+import com.hxyc.ots.vo.UserVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +39,8 @@ public class ProjectController extends BaseController {
 
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 招标录入列表
@@ -81,6 +87,16 @@ public class ProjectController extends BaseController {
         List<CompanyVO> companyList = companyService.listCompany(vo);
         mav.addObject("companyList", companyList);
 
+        // 初始化人员
+        List<UserVO> projectUsers = userService.getUsersByRole(Constants.INVITING_ADMIN);
+        mav.addObject("projectUsers", projectUsers);
+        List<UserVO> operatorUsers = userService.getUsersByRole(Constants.OPERATOR_ADMIN);
+        mav.addObject("operatorUsers", operatorUsers);
+        List<UserVO> settlementUsers = userService.getUsersByRole(Constants.SETTLEMENT_ADMIN);
+        mav.addObject("settlementUsers", settlementUsers);
+        List<UserVO> financeUsers = userService.getUsersByRole(Constants.FINANCE_ADMIN);
+        mav.addObject("financeUsers", financeUsers);
+
         return mav;
     }
 
@@ -126,6 +142,11 @@ public class ProjectController extends BaseController {
             oldProject.setInterestRate(project.getInterestRate());
             oldProject.setUpdateBy(SystemUtil.getLoginUserName());
             oldProject.setUpdateTime(new Date());
+            // 新增指定项目、运营、结算、财务专员
+            oldProject.setProjectAssistant(project.getProjectAssistant());
+            oldProject.setOperateAssistant(project.getOperateAssistant());
+            oldProject.setSettlementAssistant(project.getSettlementAssistant());
+            oldProject.setFinanceAssistant(project.getFinanceAssistant());
             projectService.updateProject(oldProject);
 
             return returnSuccess("修改成功！");

@@ -2,6 +2,8 @@ package com.hxyc.ots.controller;
 
 import com.hxjc.core.utils.SysUtils;
 import com.hxyc.ots.model.Users;
+import com.hxyc.ots.service.ProjectService;
+import com.hxyc.ots.vo.WelcomeVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -10,6 +12,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @Author: 于金谷
@@ -29,6 +33,9 @@ import java.io.IOException;
 public class LoginController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+
+    @Autowired
+    private ProjectService projectService;
 
     @RequestMapping(value = "/")
     public String Index(){
@@ -64,6 +71,10 @@ public class LoginController extends BaseController {
         ModelAndView mav = new ModelAndView("welcome");
         //List<Users> users = usersService.getUsers();
         //mav.addObject("users", users);
+
+        // 初始化汇总数据
+        List<WelcomeVO> welcomeList = projectService.getWelcomeList();
+        mav.addObject("welcomeList", welcomeList);
 
         return mav;
     }

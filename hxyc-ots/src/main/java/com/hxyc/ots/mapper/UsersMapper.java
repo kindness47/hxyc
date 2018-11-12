@@ -3,7 +3,9 @@ package com.hxyc.ots.mapper;
 import com.hxjc.core.utils.DataSource;
 import com.hxyc.ots.model.Users;
 import com.hxyc.ots.vo.UserVO;
+import org.apache.ibatis.annotations.Param;
 
+import java.sql.ParameterMetaData;
 import java.util.List;
 
 /**
@@ -64,4 +66,11 @@ public interface UsersMapper {
      * @Date create in 2018/7/27 15:08
      */
     Users selectById(String id);
+
+    /**
+     * 功能描述: 根据ID获取用户信息
+     * @Auther: 于金谷
+     * @Date create in 2018/11/5 11:17
+     */
+    List<UserVO> getUsersByRole(@Param("roleName") String roleName);
 }

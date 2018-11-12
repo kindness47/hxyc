@@ -17,6 +17,10 @@
     <result column="extra_capital_amount" property="extraCapitalAmount" jdbcType="VARCHAR" />
     <result column="capital_time_limit" property="capitalTimeLimit" jdbcType="VARCHAR" />
     <result column="interest_rate" property="interestRate" jdbcType="VARCHAR" />
+    <result column="project_assistant" property="projectAssistant" jdbcType="VARCHAR" />
+    <result column="operate_assistant" property="operateAssistant" jdbcType="VARCHAR" />
+    <result column="settlement_assistant" property="settlementAssistant" jdbcType="VARCHAR" />
+    <result column="finance_assistant" property="financeAssistant" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -32,7 +36,8 @@
   <sql id="Base_Column_List" >
     id, company_id, project_name, project_code, year, supply_unit, contract_sign_time, 
     supply_time, contract_num, contract_amount, settlement_mode, base_float_value, extra_capital_amount, 
-    capital_time_limit, interest_rate, status, create_by, create_time, update_by, update_time
+    capital_time_limit, interest_rate, status, create_by, create_time, update_by, update_time,
+    project_assistant, operate_assistant, settlement_assistant, finance_assistant
   </sql>
 
   <!-- 获取所有有效项目信息 -->
@@ -124,15 +129,17 @@
       contract_sign_time, supply_time, contract_num, 
       contract_amount, settlement_mode, base_float_value, 
       extra_capital_amount, capital_time_limit, interest_rate, 
-      status, create_by, create_time, 
-      update_by, update_time)
+      status, create_by, create_time,update_by, update_time,
+      project_assistant, operate_assistant, settlement_assistant, finance_assistant)
     values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, 
       #{projectCode,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{supplyUnit,jdbcType=VARCHAR}, 
       #{contractSignTime,jdbcType=VARCHAR}, #{supplyTime,jdbcType=VARCHAR}, #{contractNum,jdbcType=VARCHAR}, 
       #{contractAmount,jdbcType=VARCHAR}, #{settlementMode,jdbcType=VARCHAR}, #{baseFloatValue,jdbcType=VARCHAR}, 
       #{extraCapitalAmount,jdbcType=VARCHAR}, #{capitalTimeLimit,jdbcType=VARCHAR}, #{interestRate,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP
+      #{projectAssistant,jdbcType=VARCHAR},#{operateAssistant,jdbcType=VARCHAR},#{settlementAssistant,jdbcType=VARCHAR},
+      #{financeAssistant,jdbcType=VARCHAR}})
   </insert>
 
   <insert id="insertSelective" parameterType="com.hxyc.ots.model.Project" >
@@ -201,6 +208,18 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+        <if test="projectAssistant != null" >
+            project_assistant,
+        </if>
+        <if test="operateAssistant != null" >
+            operate_assistant,
+        </if>
+        <if test="settlementAssistant != null" >
+            settlement_assistant,
+        </if>
+        <if test="financeAssistant != null" >
+            finance_assistant,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -263,6 +282,18 @@
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+        <if test="projectAssistant != null" >
+            #{projectAssistant,jdbcType=VARCHAR},
+        </if>
+        <if test="operateAssistant != null" >
+            #{operateAssistant,jdbcType=VARCHAR},
+        </if>
+        <if test="settlementAssistant != null" >
+            #{settlementAssistant,jdbcType=VARCHAR},
+        </if>
+        <if test="financeAssistant != null" >
+            #{financeAssistant,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
 
@@ -326,8 +357,131 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+        <if test="projectAssistant != null" >
+            project_assistant = #{projectAssistant,jdbcType=VARCHAR},
+        </if>
+        <if test="operateAssistant != null" >
+            operate_assistant = #{operateAssistant,jdbcType=VARCHAR},
+        </if>
+        <if test="settlementAssistant != null" >
+            settlement_assistant = #{settlementAssistant,jdbcType=VARCHAR},
+        </if>
+        <if test="financeAssistant != null" >
+            finance_assistant = #{financeAssistant,jdbcType=VARCHAR},
+        </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
+  <update id="updateByPrimaryKey" parameterType="com.hxyc.ots.model.Project" >
+    update t_project
+    <set>
+        company_id = #{companyId,jdbcType=VARCHAR},
+        project_name = #{projectName,jdbcType=VARCHAR},
+        project_code = #{projectCode,jdbcType=VARCHAR},
+        year = #{year,jdbcType=VARCHAR},
+        supply_unit = #{supplyUnit,jdbcType=VARCHAR},
+        contract_sign_time = #{contractSignTime,jdbcType=VARCHAR},
+        supply_time = #{supplyTime,jdbcType=VARCHAR},
+        contract_num = #{contractNum,jdbcType=VARCHAR},
+        contract_amount = #{contractAmount,jdbcType=VARCHAR},
+        settlement_mode = #{settlementMode,jdbcType=VARCHAR},
+        base_float_value = #{baseFloatValue,jdbcType=VARCHAR},
+        extra_capital_amount = #{extraCapitalAmount,jdbcType=VARCHAR},
+        capital_time_limit = #{capitalTimeLimit,jdbcType=VARCHAR},
+        interest_rate = #{interestRate,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        project_assistant = #{projectAssistant,jdbcType=VARCHAR},
+        operate_assistant = #{operateAssistant,jdbcType=VARCHAR},
+        settlement_assistant = #{settlementAssistant,jdbcType=VARCHAR},
+        finance_assistant = #{financeAssistant,jdbcType=VARCHAR},
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--欢迎页获取汇总数据-->
+  <select id="getWelcomeList" resultType="com.hxyc.ots.vo.WelcomeVO">
+      select '总数' title, a.projectNum, b.orderNum, c.settlementNum,d.paymentNum, e.receiptNum
+      from (select count(*) projectNum  from t_project where status=1) a,
+      (select count(*) orderNum  from t_order where status=1) b,
+      (select count(*) settlementNum  from t_settlement where status=1) c,
+      (select count(*) paymentNum  from t_payment where status=1) d,
+      (select count(*) receiptNum  from t_receipt where status=1) e
+      UNION ALL
+      select '今天', a.projectNum, b.orderNum, c.settlementNum,d.paymentNum, e.receiptNum
+      from (select count(*) projectNum  from t_project
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 23:59:59'))) a,
+      (select count(*) orderNum  from t_order
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 23:59:59'))) b,
+      (select count(*) settlementNum  from t_settlement
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 23:59:59'))) c,
+      (select count(*) paymentNum  from t_payment
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 23:59:59'))) d,
+      (select count(*) receiptNum  from t_receipt
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 23:59:59'))) e
+      UNION ALL
+      select '昨天', a.projectNum, b.orderNum, c.settlementNum,d.paymentNum, e.receiptNum
+      from (select count(*) projectNum  from t_project
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 23:59:59'))) a,
+      (select count(*) orderNum  from t_order
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 23:59:59'))) b,
+      (select count(*) settlementNum  from t_settlement
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 23:59:59'))) c,
+      (select count(*) paymentNum  from t_payment
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 23:59:59'))) d,
+      (select count(*) receiptNum  from t_receipt
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 23:59:59'))) e
+      UNION ALL
+      select '上周', a.projectNum, b.orderNum, c.settlementNum,d.paymentNum, e.receiptNum
+      from (select count(*) projectNum  from t_project
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 WEEK), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( SUBDATE(CURDATE(), WEEKDAY(CURDATE()) + 1), '%Y-%m-%d 23:59:59'))) a,
+      (select count(*) orderNum  from t_order
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 WEEK), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( SUBDATE(CURDATE(), WEEKDAY(CURDATE()) + 1), '%Y-%m-%d 23:59:59'))) b,
+      (select count(*) settlementNum  from t_settlement
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 WEEK), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( SUBDATE(CURDATE(), WEEKDAY(CURDATE()) + 1), '%Y-%m-%d 23:59:59'))) c,
+      (select count(*) paymentNum  from t_payment
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 WEEK), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( SUBDATE(CURDATE(), WEEKDAY(CURDATE()) + 1), '%Y-%m-%d 23:59:59'))) d,
+      (select count(*) receiptNum  from t_receipt
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 WEEK), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( SUBDATE(CURDATE(), WEEKDAY(CURDATE()) + 1), '%Y-%m-%d 23:59:59'))) e
+      UNION ALL
+      select '本周', a.projectNum, b.orderNum, c.settlementNum,d.paymentNum, e.receiptNum
+      from (select count(*) projectNum  from t_project
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_ADD(SUBDATE(CURDATE(), WEEKDAY(CURDATE())), INTERVAL 6 DAY), '%Y-%m-%d 23:59:59'))) a,
+      (select count(*) orderNum  from t_order
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_ADD(SUBDATE(CURDATE(), WEEKDAY(CURDATE())), INTERVAL 6 DAY), '%Y-%m-%d 23:59:59'))) b,
+      (select count(*) settlementNum  from t_settlement
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_ADD(SUBDATE(CURDATE(), WEEKDAY(CURDATE())), INTERVAL 6 DAY), '%Y-%m-%d 23:59:59'))) c,
+      (select count(*) paymentNum  from t_payment
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_ADD(SUBDATE(CURDATE(), WEEKDAY(CURDATE())), INTERVAL 6 DAY), '%Y-%m-%d 23:59:59'))) d,
+      (select count(*) receiptNum  from t_receipt
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_ADD(SUBDATE(CURDATE(), WEEKDAY(CURDATE())), INTERVAL 6 DAY), '%Y-%m-%d 23:59:59'))) e
+      UNION ALL
+      select '上月', a.projectNum, b.orderNum, c.settlementNum,d.paymentNum, e.receiptNum
+      from (select count(*) projectNum  from t_project
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH)), '%Y-%m-%d 23:59:59'))) a,
+      (select count(*) orderNum  from t_order
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH)), '%Y-%m-%d 23:59:59'))) b,
+      (select count(*) settlementNum  from t_settlement
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH)), '%Y-%m-%d 23:59:59'))) c,
+      (select count(*) paymentNum  from t_payment
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH)), '%Y-%m-%d 23:59:59'))) d,
+      (select count(*) receiptNum  from t_receipt
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH)), '%Y-%m-%d 23:59:59'))) e
+      UNION ALL
+      select '本月', a.projectNum, b.orderNum, c.settlementNum,d.paymentNum, e.receiptNum
+      from (select count(*) projectNum  from t_project
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( CURDATE(), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT( LAST_DAY(CURDATE()), '%Y-%m-%d 23:59:59'))) a,
+      (select count(*) orderNum  from t_order
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( CURDATE(), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT( LAST_DAY(CURDATE()), '%Y-%m-%d 23:59:59'))) b,
+      (select count(*) settlementNum  from t_settlement
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( CURDATE(), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT( LAST_DAY(CURDATE()), '%Y-%m-%d 23:59:59'))) c,
+      (select count(*) paymentNum  from t_payment
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( CURDATE(), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT( LAST_DAY(CURDATE()), '%Y-%m-%d 23:59:59'))) d,
+      (select count(*) receiptNum  from t_receipt
+      where status=1 AND create_time BETWEEN (SELECT DATE_FORMAT( CURDATE(), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT( LAST_DAY(CURDATE()), '%Y-%m-%d 23:59:59'))) e
+  </select>
 </mapper>

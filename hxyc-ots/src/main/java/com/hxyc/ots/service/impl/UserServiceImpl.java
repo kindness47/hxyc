@@ -160,4 +160,14 @@ public class UserServiceImpl implements UserService {
         int rs = usersMapper.update(user);
         return rs;
     }
+
+    /**
+     * 功能描述: 获取所有用户列表（排除管理员）
+     * @Auther: 于金谷
+     * @Date create in 2018/11/5 11:16
+     */
+    @Override
+    public List<UserVO> getUsersByRole(String roleName) {
+        return usersMapper.getUsersByRole(roleName);
+    }
 }

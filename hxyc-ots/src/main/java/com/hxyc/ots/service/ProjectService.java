@@ -3,6 +3,7 @@ package com.hxyc.ots.service;
 import com.hxyc.ots.model.Order;
 import com.hxyc.ots.model.Project;
 import com.hxyc.ots.vo.ProjectVO;
+import com.hxyc.ots.vo.WelcomeVO;
 
 import java.util.List;
 
@@ -61,4 +62,10 @@ public interface ProjectService {
      */
     Project getProjectByName(String projectName);
 
+    /**
+     * 功能描述: 获取欢迎页汇总数据
+     * @Auther: 于金谷
+     * @Date create in 2018/11/6 16:47
+     */
+    List<WelcomeVO> getWelcomeList();
 }

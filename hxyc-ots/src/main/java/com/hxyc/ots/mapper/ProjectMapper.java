@@ -3,6 +3,7 @@ package com.hxyc.ots.mapper;
 import com.hxjc.core.utils.DataSource;
 import com.hxyc.ots.model.Project;
 import com.hxyc.ots.vo.ProjectVO;
+import com.hxyc.ots.vo.WelcomeVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -50,4 +51,11 @@ public interface ProjectMapper {
      * @Date create in 2018/7/25 15:26
      */
     Project getProjectByName(@Param("projectName") String projectName);
+
+    /**
+     * 功能描述: 获取欢迎页汇总数据
+     * @Auther: 于金谷
+     * @Date create in 2018/11/6 16:50
+     */
+    List<WelcomeVO> getWelcomeList();
 }

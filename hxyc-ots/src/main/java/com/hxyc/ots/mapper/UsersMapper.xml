@@ -40,6 +40,14 @@
     </if>
   </select>
 
+  <!--根据用户角色获取用户列表-->
+  <select id="getUsersByRole" resultMap="VOResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    where status =1 and create_by != '超级管理员' and role_name = #{roleName,jdbcType=VARCHAR}
+  </select>
+
   <!-- 取对应账号用户信息 -->
   <select id="getUserByAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select

@@ -66,4 +66,11 @@ public interface UserService {
      * @Date create in 2018/8/2 14:41
      */
     int updateUser(Users user);
+
+    /**
+     * 功能描述: 获取所有项目用户列表（排除管理员）
+     * @Auther: 于金谷
+     * @Date create in 2018/11/5 11:16
+     */
+    List<UserVO> getUsersByRole(String roleName);
 }

@@ -4,6 +4,7 @@ import com.hxyc.ots.mapper.ProjectMapper;
 import com.hxyc.ots.model.Project;
 import com.hxyc.ots.service.ProjectService;
 import com.hxyc.ots.vo.ProjectVO;
+import com.hxyc.ots.vo.WelcomeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +29,7 @@ public class ProjectServiceImpl implements ProjectService {
      */
     @Override
     public List<ProjectVO> listProject(ProjectVO projectVO) {
-        List<ProjectVO> projectList = projectMapper.listProject(projectVO);
-        return projectList;
+        return projectMapper.listProject(projectVO);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public void updateProject(Project project) {
-        projectMapper.updateByPrimaryKeySelective(project);
+        projectMapper.updateByPrimaryKey(project);
     }
 
     /**
@@ -73,19 +73,27 @@ public class ProjectServiceImpl implements ProjectService {
      */
     @Override
     public Project getProjectById(String id) {
-        Project project = projectMapper.selectByPrimaryKey(id);
-        return project;
+        return projectMapper.selectByPrimaryKey(id);
     }
 
     /**
      * 功能描述: 根据项目名称获取项目
-     * @param projectName
+     * @param projectName 工程名
      * @Auther: 于金谷
      * @Date create in 2018/7/25 15:24
      */
     @Override
     public Project getProjectByName(String projectName) {
-        Project project = projectMapper.getProjectByName(projectName);
-        return project;
+        return projectMapper.getProjectByName(projectName);
+    }
+
+    /**
+     * 功能描述: 获取欢迎页汇总数据
+     * @Auther: 于金谷
+     * @Date create in 2018/11/6 16:47
+     */
+    @Override
+    public List<WelcomeVO> getWelcomeList() {
+        return projectMapper.getWelcomeList();
     }
 }

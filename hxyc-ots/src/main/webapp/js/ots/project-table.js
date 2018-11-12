@@ -8,7 +8,7 @@ var TableDatatablesScroller = function () {
             "bLengthChange": false,  //去掉每页显示多少条数据方法
             //"sScrollY": 230,
             "scroller": true,
-            "sScrollX": 1700,
+            "sScrollX": 2234,
             "bStateSave": true,
 
             // 载入数据时，是否显示‘进度’提示

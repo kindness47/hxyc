@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/ots-table.css" />
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <![endif]-->
 <title>订单管理</title>
@@ -43,16 +44,16 @@
         <table id="orderTable" class="table table-border table-bordered table-hover table-bg table-sort">
             <thead>
                 <tr class="text-c">
-                    <th width="80">操作</th>
-                    <th width="240">项目名称</th>
-                    <th width="120">订单编号</th>
-                    <th width="100">批次号</th>
-                    <th width="80">订单时间</th>
-                    <th width="80">校验时间</th>
-                    <th width="80">验收数量(吨)</th>
-                    <th width="40">质量</th>
-                    <th width="40">服务</th>
-                    <th width="120">创建日期</th>
+                    <th width="100">操作</th>
+                    <th width="260">项目名称</th>
+                    <th width="140">订单编号</th>
+                    <th width="120">批次号</th>
+                    <th width="100">订单时间</th>
+                    <th width="100">校验时间</th>
+                    <th width="100">验收数量(吨)</th>
+                    <th width="60">质量</th>
+                    <th width="60">服务</th>
+                    <th width="140">创建日期</th>
                 </tr>
             </thead>
             <tbody>
