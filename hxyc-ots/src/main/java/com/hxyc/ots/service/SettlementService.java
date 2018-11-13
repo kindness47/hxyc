@@ -1,9 +1,11 @@
 package com.hxyc.ots.service;
 
 import com.hxyc.ots.model.Settlement;
+import com.hxyc.ots.vo.OrderAduitVO;
 import com.hxyc.ots.vo.SettlementVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: 于金谷
@@ -43,4 +45,6 @@ public interface SettlementService {
      * @return
      */
     Integer getCount(SettlementVO settlementVO);
+
+    List<OrderAduitVO> selectOrderAudit(Map map);
 }

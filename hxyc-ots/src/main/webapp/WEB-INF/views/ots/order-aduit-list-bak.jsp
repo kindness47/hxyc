@@ -257,6 +257,7 @@
                         <td><c:if test="${1==orderAduitVO.settlementDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.settlementDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.settlementDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
                         <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
+
                         <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.buyerSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.buyerSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.buyerSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
                         <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="MM-dd"/></td>

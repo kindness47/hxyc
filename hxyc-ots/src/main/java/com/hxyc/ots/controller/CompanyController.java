@@ -8,14 +8,13 @@ import com.hxyc.ots.vo.CompanyVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description:公司管理
@@ -46,11 +45,25 @@ public class CompanyController extends BaseController {
      */
     @RequestMapping(value = "/company-tree-list", method = RequestMethod.GET)
     @ResponseBody
-    public Response listCompanyByTree(CompanyVO companyVO){
-        List<CompanyVO> companyList = companyService.listCompany(companyVO);
+    public Response listCompanyByTree(@RequestParam("completion") String completion){
+        Map<String,Boolean> statusMap = new HashMap<String,Boolean>();
+        statusMap.put("completion",Boolean.parseBoolean(completion));
+        List<CompanyVO> companyList = companyService.listCompanyByStatus(statusMap);
+        for(CompanyVO companyVO:companyList)
+            System.out.println("------------>"+companyVO.getCompanyName()+"---->"+companyVO.getParentCompanyName());
         return returnSuccess(companyList);
     }
-
+    /**
+     * Description： 查询有异常项目的公司列表
+     * Author: 刘永红
+     * Date: Created in 2018/11/13 9:13
+     */
+    @RequestMapping(value = "/company-tree-exception-list" , method = RequestMethod.GET)
+    @ResponseBody
+    public Response exceptionCompanyTree(CompanyVO companyVO){
+        List<CompanyVO> companyList = companyService.listExceptionCompanys(companyVO);
+        return returnSuccess(companyList);
+    }
     /**
      * 功能描述:新增公司
      * @Auther: 于金谷
@@ -146,4 +159,5 @@ public class CompanyController extends BaseController {
         Company company = companyService.getCompanyById(id);
         return company;
     }
+
 }

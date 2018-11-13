@@ -3,11 +3,13 @@ package com.hxyc.ots.service.impl;
 import com.hxyc.ots.mapper.SettlementMapper;
 import com.hxyc.ots.model.Settlement;
 import com.hxyc.ots.service.SettlementService;
+import com.hxyc.ots.vo.OrderAduitVO;
 import com.hxyc.ots.vo.SettlementVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: 于金谷
@@ -43,5 +45,10 @@ public class SettlementServiceImpl implements SettlementService {
     @Override
     public Integer getCount(SettlementVO settlementVO) {
         return settlementMapper.selectCount(settlementVO);
+    }
+
+    @Override
+    public List<OrderAduitVO> selectOrderAudit(Map map) {
+        return settlementMapper.selectOrderAudit(map);
     }
 }

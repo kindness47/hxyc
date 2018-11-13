@@ -3,24 +3,24 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<!--[if lt IE 9]>
-<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/html5shiv.js"></script>
-<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/respond.min.js"></script>
-<![endif]-->
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
-<link rel="stylesheet" href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
-<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
-<![endif]-->
-<title>审查订单列表</title>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <![endif]-->
+    <title>审查订单列表</title>
     <style type="text/css">
         .myspan {
             font-weight: bold;
@@ -91,7 +91,7 @@
     </div>
     <div class="clearfix"> </div>
 
-	<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
         <div class="row cl">
             <table class="table table-border table-bordered table-hover table-bg" style="width: 1700px;">
                 <tr class="text-c"><td>供应单位：</td><td>${project.supplyUnit}</td><td>合同签订时间：</td><td>${project.contractSignTime}</td><td>供货时间段：</td><td>${project.supplyTime}</td>
@@ -119,94 +119,94 @@
     <div class="clearfix"> </div>
     <div class="mt-20" id="fukuaninfo" style="height:315px;">
         <div>
-        <span style="font-weight: bold">付款信息：</span>
-        <table id="" class="table table-border table-bordered table-hover table-bg scroll-table-head">
-            <thead>
-            <tr class="text-c">
-                <th width="50">序号</th>
-                <th width="100">收款金额(万元)</th>
-                <th width="100">收款时间</th>
-                <th width="100">发票开立</th>
-                <th width="30">√×</th>
-                <th width="100">审批完成</th>
-                <th width="30">√×</th>
-                <th width="100">付款时间</th>
-                <th width="30">√×</th>
-                <th width="80">付款金额</th>
-                <th width="80">余额</th>
-                <th width="120">其他备注</th>
-            </tr>
-            </thead>
-        </table>
+            <span style="font-weight: bold">付款信息：</span>
+            <table id="" class="table table-border table-bordered table-hover table-bg scroll-table-head">
+                <thead>
+                <tr class="text-c">
+                    <th width="50">序号</th>
+                    <th width="100">收款金额(万元)</th>
+                    <th width="100">收款时间</th>
+                    <th width="100">发票开立</th>
+                    <th width="30">√×</th>
+                    <th width="100">审批完成</th>
+                    <th width="30">√×</th>
+                    <th width="100">付款时间</th>
+                    <th width="30">√×</th>
+                    <th width="80">付款金额</th>
+                    <th width="80">余额</th>
+                    <th width="120">其他备注</th>
+                </tr>
+                </thead>
+            </table>
         </div>
         <div class="pre-scrollable scroll-table-body scroll-table-content-height">
-        <table class="table table-border table-bordered table-hover table-bg table-sort">
-            <tbody id="daigoufukuan">
-            <c:forEach items="${daigouFukuanVOList}" var="receipt"  varStatus="rstatus">
-                <tr class="text-c">
-                    <td width="50">
-                            ${rstatus.index+1}
-                    </td>
-                    <td width="100">${receipt.receiptAmount}</td>
-                    <td width="100"><f:formatDate value="${receipt.receiptTime}" pattern="MM-dd"/></td>
-                    <td width="100"><f:formatDate value="${receipt.billOpenTime}" pattern="MM-dd"/></td>
-                    <td width="30"><c:if test="${1==receipt.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
-                    <td width="100"><f:formatDate value="${receipt.approvalTime}" pattern="MM-dd"/></td>
-                    <td width="30">
-                        <c:if test="${1==receipt.approvalStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.approvalStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.approvalRemark}"><span style="color: red">×</span></a></c:if>
-                    </td>
-                    <td width="100"><f:formatDate value="${receipt.paymentTime}" pattern="MM-dd"/></td>
-                    <td width="30">
-                        <c:if test="${1==receipt.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.paymentRemark}"><span style="color: red">×</span></a></c:if>
-                    </td>
-                    <td width="80">${receipt.paymentAmount}</td>
-                    <%--<td width="80">${receipt.creditSurplusAmount}</td>--%>
-                    <td width="80"></td>
-                    <td width="120"><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${receipt.remarks}">${receipt.remarks}</a></td>
-                </tr>
-            </c:forEach>
-            <tr class="text-c" style="background-color: #c0edf1"  id="daigoufukuanTotalRow"></tr>
-            </tbody>
-            <tbody id="liwaifukuan">
-            <c:forEach items="${liwaiFukuanVOList}" var="receipt"  varStatus="rstatus">
-                <tr class="text-c">
-                    <td width="50">
-                            ${rstatus.index+1}
-                    </td>
-                    <td width="100">${receipt.receiptAmount}</td>
-                    <td width="100"><f:formatDate value="${receipt.receiptTime}" pattern="MM-dd"/></td>
-                    <td width="100"><f:formatDate value="${receipt.billOpenTime}" pattern="MM-dd"/></td>
-                    <td width="30"><c:if test="${1==receipt.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
-                    <td width="100"><f:formatDate value="${receipt.approvalTime}" pattern="MM-dd"/></td>
-                    <td width="30">
-                        <c:if test="${1==receipt.approvalStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.approvalStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.approvalRemark}"><span style="color: red">×</span></a></c:if>
-                    </td>
-                    <td width="100"><f:formatDate value="${receipt.paymentTime}" pattern="MM-dd"/></td>
-                    <td width="30">
-                        <c:if test="${1==receipt.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.paymentRemark}"><span style="color: red">×</span></a></c:if>
-                    </td>
-                    <td width="80">${receipt.paymentAmount}</td>
-                        <%--<td width="80">${receipt.creditSurplusAmount}</td>--%>
-                    <td width="80"></td>
-                    <td width="120"><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${receipt.remarks}">${receipt.remarks}</a></td>
-                </tr>
-            </c:forEach>
-            <tr class="text-c" style="background-color: #c0edf1"  id="liwaifukuanTotalRow"></tr>
-            </tbody>
-        </table>
-    </div>
+            <table class="table table-border table-bordered table-hover table-bg table-sort">
+                <tbody id="daigoufukuan">
+                <c:forEach items="${daigouFukuanVOList}" var="receipt"  varStatus="rstatus">
+                    <tr class="text-c">
+                        <td width="50">
+                                ${rstatus.index+1}
+                        </td>
+                        <td width="100">${receipt.receiptAmount}</td>
+                        <td width="100"><f:formatDate value="${receipt.receiptTime}" pattern="MM-dd"/></td>
+                        <td width="100"><f:formatDate value="${receipt.billOpenTime}" pattern="MM-dd"/></td>
+                        <td width="30"><c:if test="${1==receipt.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
+                        <td width="100"><f:formatDate value="${receipt.approvalTime}" pattern="MM-dd"/></td>
+                        <td width="30">
+                            <c:if test="${1==receipt.approvalStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.approvalStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.approvalRemark}"><span style="color: red">×</span></a></c:if>
+                        </td>
+                        <td width="100"><f:formatDate value="${receipt.paymentTime}" pattern="MM-dd"/></td>
+                        <td width="30">
+                            <c:if test="${1==receipt.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.paymentRemark}"><span style="color: red">×</span></a></c:if>
+                        </td>
+                        <td width="80">${receipt.paymentAmount}</td>
+                            <%--<td width="80">${receipt.creditSurplusAmount}</td>--%>
+                        <td width="80"></td>
+                        <td width="120"><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${receipt.remarks}">${receipt.remarks}</a></td>
+                    </tr>
+                </c:forEach>
+                <tr class="text-c" style="background-color: #c0edf1"  id="daigoufukuanTotalRow"></tr>
+                </tbody>
+                <tbody id="liwaifukuan">
+                <c:forEach items="${liwaiFukuanVOList}" var="receipt"  varStatus="rstatus">
+                    <tr class="text-c">
+                        <td width="50">
+                                ${rstatus.index+1}
+                        </td>
+                        <td width="100">${receipt.receiptAmount}</td>
+                        <td width="100"><f:formatDate value="${receipt.receiptTime}" pattern="MM-dd"/></td>
+                        <td width="100"><f:formatDate value="${receipt.billOpenTime}" pattern="MM-dd"/></td>
+                        <td width="30"><c:if test="${1==receipt.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
+                        <td width="100"><f:formatDate value="${receipt.approvalTime}" pattern="MM-dd"/></td>
+                        <td width="30">
+                            <c:if test="${1==receipt.approvalStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.approvalStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.approvalRemark}"><span style="color: red">×</span></a></c:if>
+                        </td>
+                        <td width="100"><f:formatDate value="${receipt.paymentTime}" pattern="MM-dd"/></td>
+                        <td width="30">
+                            <c:if test="${1==receipt.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.paymentRemark}"><span style="color: red">×</span></a></c:if>
+                        </td>
+                        <td width="80">${receipt.paymentAmount}</td>
+                            <%--<td width="80">${receipt.creditSurplusAmount}</td>--%>
+                        <td width="80"></td>
+                        <td width="120"><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${receipt.remarks}">${receipt.remarks}</a></td>
+                    </tr>
+                </c:forEach>
+                <tr class="text-c" style="background-color: #c0edf1"  id="liwaifukuanTotalRow"></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="clearfix"> </div>
-        <div class="mt-20" style="height:315px;">
-            <div>
+    <div class="mt-20" style="height:315px;">
+        <div>
             <table id="orderAduitTable" class="table table-border table-bordered table-hover table-bg table-sort scroll-table-head">
                 <thead>
                 <tr class="text-c">
                     <th colspan="3">跟踪节点</th>
                     <%--<th colspan="2">--%>
-                        <%--<span><a class="myspan" onclick="init();">全部</a></span><span><a class="myspan" onclick="xyz();">信用证</a></span>--%>
-                        <%--<span><a class="myspan" onclick="daigou();">代购</a></span><span><a class="myspan" onclick="liwai();">例外</a></span>--%>
+                    <%--<span><a class="myspan" onclick="init();">全部</a></span><span><a class="myspan" onclick="xyz();">信用证</a></span>--%>
+                    <%--<span><a class="myspan" onclick="daigou();">代购</a></span><span><a class="myspan" onclick="liwai();">例外</a></span>--%>
                     <%--</th>--%>
                     <th colspan="6">订单信息</th>
                     <th colspan="6">供方结算</th>
@@ -247,19 +247,19 @@
                 </tr>
                 </thead>
             </table>
-            </div>
-            <div class="pre-scrollable scroll-table-body scroll-table-content-height">
-                <table class="table table-border table-bordered table-hover table-bg table-sort">
+        </div>
+        <div class="pre-scrollable scroll-table-body scroll-table-content-height">
+            <table class="table table-border table-bordered table-hover table-bg table-sort">
                 <tbody id="init">
                 <c:forEach items="${orderAduitVOList}" var="orderAduitVO" varStatus="status">
                     <tr class="text-c">
                         <td>
-                           ${status.index+1}
+                                ${status.index+1}
                         </td>
                         <td></td>
                         <td></td>
-                        <%--<td>${orderAduitVO.openAmount}</td>--%>
-                        <%--<td><f:formatDate value="${orderAduitVO.openTime}" pattern="MM-dd"/></td>--%>
+                            <%--<td>${orderAduitVO.openAmount}</td>--%>
+                            <%--<td><f:formatDate value="${orderAduitVO.openTime}" pattern="MM-dd"/></td>--%>
                         <td class="hidden">
                             <c:if test="${1==orderAduitVO.settlementMode}">信用证</c:if><c:if test="${2==orderAduitVO.settlementMode}">代购</c:if><c:if test="${3==orderAduitVO.settlementMode}">信用证-例外</c:if>
                         </td>
@@ -296,7 +296,7 @@
                             <c:if test="${1==orderAduitVO.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.paymentRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
                         <td>${orderAduitVO.paymentAmount}</td>
-                        <%--<td>${orderAduitVO.creditSurplusAmount}</td>--%>
+                            <%--<td>${orderAduitVO.creditSurplusAmount}</td>--%>
                         <td></td>
                         <td><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.remarks}">${orderAduitVO.remarks}</a></td>
                     </tr>
@@ -432,7 +432,7 @@
                 </tbody>
             </table>
         </div>
-        </div>
+    </div>
 
 </div>
 <!--_footer 作为公共模版分离出去-->
@@ -569,7 +569,7 @@
         });
 
     });
-        liwaiTotalRow[3] = parseFloat(liwaiTotalRow[1]) - parseFloat(liwaiTotalRow[2]);
+    liwaiTotalRow[3] = parseFloat(liwaiTotalRow[1]) - parseFloat(liwaiTotalRow[2]);
     $('#liwaifukuanTotalRow').append('<td>合计</td><td>'+liwaiTotalRow[1].toFixed(fixLength)+'</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>'+liwaiTotalRow[2].toFixed(fixLength)+'</td><td>'+liwaiTotalRow[3].toFixed(fixLength)+'</td><td></td>');
 
 

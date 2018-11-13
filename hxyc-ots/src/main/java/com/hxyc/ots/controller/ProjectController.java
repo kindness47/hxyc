@@ -1,5 +1,6 @@
 package com.hxyc.ots.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.hxjc.core.utils.CodeUtils;
 import com.hxjc.core.utils.PoiExcelExport;
 import com.hxyc.ots.base.Constants;
@@ -16,15 +17,15 @@ import com.hxyc.ots.vo.UserVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
+import java.util.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -44,7 +45,7 @@ public class ProjectController extends BaseController {
     private UserService userService;
 
     /**
-     * 招标录入列表
+     * 项目信息列表
      */
     @RequestMapping(value = "/project-list", method = RequestMethod.GET)
     public ModelAndView listProject(ProjectVO projectVO){
@@ -56,7 +57,7 @@ public class ProjectController extends BaseController {
     }
 
     /**
-     * 项目信息列表
+     * 通过参数获取项目信息列表
      */
     @RequestMapping(value = "/project-list-by-param", method = RequestMethod.GET)
     @ResponseBody
@@ -71,6 +72,28 @@ public class ProjectController extends BaseController {
         List<ProjectVO> projectVOList = projectService.listProjectByParam(projectVO);
         paramMap.put("data",projectVOList);
         return paramMap;
+    }
+
+    /**
+     * 设置项目已完成
+     * @param projectList
+     * @return
+     */
+    @RequestMapping(value = "/project-list-setfinish",method = RequestMethod.GET)
+    @ResponseBody
+    public Response projectSetFinish(@RequestParam("jsonData") String projectList){
+        List<ProjectVO> list = JSONArray.parseArray(projectList,ProjectVO.class);
+        Project project = new Project();
+        for(ProjectVO projectVO:list){
+            project.setId(projectVO.getId());
+            project.setUpdateBy(SystemUtil.getLoginUserName());
+            project.setUpdateTime(new Date());
+            project.setCompletion(true);
+            System.out.println(project);
+            projectService.updateProject(project);
+        }
+
+        return returnSuccess("修改成功");
     }
 
     /**
@@ -107,6 +130,8 @@ public class ProjectController extends BaseController {
     @RequestMapping(value = "/project-save", method = RequestMethod.POST)
     @ResponseBody
     public Response saveProject(Project project) {
+        System.out.println("project------------>"+project.getCompletion()+project.getProjectName()+
+                (project.getCompletion() instanceof Boolean ));
         String id = project.getId();
         if (StringUtils.isBlank(id)) { // 新增
             String projectName = project.getProjectName();
@@ -119,6 +144,8 @@ public class ProjectController extends BaseController {
             project.setProjectCode(CodeUtils.getRuleCode("GCP"));
             project.setCreateBy(SystemUtil.getLoginUserName());
             project.setCreateTime(new Date());
+            project.setCompletion(false);
+
             projectService.saveProject(project);
 
             return returnSuccess("新增成功！");
@@ -143,6 +170,7 @@ public class ProjectController extends BaseController {
             oldProject.setInterestRate(project.getInterestRate());
             oldProject.setUpdateBy(SystemUtil.getLoginUserName());
             oldProject.setUpdateTime(new Date());
+            oldProject.setCompletion(project.getCompletion());
             // 新增指定项目、运营、结算、财务专员
             oldProject.setProjectAssistant(project.getProjectAssistant());
             oldProject.setOperateAssistant(project.getOperateAssistant());
@@ -164,6 +192,36 @@ public class ProjectController extends BaseController {
     public Project getProjectById(@PathVariable("id") String id) {
         Project project = projectService.getProjectById(id);
         return project;
+    }
+    /**
+     * Description： 查看项目详细信息
+     * Author: 刘永红
+     * Date: Created in 2018/11/8 17:09
+     */
+    @RequestMapping(value = "/project-detail",method = RequestMethod.GET)
+    public ModelAndView projectDetails(ProjectVO projectVO){
+        ModelAndView mav = new ModelAndView("ots/project-detail");
+        mav.addObject("project",projectService.listProject(projectVO).get(0));
+        return mav;
+    }
+    /**
+     * Description： 查询异常项目信息
+     * Author: 刘永红
+     * Date: Created in 2018/11/12 9:29
+     */
+    @RequestMapping(value = "/project-list-exception",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> projectListException(ProjectVO projectVO){
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("code",0);
+        paramMap.put("msg","");
+        Integer total = projectService.selectExceptionProjectCount(projectVO);
+        paramMap.put("count",total);
+        projectVO.setPageStart((projectVO.getPage()-1)*projectVO.getLimit());
+        projectVO.setPageEnd(projectVO.getLimit());
+        List<ProjectVO> projectVOList = projectService.selectExceptionProject(projectVO);
+        paramMap.put("data",projectVOList);
+        return paramMap;
     }
 
     /**

@@ -6,6 +6,7 @@ import com.hxyc.ots.vo.CompanyVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @DataSource(value="dataSourceOts")
 public interface CompanyMapper {
@@ -34,4 +35,16 @@ public interface CompanyMapper {
      * @Date create in 2018/7/16 15:53
      */
     int getCompanyCountByName(@Param("name") String name);
+    /**
+     * Description： 查询有异常的公司列表
+     * Author: 刘永红
+     * Date: Created in 2018/11/13 9:08
+     */
+    List<CompanyVO> listExceptionCompanys(CompanyVO companyVO);
+    /**
+     * Description： 根据Project状态(completion=true|fasle)查询CompanyVO对象
+     * Author: 刘永红
+     * Date: Created in 2018/11/13 10:59
+     */
+    List<CompanyVO> listCompanyByStatus(Map map);
 }

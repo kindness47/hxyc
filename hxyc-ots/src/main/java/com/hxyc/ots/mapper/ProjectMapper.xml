@@ -26,6 +26,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_completion" property="completion" jdbcType="TINYINT" />
   </resultMap>
   
   <resultMap id="VOResultMap" type="com.hxyc.ots.vo.ProjectVO" extends="BaseResultMap">
@@ -36,6 +37,7 @@
   <sql id="Base_Column_List" >
     id, company_id, project_name, project_code, year, supply_unit, contract_sign_time, 
     supply_time, contract_num, contract_amount, settlement_mode, base_float_value, extra_capital_amount, 
+    capital_time_limit, interest_rate, status, create_by, create_time, update_by, update_time,is_completion
     capital_time_limit, interest_rate, status, create_by, create_time, update_by, update_time,
     project_assistant, operate_assistant, settlement_assistant, finance_assistant
   </sql>
@@ -60,7 +62,6 @@
     from t_project
     where id = #{id,jdbcType=VARCHAR}
   </select>
-
   <select id="select" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.ProjectVO" >
     select 
     proj.*,comp.company_name
@@ -77,6 +78,9 @@
       </if>
       <if test="id != null" >
         and id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="completion != null">
+        and proj.is_completion = #{completion,jdbcType=TINYINT}
       </if>
     </where>
     order by proj.create_time desc
@@ -103,7 +107,11 @@
       <if test="id != null">
         and id = #{id,jdbcType=VARCHAR}
       </if>
+      <if test="completion != null">
+        and proj.is_completion = #{completion,jdbcType=TINYINT}
+      </if>
     </where>
+
     )aa
   </select>
 
@@ -130,14 +138,17 @@
       contract_sign_time, supply_time, contract_num, 
       contract_amount, settlement_mode, base_float_value, 
       extra_capital_amount, capital_time_limit, interest_rate, 
+      status, create_by, create_time, 
+      update_by, update_time,is_completion)
       status, create_by, create_time,update_by, update_time,
       project_assistant, operate_assistant, settlement_assistant, finance_assistant)
-    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR},
       #{projectCode,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{supplyUnit,jdbcType=VARCHAR}, 
       #{contractSignTime,jdbcType=VARCHAR}, #{supplyTime,jdbcType=VARCHAR}, #{contractNum,jdbcType=VARCHAR}, 
       #{contractAmount,jdbcType=VARCHAR}, #{settlementMode,jdbcType=VARCHAR}, #{baseFloatValue,jdbcType=VARCHAR}, 
       #{extraCapitalAmount,jdbcType=VARCHAR}, #{capitalTimeLimit,jdbcType=VARCHAR}, #{interestRate,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},#{completion,jdbcType=TINYINT})
       #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP
       #{projectAssistant,jdbcType=VARCHAR},#{operateAssistant,jdbcType=VARCHAR},#{settlementAssistant,jdbcType=VARCHAR},
       #{financeAssistant,jdbcType=VARCHAR}})
@@ -208,6 +219,9 @@
       </if>
       <if test="updateTime != null" >
         update_time,
+      </if>
+      <if test="completion != null" >
+        is_completion,
       </if>
         <if test="projectAssistant != null" >
             project_assistant,
@@ -282,6 +296,9 @@
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completion != null" >
+        #{is_completion,jdbcType=TINYINT},
       </if>
         <if test="projectAssistant != null" >
             #{projectAssistant,jdbcType=VARCHAR},
@@ -373,6 +390,46 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <!--查询异常订单的项目信息-->
+  <select id="selectExceptionProject" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.ProjectVO">
+
+    SELECT comp.`company_name`,proj.`project_name`,proj.`id`,proj.`is_completion` FROM `t_company` comp
+      LEFT JOIN `t_project` proj ON proj.`company_id` = comp.`id` AND proj.`status` = 1
+      LEFT JOIN `t_order` o ON o.`project_id` = proj.`id` AND o.`status` = 1
+      LEFT JOIN `t_settlement` sett ON sett.`order_id` = o.`order_code` AND sett.`status` = 1
+      LEFT JOIN `t_payment` pay ON pay.`settlement_id` = sett.`id` AND pay.`status` = 1
+      WHERE comp.`status` = 1 AND
+      <if test="completion != null">
+        proj.`is_completion` = #{completion} AND
+      </if>
+      <if test="companyId != null">
+        comp.`id` = #{companyId} AND
+      </if>
+      (o.`delivery_status` = 0 OR sett.`bill_delivery_status` = 2 OR sett.`buyer_settlement_status` = 2
+      OR sett.`settlement_delivery_status` = 2 OR sett.`supplier_settlement_status` = 2 OR pay.`approval_status` = 2
+      OR pay.`bill_open_time` = 2 OR pay.`payment_status` = 2
+      ) GROUP BY proj.`project_name`
+  </select>
+
+  <select id="selectExceptionProjectCount" resultType="java.lang.Integer" parameterType="com.hxyc.ots.vo.ProjectVO">
+    SELECT COUNT(*) FROM(
+    SELECT comp.`company_name`,proj.`project_name`,proj.`id`,proj.`is_completion` FROM `t_company` comp
+    LEFT JOIN `t_project` proj ON proj.`company_id` = comp.`id` AND proj.`status` = 1
+    LEFT JOIN `t_order` o ON o.`project_id` = proj.`id` AND o.`status` = 1
+    LEFT JOIN `t_settlement` sett ON sett.`order_id` = o.`order_code` AND sett.`status` = 1
+    LEFT JOIN `t_payment` pay ON pay.`settlement_id` = sett.`id` AND pay.`status` = 1
+    WHERE comp.`status` = 1 AND
+    <if test="completion != null">
+      proj.`is_completion` = #{completion} AND
+    </if>
+    <if test="companyId != null">
+      comp.`id` = #{companyId} AND
+    </if>
+    (o.`delivery_status` = 0 OR sett.`bill_delivery_status` = 2 OR sett.`buyer_settlement_status` = 2
+    OR sett.`settlement_delivery_status` = 2 OR sett.`supplier_settlement_status` = 2 OR pay.`approval_status` = 2
+    OR pay.`bill_open_time` = 2 OR pay.`payment_status` = 2
+    ) GROUP BY proj.`project_name`)aa
+  </select>
 
   <update id="updateByPrimaryKey" parameterType="com.hxyc.ots.model.Project" >
     update t_project

@@ -143,6 +143,10 @@ public class OrderController extends BaseController {
         Order order = orderService.getOrderById(id);
         return order;
     }
+    @RequestMapping("/order-exception")
+    public String orderException(){
+        return "ots/order-exception";
+    }
 
 
     /**

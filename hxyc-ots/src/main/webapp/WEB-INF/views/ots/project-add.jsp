@@ -89,12 +89,12 @@
 			<label  class="form-label col-xs-2 col-sm-2">结算模式：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<select id="settlementMode" name="settlementMode" class="bs-select form-control">
-					<option value="1" <c:if test="${'1'==project.settlementMode}">selected</c:if>>信用证</option>
-					<option value="2" <c:if test="${'2'==project.settlementMode}">selected</c:if>>代购</option>
-					<option value="3" <c:if test="${'3'==project.settlementMode}">selected</c:if>>信用证-例外</option>
-				</select>
+				<option value="1" <c:if test="${'1'==project.settlementMode}">selected</c:if>>信用证</option>
+				<option value="2" <c:if test="${'2'==project.settlementMode}">selected</c:if>>代购</option>
+				<option value="3" <c:if test="${'3'==project.settlementMode}">selected</c:if>>信用证-例外</option>
+			</select>
 			</div>
-			<label  class="form-label col-xs-2 col-sm-2">裸价浮动值（元）：</label>
+			<label  class="form-label col-xs-2 col-sm-2">浮动值（元）：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="text" class="input-text" value="${project.baseFloatValue}" placeholder="请输入基价浮动值" id="baseFloatValue" name="baseFloatValue">
 			</div>
@@ -114,40 +114,11 @@
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="text" class="input-text" value="${project.interestRate}" placeholder="请输入利息标准" id="interestRate" name="interestRate">
 			</div>
-			<label class="form-label col-xs-2 col-sm-2">项目专员：</label>
+			<label  class="form-label col-xs-2 col-sm-2">是否在建：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<select id="projectAssistant" name="projectAssistant" class="form-control select2-multiple" multiple>
-					<c:forEach items="${projectUsers}" var="user">
-						<option value="${user.userName}">${user.userName}</option>
-					</c:forEach>
-				</select>
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2">财务专员：</label>
-			<div class="formControls col-xs-4 col-sm-4">
-				<select id="financeAssistant" name="financeAssistant" class="form-control select2-multiple" multiple>
-					<c:forEach items="${financeUsers}" var="user">
-						<option value="${user.userName}">${user.userName}</option>
-					</c:forEach>
-				</select>
-			</div>
-			<label class="form-label col-xs-2 col-sm-2">运营专员：</label>
-			<div class="formControls col-xs-4 col-sm-4">
-				<select id="operateAssistant" name="operateAssistant" class="form-control select2-multiple" multiple>
-					<c:forEach items="${operatorUsers}" var="user">
-						<option value="${user.userName}">${user.userName}</option>
-					</c:forEach>
-				</select>
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2">结算专员：</label>
-			<div class="formControls col-xs-4 col-sm-4">
-				<select id="settlementAssistant" name="settlementAssistant" class="form-control select2-multiple" multiple>
-					<c:forEach items="${settlementUsers}" var="user">
-						<option value="${user.userName}">${user.userName}</option>
-					</c:forEach>
+				<select id="completion" name="completion" class="bs-select form-control">
+					<option value=fasle <c:if test="${false==project.completion}">selected</c:if>>在建</option>
+					<option value=true <c:if test="${true==project.completion}">selected</c:if>>竣工</option>
 				</select>
 			</div>
 		</div>
@@ -178,7 +149,7 @@
 <script src="${hxycStatic}/vendors/metronic4.5.2/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
 <script src="${hxycStatic}/vendors/metronic4.5.2/global/scripts/app.min.js" type="text/javascript"></script>
 <script src="${hxycStatic}/vendors/metronic4.5.2/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
-<script src="${hxycStatic}/js/ots/project-add-select2.js" type="text/javascript"></script>
+<script src="${hxycStatic}/js/ots/company-select2.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 
 <script type="text/javascript">
@@ -229,36 +200,6 @@
             parent.layer.close(index);
         });
     });
-
-    /**
-	 * 初始化Select
-     * @param projectAssistant 项目专员
-     */
-    function initSelect2(obj) {
-		var proArr = new Array();
-        if (obj.projectAssistant != null) {
-            proArr = obj.projectAssistant.split(",");
-		}
-        $("#projectAssistant").val(proArr).trigger('change');
-		// 运营专员
-		var operateArr = new Array();
-        if (obj.operateAssistant != null) {
-            operateArr = obj.operateAssistant.split(",");
-        }
-        $("#operateAssistant").val(operateArr).trigger('change');
-		// 结算专员
-        var settlementArr = new Array();
-        if (obj.settlementAssistant != null) {
-            settlementArr = obj.settlementAssistant.split(",");
-        }
-        $("#settlementAssistant").val(settlementArr).trigger('change');
-        // 财务专员
-        var financeArr = new Array();
-        if (obj.financeAssistant != null) {
-            financeArr = obj.financeAssistant.split(",");
-        }
-        $("#financeAssistant").val(financeArr).trigger('change');
-    }
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

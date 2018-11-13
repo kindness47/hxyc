@@ -51,6 +51,18 @@ public interface ProjectMapper {
      * @Date create in 2018/7/25 15:26
      */
     Project getProjectByName(@Param("projectName") String projectName);
+    /**
+     * Description： 查询异常项目信息
+     * Author: 刘永红
+     * Date: Created in 2018/11/12 10:38
+     */
+    List<ProjectVO> selectExceptionProject(ProjectVO projectVO);
+    /**
+     * Description： 查询异常项目数量
+     * Author: 刘永红
+     * Date: Created in 2018/11/12 10:49
+     */
+    Integer selectExceptionProjectCount(ProjectVO project);
 
     /**
      * 功能描述: 获取欢迎页汇总数据

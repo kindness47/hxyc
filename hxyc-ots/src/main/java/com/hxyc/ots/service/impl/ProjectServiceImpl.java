@@ -96,4 +96,14 @@ public class ProjectServiceImpl implements ProjectService {
     public List<WelcomeVO> getWelcomeList() {
         return projectMapper.getWelcomeList();
     }
+
+    @Override
+    public List<ProjectVO> selectExceptionProject(ProjectVO projectVO) {
+        return projectMapper.selectExceptionProject(projectVO);
+    }
+
+    @Override
+    public Integer selectExceptionProjectCount(ProjectVO project) {
+        return projectMapper.selectExceptionProjectCount(project);
+    }
 }

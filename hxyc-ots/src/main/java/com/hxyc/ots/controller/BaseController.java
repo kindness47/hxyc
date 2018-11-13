@@ -3,6 +3,8 @@ package com.hxyc.ots.controller;
 import com.hxyc.ots.base.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @Author: 于金谷
@@ -43,4 +45,5 @@ public class BaseController {
         response.setErrorMsg(errorMsg);
         return response;
     }
+
 }

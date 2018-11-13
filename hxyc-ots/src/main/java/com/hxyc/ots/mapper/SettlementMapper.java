@@ -6,6 +6,7 @@ import com.hxyc.ots.vo.OrderAduitVO;
 import com.hxyc.ots.vo.SettlementVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单跟踪
@@ -65,4 +66,6 @@ public interface SettlementMapper {
      * @return
      */
     List<OrderAduitVO> selectAduitOrder(String projectId);
+
+    List<OrderAduitVO> selectOrderAudit(Map map);
 }

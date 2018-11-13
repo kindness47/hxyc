@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: 于金谷
@@ -78,5 +79,15 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void saveCompany(Company company) {
         companyMapper.insertSelective(company);
+    }
+
+    @Override
+    public List<CompanyVO> listExceptionCompanys(CompanyVO companyVO) {
+        return companyMapper.listExceptionCompanys(companyVO);
+    }
+
+    @Override
+    public List<CompanyVO> listCompanyByStatus(Map map) {
+        return companyMapper.listCompanyByStatus(map);
     }
 }

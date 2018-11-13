@@ -85,6 +85,12 @@
 					<shiro:hasPermission name="0206">
 					<li><a data-href="order-aduit" data-title="订单追踪" href="javascript:void(0)">订单追踪</a></li>
 					</shiro:hasPermission>
+					<shiro:hasPermission name="0206">
+						<li><a data-href="order-archiving" data-title="归档订单" href="javascript:void(0)">归档订单</a></li>
+					</shiro:hasPermission>
+                    <shiro:hasPermission name="0206">
+                        <li><a data-href="order-exception" data-title="异常订单" href="javascript:void(0)">异常订单</a></li>
+                    </shiro:hasPermission>
 				</ul>
 			</dd>
 		</dl>
@@ -132,7 +138,7 @@
 	<ul>
 		<li id="closethis">关闭当前 </li>
 		<li id="closeall">关闭全部 </li>
-</ul>
+	</ul>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery/1.9.1/jquery.min.js"></script>

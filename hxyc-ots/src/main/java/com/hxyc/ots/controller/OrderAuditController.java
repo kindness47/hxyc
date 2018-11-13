@@ -1,23 +1,22 @@
 package com.hxyc.ots.controller;
 
 import com.hxyc.ots.model.Project;
-import com.hxyc.ots.model.Receipt;
 import com.hxyc.ots.service.*;
 import com.hxyc.ots.vo.*;
-import java.util.Collection;
-import java.util.Collections;
+
+import java.util.*;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -39,6 +38,9 @@ public class OrderAuditController extends BaseController {
 
     @Autowired
     private OrderAduitService orderAduitService;
+
+    @Autowired
+    private SettlementService settlementService;
 
     /**
      * 审查订单
@@ -142,9 +144,31 @@ public class OrderAuditController extends BaseController {
         mav.addObject("liwaiOrderAduitVOList", liwaiOrderAduitVOList);
         mav.addObject("daigouFukuanVOList", daigouFukuanVOList);
         mav.addObject("liwaiFukuanVOList", liwaiFukuanVOList);
+
         mav.addObject("orderAduitVOList",orderAduitVOList);
+        System.out.println(orderAduitVOList);
         return mav;
     }
 
+    @RequestMapping("/exceptionOrder")
+    public ModelAndView selectExceptionOrder(@RequestParam("projectId") String projectId,@RequestParam("completion") String completion){
+        Map<String,Object> map = new HashMap<>();
+        map.put("projectId",projectId);
+        map.put("completion",completion);
+        List<OrderAduitVO> orderAduitVOList = settlementService.selectOrderAudit(map);
+        ModelAndView mov = new ModelAndView();
+        mov.addObject("orderAduitVOList",orderAduitVOList);
+        System.out.println(orderAduitVOList);
+        mov.setViewName("ots/order-exception-list");
+        return mov;
+    }
 
+    /**
+     * 归档订单
+     */
+    @RequestMapping("/order-archiving")
+    public ModelAndView orderException(SettlementVO settlementVO){
+        ModelAndView mav = new ModelAndView("ots/order-archiving");
+        return mav;
+    }
 }

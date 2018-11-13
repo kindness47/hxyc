@@ -61,7 +61,7 @@ public class PermissionServiceImpl implements PermissionService {
      * @param userId 用户ID
      * @Auther: 于金谷
      * @Date create in 2018/7/30 15:42
-     */
+            */
     @Override
     public List<Permission> getPermissionsByUserId(String userId) {
         List<Permission> permissionList = permissionMapper.getPermissionsByUserId(userId);

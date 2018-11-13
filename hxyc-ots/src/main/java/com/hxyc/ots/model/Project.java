@@ -63,6 +63,17 @@ public class Project extends BaseModel {
     /**财务专员*/
     private String financeAssistant;
 
+    /** 是否竣工 **/
+   private Boolean completion;
+
+    public Boolean getCompletion() {
+        return completion;
+    }
+
+    public void setCompletion(Boolean completion) {
+        this.completion = completion;
+    }
+
 
     public String getCompanyId() {
         return companyId;
@@ -174,37 +185,5 @@ public class Project extends BaseModel {
 
     public void setInterestRate(String interestRate) {
         this.interestRate = interestRate == null ? null : interestRate.trim();
-    }
-
-    public String getProjectAssistant() {
-        return projectAssistant;
-    }
-
-    public void setProjectAssistant(String projectAssistant) {
-        this.projectAssistant = projectAssistant;
-    }
-
-    public String getOperateAssistant() {
-        return operateAssistant;
-    }
-
-    public void setOperateAssistant(String operateAssistant) {
-        this.operateAssistant = operateAssistant;
-    }
-
-    public String getSettlementAssistant() {
-        return settlementAssistant;
-    }
-
-    public void setSettlementAssistant(String settlementAssistant) {
-        this.settlementAssistant = settlementAssistant;
-    }
-
-    public String getFinanceAssistant() {
-        return financeAssistant;
-    }
-
-    public void setFinanceAssistant(String financeAssistant) {
-        this.financeAssistant = financeAssistant;
     }
 }

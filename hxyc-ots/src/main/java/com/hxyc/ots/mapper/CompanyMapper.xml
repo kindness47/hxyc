@@ -38,6 +38,38 @@
     order by a.level,a.sort
   </select>
 
+  <!-- 根据状态查询CompanyVO对象 -->
+  <select id="listCompanyByStatus" resultMap="VOResultMap" parameterType="java.util.Map">
+    SELECT com.*,com1.company_name AS parentCompanyName FROM
+      (SELECT comp.* FROM `t_company` comp WHERE comp.`status` = 1 AND comp.`id` IN(
+      SELECT proj.`company_id` FROM `t_project` proj WHERE proj.`status` = 1
+      <if test="completion != null">
+        AND proj.`is_completion` = #{completion,jdbcType=TINYINT}
+      </if>
+      GROUP BY proj.`company_id`)) com
+      LEFT JOIN `t_company` com1 ON com1.`id` = com.`parent_id` AND com1.`status` = 1 WHERE com.`status` = 1
+      ORDER BY com.level
+  </select>
+  <!--  查询有异常项目的CompanyVO对象  -->
+  <select id="listExceptionCompanys" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.CompanyVO" >
+    SELECT com1.*,com.`company_name` AS parentCompanyName FROM
+      (SELECT comp.* FROM `t_company` comp
+      LEFT JOIN `t_project` proj ON proj.`company_id` = comp.`id` AND proj.`status` = 1
+      LEFT JOIN `t_order` o ON o.`project_id` = proj.`id` AND o.`status` = 1
+      LEFT JOIN `t_settlement` sett ON sett.`order_id` = o.`order_code` AND sett.`status` = 1
+      LEFT JOIN `t_payment` pay ON pay.`settlement_id` = sett.`id` AND pay.`status` = 1
+      WHERE comp.`status` = 1 AND (o.`delivery_status` = 0 OR sett.`bill_delivery_status` = 2 OR sett.`buyer_settlement_status` = 2
+        OR sett.`settlement_delivery_status` = 2 OR sett.`supplier_settlement_status` = 2 OR pay.`approval_status` = 2
+        OR pay.`bill_open_time` = 2 OR pay.`payment_status` = 2
+        ) GROUP BY comp.`company_name`) com1
+      LEFT JOIN `t_company` com ON com.`id` = com1.`parent_id` AND com.`status` = 1
+      WHERE com1.`status` = 1
+      <if test="companyName != null and companyName != ''" >
+        and com1.company_name like concat(concat('%',#{companyName,jdbcType=VARCHAR}),'%')
+      </if>
+      ORDER BY com1.level,com1.sort
+  </select>
+
   <!-- 获取公司名称或公司简称是否存在 -->
   <select id="getCompanyCountByName" resultType="java.lang.Integer" parameterType="java.util.Map" >
     select count(*) from t_company where

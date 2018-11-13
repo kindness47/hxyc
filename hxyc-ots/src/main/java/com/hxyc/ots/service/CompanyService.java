@@ -4,6 +4,7 @@ import com.hxyc.ots.model.Company;
 import com.hxyc.ots.vo.CompanyVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: 于金谷
@@ -45,4 +46,17 @@ public interface CompanyService {
      * @Date create in 2018/7/16 15:48
      */
     void saveCompany(Company company);
+    /**
+     * Description： 查询有异常的公司列表
+     * Author: 刘永红
+     * Date: Created in 2018/11/13 9:08
+     */
+    List<CompanyVO> listExceptionCompanys(CompanyVO companyVO);
+
+    /**
+     * Description： 根据Project状态(completion=true|fasle)查询CompanyVO对象
+     * Author: 刘永红
+     * Date: Created in 2018/11/13 10:59
+     */
+    List<CompanyVO> listCompanyByStatus(Map map);
 }

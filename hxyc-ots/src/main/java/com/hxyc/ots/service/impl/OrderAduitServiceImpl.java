@@ -81,8 +81,8 @@ public class OrderAduitServiceImpl implements OrderAduitService {
                     OrderAduitVO orderAduitVO = new  OrderAduitVO();
                     orderAduitVO.setReceiptAmount(receiptVOList.get(p).getReceiptAmount());
                     orderAduitVO.setReceiptTime(receiptVOList.get(p).getReceiptTime());
-                    orderAduitVOList.add(orderAduitVO);
-                }
+                orderAduitVOList.add(orderAduitVO);
+            }
                 break;
             }
             if (n < orderAduitVOList.size()){

@@ -106,6 +106,9 @@ public class OrderAduitVO extends Settlement {
 
     //===========信用证============
 
+    /**信用证编码*/
+    private String creditCode;
+
     /**开证金额*/
     private Double openAmount;
 
@@ -392,5 +395,13 @@ public class OrderAduitVO extends Settlement {
 
     public void setServiceRemark(String serviceRemark) {
         this.serviceRemark = serviceRemark;
+    }
+
+    public String getCreditCode() {
+        return creditCode;
+    }
+
+    public void setCreditCode(String creditCode) {
+        this.creditCode = creditCode;
     }
 }
