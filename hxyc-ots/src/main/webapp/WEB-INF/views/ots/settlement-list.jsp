@@ -3,25 +3,30 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<!--[if lt IE 9]>
-<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/html5shiv.js"></script>
-<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/respond.min.js"></script>
-<![endif]-->
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css">
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/ots-table.css" />
-<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
-<![endif]-->
-<title>结算管理</title>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css">
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/ots-table.css" />
+    <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <![endif]-->
+    <title>结算管理</title>
+    <style>
+        #settlementTable{
+            width: 2469px !important;
+        }
+    </style>
 </head>
 <body>
 <div><a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" onclick="location.replace(location.href)" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></div>
@@ -44,22 +49,22 @@
             <table id="settlementTable" class="table table-border table-bordered table-hover table-bg table-sort">
                 <thead>
                 <tr class="text-c">
-                    <th width="60">操作</th>
-                    <th width="80">公司名称</th>
-                    <th width="100">项目名称</th>
-                    <th width="60">订单号</th>
+                    <th width="100">操作</th>
+                    <th width="160">公司名称</th>
+                    <th width="220">项目名称</th>
+                    <th width="180">订单号</th>
                     <th width="180">结算单号</th>
-                    <th width="100">供方结算时间</th>
-                    <th width="30">异常否</th>
-                    <th width="100">供方结算单据送达时间</th>
-                    <th width="30">异常否</th>
-                    <th width="100">供方发票送达时间</th>
-                    <th width="30">异常否</th>
-                    <th width="100">需方结算时间</th>
-                    <th width="30">异常否</th>
+                    <th width="100">结算时间（供）</th>
+                    <th width="90">异常否</th>
+                    <th width="200">供方结算单送达时间</th>
+                    <th width="90">异常否</th>
+                    <th width="200">供方发票送达时间</th>
+                    <th width="90">异常否</th>
+                    <th width="100">结算时间（需）</th>
+                    <th width="90">异常否</th>
                     <%--<th width="100">需方发票开立时间</th>--%>
                     <%--<th width="30">异常否</th>--%>
-                    <th width="80">结算方式</th>
+                    <th width="120">结算方式</th>
                     <th width="140">结算金额(元)</th>
                     <th width="100">创建人</th>
                     <th width="120">创建时间</th>
@@ -72,10 +77,10 @@
                         <td>
                             <a title="编辑" href="javascript:;" onclick="settlement_edit('编辑','settlement-edit?id=${settlementVO.id}','1000','620')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                         </td>
-                        <td><span class="long-text-hidden" style="width: 80px">${settlementVO.companyName}</span></td>
-                        <td><span class="long-text-hidden" style="width: 100px">${settlementVO.projectName}</span></td>
-                        <td><span class="long-text-hidden" style="width: 60px">${settlementVO.orderId}</span></td>
-                        <td><span style="width: 100px">${settlementVO.settlementCode}</span></td>
+                        <td><span class="long-text-hidden">${settlementVO.companyName}</span></td>
+                        <td><span class="long-text-hidden">${settlementVO.projectName}</span></td>
+                        <td><span class="long-text-hidden">${settlementVO.orderId}</span></td>
+                        <td><span class="long-text-hidden">${settlementVO.settlementCode}</span></td>
                         <td><f:formatDate value="${settlementVO.supplierSettlementTime}" pattern="yyyy-MM-dd"/></td>
                         <td><c:if test="${1==settlementVO.supplierSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==settlementVO.supplierSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${settlementVO.supplierSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
                         <td><f:formatDate value="${settlementVO.settlementDeliveryTime}" pattern="yyyy-MM-dd"/></td>
@@ -89,7 +94,7 @@
                         <td><c:if test="${1==settlementVO.settlementMode}">信用证</c:if><c:if test="${2==settlementVO.settlementMode}">代购</c:if><c:if test="${3==settlementVO.settlementMode}">信用证-例外</c:if></td>
                         <td>${settlementVO.settlementAmount}</td>
                         <td>${settlementVO.createBy}</td>
-                        <td><span class="long-text-hidden" style="width: 120px"><f:formatDate value="${settlementVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></td>
+                        <td><span class="long-text-hidden"><f:formatDate value="${settlementVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></td>
                     </tr>
                 </c:forEach>
                 </tbody>

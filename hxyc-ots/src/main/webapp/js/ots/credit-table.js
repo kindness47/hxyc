@@ -1,5 +1,4 @@
 var TableDatatablesScroller = function () {
-
     var initTable1 = function () {
         var table = $('#creditTable');
 

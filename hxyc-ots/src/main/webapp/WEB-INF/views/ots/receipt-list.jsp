@@ -3,24 +3,24 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<!--[if lt IE 9]>
-<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/html5shiv.js"></script>
-<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/respond.min.js"></script>
-<![endif]-->
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
-<!--[if lt IE 9]>
-<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
-<![endif]-->
-<title>收款管理</title>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/ots-table.css" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <![endif]-->
+    <title>收款管理</title>
 </head>
 <body>
 <div><a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></div>
@@ -43,9 +43,9 @@
                     <th width="100">操作</th>
                     <th width="180">项目名称</th>
                     <th width="180">公司名称</th>
-                    <th width="180">收款金额</th>
-                    <th width="180">收款时期</th>
-                    <th width="180">创建时间</th>
+                    <th width="120">收款金额</th>
+                    <th width="120">收款时期</th>
+                    <th width="120">创建时间</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,8 +56,8 @@
                                 <a title="修改收款信息" href="javascript:;" onclick="receipt_edit('修改收款信息','receipt-add','500','250','${receipt.id}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                             </shiro:hasPermission>
                         </td>
-                        <td>${receipt.projectName}</td>
-                        <td>${receipt.companyName}</td>
+                        <td><span class="long-text-hidden">${receipt.projectName}</span></td>
+                        <td><span class="long-text-hidden">${receipt.companyName}</span></td>
                         <td>${receipt.receiptAmount}</td>
                         <td><f:formatDate value="${receipt.receiptTime}" pattern="yyyy-MM-dd"/></td>
                         <td><f:formatDate value="${receipt.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>

@@ -48,7 +48,9 @@ var TableDatatablesScroller = function () {
 
             initTable1();
         }
-
     };
-
 }();
+
+$(function(){
+    TableDatatablesScroller.init();
+});

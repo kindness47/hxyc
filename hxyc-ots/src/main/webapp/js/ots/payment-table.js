@@ -9,14 +9,14 @@ var TableDatatablesScroller = function () {
 
             //"sScrollY": 230,
             "scroller": true,
-            "sScrollX": 1700,
+            "sScrollX": 2185,
             "bStateSave": true,
 
             // 载入数据时，是否显示‘进度’提示
-            "bProcessing": true,
+                "bProcessing": true,
 
             "pageLength": 10,
-            "order": [[14, 'desc']],
+            "order": [13, 'desc'],
             "aoColumnDefs": [
                 //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
                 {"orderable":false,"aTargets":[0]}// 制定列不参与排序
