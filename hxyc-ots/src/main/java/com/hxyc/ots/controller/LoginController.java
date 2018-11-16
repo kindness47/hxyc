@@ -1,7 +1,10 @@
 package com.hxyc.ots.controller;
 
 import com.hxjc.core.utils.SysUtils;
+import com.hxyc.ots.base.Constants;
+import com.hxyc.ots.model.Menu;
 import com.hxyc.ots.model.Users;
+import com.hxyc.ots.service.MenuService;
 import com.hxyc.ots.service.ProjectService;
 import com.hxyc.ots.vo.WelcomeVO;
 import org.apache.shiro.SecurityUtils;
@@ -36,6 +39,8 @@ public class LoginController extends BaseController {
 
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private MenuService menuService;
 
     @RequestMapping(value = "/")
     public String Index(){
@@ -52,13 +57,23 @@ public class LoginController extends BaseController {
         token.setRememberMe(true);
         try {
             subject.login(token);
+            // 登录用户初始化
+            Users sessionUser = (Users) SysUtils.getSession().getAttribute("user");
+            model.addAttribute("user", sessionUser);
+            // 登录菜单初始化
+            String roleName = sessionUser.getRoleName();
+            List<Menu> menus;
+            if (Constants.SUPER_ADMIN.equals(roleName)) {
+                menus = menuService.getAllMenus();
+            } else {
+                String userId = sessionUser.getId();
+                menus = menuService.getMenusByLoginUser(userId);
+            }
+            model.addAttribute("menus", menus);
         } catch (Exception e) {
             System.out.println("登录异常： " + e.getMessage());
             return "login";
         }
-
-        Users sessionUser = (Users) SysUtils.getSession().getAttribute("user");
-        model.addAttribute("user", sessionUser);
 
         return "index";
     }

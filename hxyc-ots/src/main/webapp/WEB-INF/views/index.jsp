@@ -46,63 +46,21 @@
 </header>
 <aside class="Hui-aside">
 	<div class="menu_dropdown bk_2">
-		<dl id="menu-base">
-			<shiro:hasPermission name="01">
-				<dt><i class="Hui-iconfont">&#xe61a;</i> 基础信息<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			</shiro:hasPermission>
-			<dd>
-				<ul>
-					<shiro:hasPermission name="0101">
-						<li><a data-href="company-list" data-title="公司管理" href="javascript:void(0)">公司管理</a></li>
-					</shiro:hasPermission>
-					<shiro:hasPermission name="0102">
-						<li><a data-href="credit-list" data-title="信用证管理" href="javascript:void(0)">信用证管理</a></li>
-					</shiro:hasPermission>
-				</ul>
-			</dd>
-		</dl>
-		<dl id="menu-order">
-			<shiro:hasPermission name="02">
-				<dt><i class="Hui-iconfont">&#xe616;</i> 订单跟踪<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			</shiro:hasPermission>
-			<dd style="display: none;">
-				<ul>
-					<shiro:hasPermission name="0201">
-                    	<li><a data-href="project-list" data-title="项目管理" href="javascript:void(0)">项目管理</a></li>
-					</shiro:hasPermission>
-					<shiro:hasPermission name="0202">
-                    	<li><a data-href="order-list" data-title="订单管理" href="javascript:void(0)">订单管理</a></li>
-					</shiro:hasPermission>
-					<shiro:hasPermission name="0203">
-                    	<li><a data-href="settlement-list" data-title="结算管理" href="javascript:void(0)">结算管理</a></li>
-					</shiro:hasPermission>
-					<shiro:hasPermission name="0204">
-                    	<li><a data-href="payment-list" data-title="支付管理" href="javascript:void(0)">支付管理</a></li>
-					</shiro:hasPermission>
-					<shiro:hasPermission name="0205">
-                    	<li><a data-href="receipt-list" data-title="收款管理" href="javascript:void(0)">收款管理</a></li>
-					</shiro:hasPermission>
-					<shiro:hasPermission name="0206">
-					<li><a data-href="order-aduit" data-title="订单追踪" href="javascript:void(0)">订单追踪</a></li>
-					</shiro:hasPermission>
-				</ul>
-			</dd>
-		</dl>
-        <dl id="menu-system">
-			<shiro:hasPermission name="03">
-           	<dt><i class="Hui-iconfont">&#xe62d;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			</shiro:hasPermission>
-            <dd>
-                <ul>
-					<shiro:hasPermission name="0301">
-                    	<li><a data-href="user-list" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
-					</shiro:hasPermission>
-					<shiro:hasPermission name="0302">
-                    	<li><a data-href="company-list" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>
-					</shiro:hasPermission>
-                </ul>
-            </dd>
-        </dl>
+		<c:forEach items="${menus}" var="menu2">
+			<c:if test="${menu2.level=='2'}">
+				<dl id="menu-${menu2.menuCode}">
+					<dt><i class="Hui-iconfont">${menu2.menuClass}</i> ${menu2.menuName}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+					<c:set var="parentCode2" value="${menu2.menuCode}"/>
+					<dd <c:if test="${menu2.sort != '1'}">style="display: none;"</c:if>><ul>
+					<c:forEach items="${menus}" var="menu3">
+						<c:if test="${menu3.level=='3'and menu3.parentCode==parentCode2}">
+							<li><a data-href="${menu3.url}" data-title="${menu3.title}" href="javascript:void(0)">${menu3.menuName}</a></li>
+						</c:if>
+					</c:forEach>
+					</ul></dd>
+				</dl>
+			</c:if>
+		</c:forEach>
 	</div>
 </aside>
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
@@ -132,7 +90,7 @@
 	<ul>
 		<li id="closethis">关闭当前 </li>
 		<li id="closeall">关闭全部 </li>
-</ul>
+	</ul>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery/1.9.1/jquery.min.js"></script>

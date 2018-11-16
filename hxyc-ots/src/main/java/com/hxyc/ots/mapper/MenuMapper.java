@@ -1,19 +1,36 @@
 package com.hxyc.ots.mapper;
 
-import com.hxjc.core.utils.DataSource;
 import com.hxyc.ots.model.Menu;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 
-@DataSource(value="dataSourceOts")
+import java.util.List;
+
 public interface MenuMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Menu record);
 
     int insertSelective(Menu record);
 
-    Menu selectByPrimaryKey(String id);
+    Menu selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(Menu record);
 
     int updateByPrimaryKey(Menu record);
+
+    /**
+     * 功能描述: 获取所有有效菜单功能
+     * @Auther: 于金谷
+     * @Date create in 2018/11/15 17:22
+     */
+    List<Menu> getAllMenus();
+
+
+    /**
+     * 功能描述: 获取登录用户有效授权菜单功能
+     * @Auther: 于金谷
+     * @Date create in 2018/11/15 17:24
+     */
+    List<Menu> getMenusByLoginUser(@Param("userId") String userId);
 }
