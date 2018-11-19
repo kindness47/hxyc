@@ -105,7 +105,7 @@
         and comp.company_name like concat('%',concat(#{companyName,jdbcType=VARCHAR},'%'))
       </if>
       <if test="id != null">
-        and id = #{id,jdbcType=VARCHAR}
+        and proj.id = #{id,jdbcType=VARCHAR}
       </if>
       <if test="completion != null">
         and proj.is_completion = #{completion,jdbcType=TINYINT}
@@ -408,12 +408,12 @@
       (o.`delivery_status` = 0 OR sett.`bill_delivery_status` = 2 OR sett.`buyer_settlement_status` = 2
       OR sett.`settlement_delivery_status` = 2 OR sett.`supplier_settlement_status` = 2 OR pay.`approval_status` = 2
       OR pay.`bill_open_time` = 2 OR pay.`payment_status` = 2
-      ) GROUP BY proj.`project_name`
+      ) GROUP BY comp.`company_name`,proj.`project_name`,proj.`id`,proj.`is_completion`
   </select>
 
   <select id="selectExceptionProjectCount" resultType="java.lang.Integer" parameterType="com.hxyc.ots.vo.ProjectVO">
     SELECT COUNT(*) FROM(
-    SELECT comp.`company_name`,proj.`project_name`,proj.`id`,proj.`is_completion` FROM `t_company` comp
+    SELECT comp.`company_name`,proj.`project_name` FROM `t_company` comp
     LEFT JOIN `t_project` proj ON proj.`company_id` = comp.`id` AND proj.`status` = 1
     LEFT JOIN `t_order` o ON o.`project_id` = proj.`id` AND o.`status` = 1
     LEFT JOIN `t_settlement` sett ON sett.`order_id` = o.`order_code` AND sett.`status` = 1
@@ -428,7 +428,7 @@
     (o.`delivery_status` = 0 OR sett.`bill_delivery_status` = 2 OR sett.`buyer_settlement_status` = 2
     OR sett.`settlement_delivery_status` = 2 OR sett.`supplier_settlement_status` = 2 OR pay.`approval_status` = 2
     OR pay.`bill_open_time` = 2 OR pay.`payment_status` = 2
-    ) GROUP BY proj.`project_name`)aa
+    ) GROUP BY comp.`company_name`,proj.`project_name`)aa
   </select>
 
   <update id="updateByPrimaryKey" parameterType="com.hxyc.ots.model.Project" >

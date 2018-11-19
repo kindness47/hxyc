@@ -151,10 +151,9 @@ public class OrderAuditController extends BaseController {
     }
 
     @RequestMapping("/exceptionOrder")
-    public ModelAndView selectExceptionOrder(@RequestParam("projectId") String projectId,@RequestParam("completion") String completion){
+    public ModelAndView selectExceptionOrder(@RequestParam("projectId") String projectId){
         Map<String,Object> map = new HashMap<>();
         map.put("projectId",projectId);
-        map.put("completion",completion);
         List<OrderAduitVO> orderAduitVOList = settlementService.selectOrderAudit(map);
         ModelAndView mov = new ModelAndView();
         mov.addObject("orderAduitVOList",orderAduitVOList);

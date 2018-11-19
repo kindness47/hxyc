@@ -21,14 +21,14 @@
     <link rel="stylesheet" href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
     <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
     <![endif]-->
-    <title>订单审查</title>
+    <title>异常订单</title>
     <style type="text/css">
         .Hui-aside{position: absolute;top:44px;bottom:0;left:0;padding-top:10px;width:256px;z-index:99;overflow:auto; background-color:rgba(238,238,238,0.98);_background-color:rgb(238,238,238);border-right: 1px solid #e5e5e5}
         .Hui-article-box{position: absolute;top:44px;right:16px;bottom: 0;left:299px; overflow:hidden; z-index:1; background-color:#fff}
     </style>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单跟踪 <span class="c-gray en">&gt;</span> 订单审查 <a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" onclick="location.replace(location.href)" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 异常项目<span class="c-gray en">&gt;</span> 项目审查 <a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" onclick="location.replace(location.href)" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 
 <aside class="Hui-aside">
     <ul id="compDeptTree" class="ztree"></ul>
@@ -49,10 +49,10 @@
                     </div>
                     <button class="layui-btn layui-btn-sm" data-type="reload">搜索</button>
 
-                    <button class="layui-btn layui-btn-sm" lay-event="getFinish">
+                    <%--<button class="layui-btn layui-btn-sm" lay-event="getFinish">
                         <i class="layui-icon">&#xe605;</i>
                         设置为已完成
-                    </button>
+                    </button>--%>
                 </div>
             </div>
         </script>
@@ -134,7 +134,7 @@
 
     function initCompDeptTree(){
         $.ajax({
-            url: '${hxycStatic}/company-tree-list?completion=' + false,
+            url: '${hxycStatic}/company-tree-exception-list',
             type: 'get',
             dataType:'json',
             async:false,
@@ -158,9 +158,9 @@
     }
 
     function initProjectTable2(companyId) {
-        var requrl = '${hxycStatic}/project-list-by-param?completion=false';
+        var requrl = '${hxycStatic}/project-list-exception';
         if ('' != companyId){
-            requrl = '${hxycStatic}/project-list-by-param?companyId='+companyId+'&completion=false';
+            requrl = '${hxycStatic}/project-list-exception?companyId='+ companyId;
         }
         layui.use('table', function(){
             var laytable = layui.table;
@@ -175,11 +175,16 @@
                 ,page: true
                 ,limit: 10
                 ,cols: [[
-                    {type: 'checkbox', fixed: 'left'},
-                    {title:'操作', toolbar: '#view', width:66},
+                    //{type: 'checkbox', fixed: 'left'},
+                    {title:'查看', toolbar: '#view', width:66},
                     {field:'companyName', title:'公司名称', width:211, sort: true},
-                    {field:'projectName', title:'项目名称', width:520, sort: true}
-
+                    {field:'projectName', title:'项目名称', width:520, sort: true},
+                    {field:'completion',title:'完成状态',templet: function(d){
+                        if(d.completion == true)
+                            return '竣工';
+                        else
+                            return '未完成';
+                        },width:150, sort: true}
                 ]]
             });
 
@@ -191,7 +196,7 @@
                     //layer_show(data.projectName,'showView?projectId='+data.projectId,800,600);
                     var index = layer.open({
                         type: 2,
-                        content:'aduit-list?projectId='+data.id,
+                        content:'exceptionOrder?projectId='+data.id,
                         area: ['800px', '500px'],
                         title: data.projectName+' --订单跟踪详情',
                         maxmin: true,
@@ -201,7 +206,7 @@
                 }
             });
             //头工具栏事件
-            laytable.on('toolbar(demotable)', function(obj){
+            /*laytable.on('toolbar(demotable)', function(obj){
                 var checkStatus = laytable.checkStatus(obj.config.id);
                 switch(obj.event){
                     case 'getFinish':
@@ -217,12 +222,18 @@
                         });
                         break;
                 };
-            });
+            });*/
+            /*laytable.on('checkbox(demotable)', function(obj){
+                console.log(obj.data); //所在行的所有相关数据
+                console.log(obj.value); //得到修改后的值
+                console.log(obj.field); //当前编辑的字段名
+            });*/
 
             var $ = layui.$, active = {
                 reload: function(){
                     var projectName = $('#projectName');
                     var companyName = $('#companyName');
+                    var completion = $('#completion');
                     //执行重载
                     laytable.reload('projectTable', {
                         page: {
@@ -242,9 +253,9 @@
             });
         });
     }
-    var getFinish = function (jsonData) {
+   /* var getFinish = function (jsonData) {
         $.ajax({
-            url: '${hxycStatic}/project-list-setfinish',
+            url: '\${hxycStatic}/project-list-setfinish',
             type: 'get',
             data:{"jsonData":jsonData},
             dataType:'json',
@@ -268,7 +279,7 @@
                 });
             }
         });
-    }
+    }*/
 </script>
 </body>
 </html>

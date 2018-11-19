@@ -1,5 +1,6 @@
 package com.hxyc.ots.service.impl;
 
+import com.hxyc.ots.base.Constants;
 import com.hxyc.ots.mapper.CompanyMapper;
 import com.hxyc.ots.model.Company;
 import com.hxyc.ots.service.CompanyService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -82,12 +84,77 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<CompanyVO> listExceptionCompanys(CompanyVO companyVO) {
-        return companyMapper.listExceptionCompanys(companyVO);
+    public List<CompanyVO> listExceptionCompanys(CompanyVO company) {
+        List<CompanyVO> companyList = companyMapper.listExceptionCompanys(company);
+        //如果无项目返回顶级父目录
+        if(companyList.size() == 0) {
+            CompanyVO c = new CompanyVO();
+            c.setLevel(1);
+            return companyMapper.listCompanys(c);
+        }
+        if(companyList.size() == 0) {
+            CompanyVO c = new CompanyVO();
+            c.setLevel(1);
+            return companyMapper.listCompanys(c);
+        }
+        List<String> idList = new ArrayList<>();
+        boolean isFa ;
+        List<CompanyVO> hasFaCompanyVOList = new ArrayList<>();
+        CompanyVO c = new CompanyVO();
+        for(CompanyVO companyVO : companyList) {
+            idList.add(companyVO.getId());
+            hasFaCompanyVOList.add(companyVO);
+        }
+        for(CompanyVO companyVO : companyList){
+            //判断是否为根节点
+            isFa = companyVO.getLevel() == (Integer)1;
+            while(!isFa && idList.indexOf(companyVO.getParentId()) == -1) {
+                //查出父对象
+                c.setId(companyVO.getParentId());
+                List<CompanyVO> list = companyMapper.listCompanys(c);
+                if(list.size() == 0)
+                    break;
+                companyVO = list.get(0);
+                idList.add(companyVO.getId());
+                hasFaCompanyVOList.add(companyVO);
+                isFa = companyVO.getLevel() == (Integer)1;
+            }
+        }
+        return hasFaCompanyVOList;
     }
 
     @Override
     public List<CompanyVO> listCompanyByStatus(Map map) {
-        return companyMapper.listCompanyByStatus(map);
+        List<CompanyVO> companyList = companyMapper.listCompanyByStatus(map);
+        //如果无项目返回顶级父目录
+        if(companyList.size() == 0) {
+            CompanyVO c = new CompanyVO();
+            c.setLevel(1);
+            return companyMapper.listCompanys(c);
+        }
+        List<String> idList = new ArrayList<>();
+        boolean isFa ;
+        List<CompanyVO> hasFaCompanyVOList = new ArrayList<>();
+        CompanyVO c = new CompanyVO();
+        for(CompanyVO companyVO : companyList) {
+            idList.add(companyVO.getId());
+            hasFaCompanyVOList.add(companyVO);
+        }
+        for(CompanyVO companyVO : companyList){
+            //判断是否为根节点
+            isFa = companyVO.getLevel() == (Integer)1;
+            while(!isFa && idList.indexOf(companyVO.getParentId()) == -1) {
+                //查出父对象
+                c.setId(companyVO.getParentId());
+                List<CompanyVO> list = companyMapper.listCompanys(c);
+                if(list.size() == 0)
+                    break;
+                companyVO = list.get(0);
+                idList.add(companyVO.getId());
+                hasFaCompanyVOList.add(companyVO);
+                isFa = companyVO.getLevel() == (Integer)1;
+            }
+        }
+        return hasFaCompanyVOList;
     }
 }

@@ -1,5 +1,8 @@
 package com.hxyc.ots.base;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Author: 于金谷
  * @Date: 2018/7/26 10:57
@@ -44,5 +47,12 @@ public class Constants {
      */
     public final static String HAO = "好";
     public final static String CHA = "差";
+
+    /**
+     * 记录公司的项目数
+     */
+    public final static Map<String,Integer> noCompletionCountMap = new HashMap<>();
+    public final static Map<String,Integer> completionCountMap = new HashMap<>();
+    public final static Map<String,Integer> exceptionCountMap = new HashMap<>();
 
 }

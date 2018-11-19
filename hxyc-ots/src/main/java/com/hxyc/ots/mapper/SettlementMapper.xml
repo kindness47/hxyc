@@ -77,6 +77,19 @@
     buyer_settlement_time, buyer_settlement_status,buyer_settlement_remark,
     settlement_mode, settlement_amount, status, create_by, create_time, update_by, update_time
   </sql>
+  <sql id="Order_Aduit_List">
+    comp.`company_short_name`,comp.`company_name`,proj.`project_name`,proj.`create_by`,
+	sett.`project_id`,sett.`company_id`,sett.`id`,sett.`order_id`,sett.`settlement_code`,sett.`supplier_settlement_time`,
+	sett.`supplier_settlement_status`,sett.`supplier_settlement_remark`,sett.`settlement_delivery_time`,
+	sett.`settlement_delivery_status`,sett.`settlement_delivery_remark`,sett.`bill_delivery_time`,sett.`bill_delivery_status`,
+	sett.`bill_delivery_remark`,sett.`settlement_mode`,sett.`create_by`,sett.`create_time`,sett.`update_by`,sett.`update_time`,
+	sett.`settlement_amount`,sett.`buyer_settlement_time`,sett.`buyer_settlement_status`,sett.`buyer_settlement_remark`,
+	pay.`approval_time`,pay.`approval_status`,pay.`approval_remark`,pay.`payment_time`,pay.`payment_status`,pay.`payment_remark`,
+	pay.`bill_open_time`,pay.`bill_open_status`,pay.`bill_open_remark`,pay.`payment_amount`,pay.`create_by`,
+	pay.`credit_surplus_amount`,pay.`remarks`,o.`order_code`,o.`order_time`,o.`order_status`,o.`order_exception_desc`,
+	o.`delivery_time`,o.`delivery_status`,o.`delivery_exception_desc`,o.`receive_num`,o.`quality`,o.`quality_remark`,
+	o.`service`,o.`service_remark`,o.`create_by`,cre.`credit_code`,cre.`open_amount`,cre.`open_time`
+  </sql>
 
   <select id="selectAduitOrder"  resultMap="AduitResultMap" parameterType="java.lang.String" >
     select tod.order_code,tod.order_time,tod.order_status,tod.delivery_time,tod.delivery_status,tod.receive_num,tod.quality,tod.service,tod.order_exception_desc,tod.delivery_exception_desc
@@ -334,17 +347,7 @@
 
 <select id="selectOrderAudit" resultMap="AduitResultMap" parameterType="java.util.Map">
 SELECT  comp.`company_short_name`,comp.`company_name`,proj.`project_name`,proj.`create_by`,
-	sett.`project_id`,sett.`company_id`,sett.`id`,sett.`order_id`,sett.`settlement_code`,sett.`supplier_settlement_time`,
-	sett.`supplier_settlement_status`,sett.`supplier_settlement_remark`,sett.`settlement_delivery_time`,
-	sett.`settlement_delivery_status`,sett.`settlement_delivery_remark`,sett.`bill_delivery_time`,sett.`bill_delivery_status`,
-	sett.`bill_delivery_remark`,sett.`settlement_mode`,sett.`create_by`,sett.`create_time`,sett.`update_by`,sett.`update_time`,
-	sett.`settlement_amount`,sett.`buyer_settlement_time`,sett.`buyer_settlement_status`,sett.`buyer_settlement_remark`,
-	pay.`approval_time`,pay.`approval_status`,pay.`approval_remark`,pay.`payment_time`,pay.`payment_status`,pay.`payment_remark`,
-	pay.`bill_open_time`,pay.`bill_open_status`,pay.`bill_open_remark`,pay.`payment_amount`,pay.`create_by`,
-	pay.`credit_surplus_amount`,pay.`remarks`,o.`order_code`,o.`order_time`,o.`order_status`,o.`order_exception_desc`,
-	o.`delivery_time`,o.`delivery_status`,o.`delivery_exception_desc`,o.`receive_num`,o.`quality`,o.`quality_remark`,
-	o.`service`,o.`service_remark`,o.`create_by`,cre.`credit_code`,cre.`open_amount`,cre.`open_time`
-    /*cre.`rest_amount`*/
+	<include refid="Order_Aduit_List" />
 	FROM `t_company` comp LEFT JOIN `t_project` proj ON comp.`id` = proj.`company_id` AND proj.`status` = '1'
 	LEFT JOIN `t_order` o ON proj.`id` = o.`project_id` AND o.`status` = '1'
 	LEFT JOIN `t_settlement` sett ON o.`order_code` = sett.`order_id` AND sett.`status` = '1'
@@ -364,7 +367,7 @@ SELECT  comp.`company_short_name`,comp.`company_name`,proj.`project_name`,proj.`
 	sett.`bill_delivery_status` ='2' OR sett.`buyer_settlement_status` = '2' OR pay.`bill_open_status` = '2' OR
 	pay.`approval_status` = '2' OR pay.`payment_status` = '2')
 
-	GROUP BY pay.`id`
+	GROUP BY <include refid="Order_Aduit_List" />
 
 </select>
 

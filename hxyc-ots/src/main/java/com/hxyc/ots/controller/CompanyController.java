@@ -1,20 +1,21 @@
 package com.hxyc.ots.controller;
 
+import com.hxyc.ots.base.Constants;
 import com.hxyc.ots.base.Response;
 import com.hxyc.ots.model.Company;
 import com.hxyc.ots.service.CompanyService;
+import com.hxyc.ots.service.ProjectService;
 import com.hxyc.ots.utils.SystemUtil;
 import com.hxyc.ots.vo.CompanyVO;
+import com.hxyc.ots.vo.ProjectVO;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description:公司管理
@@ -26,6 +27,9 @@ public class CompanyController extends BaseController {
 
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private ProjectService projectService;
 
     /**
      * 公司信息列表
@@ -49,9 +53,50 @@ public class CompanyController extends BaseController {
         Map<String,Boolean> statusMap = new HashMap<String,Boolean>();
         statusMap.put("completion",Boolean.parseBoolean(completion));
         List<CompanyVO> companyList = companyService.listCompanyByStatus(statusMap);
-        for(CompanyVO companyVO:companyList)
-            System.out.println("------------>"+companyVO.getCompanyName()+"---->"+companyVO.getParentCompanyName());
-        return returnSuccess(companyList);
+        //操作将在companyList进行,newCompanyList向前台返回数据
+        List<CompanyVO> newCompanyList = new ArrayList<>();
+        for(CompanyVO companyVO:companyList) {
+            newCompanyList.add(companyVO);
+        }
+        //查找每个CompanyVO对象下的project的count
+        int count;
+        ProjectVO p = new ProjectVO();
+        //判断查询的listcompany的状态
+        Map<String,Integer> countMap=Boolean.parseBoolean(completion)?Constants.completionCountMap:Constants.noCompletionCountMap;
+        if(countMap == null || countMap.isEmpty())
+            countMap = new HashMap<String,Integer>();
+            for(CompanyVO companyVO:companyList) {
+                p.setCompanyId(companyVO.getId());
+                p.setCompletion(Boolean.parseBoolean(completion));
+                //获取某个company下project的count
+                count = projectService.getCount(p);
+                System.out.println();
+                //判断是否已有子节点加上了count
+                int sum = countMap.get(companyVO.getId()) == null ? count : (countMap.get(companyVO.getId())+count);
+                countMap.put(companyVO.getId(),sum);
+                //判断此CompanyVO对象是否为顶级父节点
+                boolean isTopFa = companyVO.getLevel() == 1;
+                CompanyVO c = new CompanyVO();
+                //如果不是顶级父节点，将count加到其直接父节点上
+                while(!isTopFa){
+                    //父节点新的数量
+                    int fNewCount = countMap.get(companyVO.getParentId()) == null ? count : (countMap.get(companyVO.getParentId())+count);
+                    countMap.put(companyVO.getParentId(),fNewCount);
+                    //将下一次操作的CompanyVO对象变为其父对象
+                    c.setId(companyVO.getParentId());
+                    List<CompanyVO> list = companyService.listCompany(c);
+                    if(list.size() == 0)
+                        break;
+                    companyVO = list.get(0);
+                    isTopFa = companyVO.getLevel() == 1;
+                }
+            }
+       String newCompanyShortName = "";
+        for(CompanyVO companyVO : newCompanyList) {
+            newCompanyShortName = companyVO.getCompanyShortName()+"("+countMap.get(companyVO.getId())+")";
+             companyVO.setCompanyShortName(newCompanyShortName);
+        }
+        return returnSuccess(newCompanyList);
     }
     /**
      * Description： 查询有异常项目的公司列表
@@ -60,9 +105,45 @@ public class CompanyController extends BaseController {
      */
     @RequestMapping(value = "/company-tree-exception-list" , method = RequestMethod.GET)
     @ResponseBody
-    public Response exceptionCompanyTree(CompanyVO companyVO){
-        List<CompanyVO> companyList = companyService.listExceptionCompanys(companyVO);
-        return returnSuccess(companyList);
+    public Response exceptionCompanyTree(CompanyVO company){
+        List<CompanyVO> companyList = companyService.listExceptionCompanys(company);
+        List<CompanyVO> newCompanyList = new ArrayList<>();
+        for(CompanyVO companyVO:companyList) {
+            System.out.println("--------------------->>"+companyVO.getCompanyName()+"-->"+companyVO.getCompanyShortName());
+            newCompanyList.add(companyVO);
+        }
+        int count;
+        ProjectVO p = new ProjectVO();
+        Map<String,Integer> countMap= Constants.exceptionCountMap;
+        if(countMap == null || countMap.isEmpty())
+            countMap = new HashMap<String,Integer>();
+        for(CompanyVO companyVO:companyList) {
+            p.setCompanyId(companyVO.getId());
+            count = projectService.selectExceptionProjectCount(p);
+            System.out.println();
+            int sum = countMap.get(companyVO.getId()) == null ? count : (countMap.get(companyVO.getId())+count);
+            countMap.put(companyVO.getId(),sum);
+            boolean isTopFa = companyVO.getLevel() == 1;
+            CompanyVO c = new CompanyVO();
+            while(!isTopFa){
+                //父节点新的数量
+                int fNewCount = countMap.get(companyVO.getParentId()) == null ? count : (countMap.get(companyVO.getParentId())+count);
+                countMap.put(companyVO.getParentId(),fNewCount);
+                //将下一次操作的CompanyVO对象变为其父对象
+                c.setId(companyVO.getParentId());
+                List<CompanyVO> list = companyService.listCompany(c);
+                if(list.size() == 0)
+                    break;
+                companyVO = list.get(0);
+                isTopFa = companyVO.getLevel() == 1;
+            }
+        }
+        String newCompanyShortName = "";
+        for(CompanyVO companyVO : newCompanyList) {
+            newCompanyShortName = companyVO.getCompanyShortName()+"("+countMap.get(companyVO.getId())+")";
+            companyVO.setCompanyShortName(newCompanyShortName);
+        }
+        return returnSuccess(newCompanyList);
     }
     /**
      * 功能描述:新增公司

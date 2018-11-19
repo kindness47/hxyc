@@ -65,7 +65,6 @@ public interface ProjectService {
     List<ProjectVO> selectExceptionProject(ProjectVO projectVO);
 
     Integer selectExceptionProjectCount(ProjectVO project);
- }
     /**
      * 功能描述: 获取欢迎页汇总数据
      * @Auther: 于金谷
