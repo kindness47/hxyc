@@ -20,15 +20,7 @@
 	<!--[if IE 6]>
 	<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<![endif]-->
-
-	<!-- BEGIN PAGE LEVEL PLUGINS -->
-	<link href="${hxycStatic}/vendors/metronic4.5.2/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-	<link href="${hxycStatic}/vendors/metronic4.5.2/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<!-- END PAGE LEVEL PLUGINS -->
 	<title>权限分配</title>
-	<style>
-		#select2-parentId-results {max-height: 100px;}
-	</style>
 </head>
 <body>
 <article class="page-container">
@@ -37,223 +29,36 @@
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2">用户名：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<input type="text" class="input-text" value="admin"  id="userName" name="userName">
+				<input type="text" class="input-text" value="admin"  id="userName" name="userName" readonly>
 			</div>
 			<label class="form-label col-xs-2 col-sm-2" style="margin: right;">账号：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<input type="text" class="input-text" value="admin" id="account" name="account">
+				<input type="text" class="input-text" value="admin" id="account" name="account" readonly>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2">菜单功能：</label>
 			<div class="formControls col-xs-10 col-sm-10">
-				<shiro:hasPermission name="01" >
-					<dl class="permission-list">
-						<dt><label><input type="checkbox" value="01" name="BaseInfo" id="01">基础信息</label></dt>
-						<dd>
-							<shiro:hasPermission name="0101">
+				<c:forEach items="${menus}" var="menu2">
+					<c:if test="${menu2.level=='2'}">
+						<dl class="permission-list">
+						<dt><label><input type="checkbox" id="${menu2.menuCode}" value="${menu2.menuCode}" name="${menu2.menuCode}" >${menu2.menuName}</label></dt>
+						<c:set var="parentCode2" value="${menu2.menuCode}"/>
+						<dd><c:forEach items="${menus}" var="menu3">
+							<c:if test="${menu3.level=='3'and menu3.parentCode==parentCode2}">
 								<dl class="cl permission-list2">
-									<dt><label class=""><input type="checkbox" value="0101" name="user-Character-0-0" id="0101">公司管理</label></dt>
-									<dd>
-										<shiro:hasPermission name="0101-0005">
-											<label class=""><input type="checkbox" value="0101-0005" name="user-Character-0-0-0" id="0101-0005">查看</label>
-										</shiro:hasPermission>
-										<shiro:hasPermission name="0101-0001">
-											<label class=""><input type="checkbox" value="0101-0001" name="user-Character-0-0-0" id="0101-0001">新增</label>
-										</shiro:hasPermission>
-										<shiro:hasPermission name="0101-0002">
-											<label class=""><input type="checkbox" value="0101-0002" name="user-Character-0-0-0" id="0101-0002">修改</label>
-										</shiro:hasPermission>
-										<shiro:hasPermission name="0101-0004">
-											<label class=""><input type="checkbox" value="0101-0004" name="user-Character-0-0-0" id="0101-0004">信用证</label>
-										</shiro:hasPermission>
-									</dd>
+									<dt><label class=""><input type="checkbox" value="${menu3.menuCode}" name="${menu3.menuCode}" id="${menu3.menuCode}">${menu3.menuName}</label></dt>
+									<dd><c:set var="parentCode3" value="${menu3.menuCode}"/>
+									<c:forEach items="${menus}" var="menu4">
+										<c:if test="${menu4.level=='4'and menu4.parentCode==parentCode3}">
+											<label class=""><input type="checkbox" value="${menu4.menuCode}" name="${menu4.menuCode}" id="${menu4.menuCode}">${menu4.menuName}</label></c:if>
+									</c:forEach></dd>
 								</dl>
-							</shiro:hasPermission>
-							<shiro:hasPermission name="0102">
-							<dl class="cl permission-list2">
-								<shiro:hasPermission name="0102">
-									<dt><label class=""><input type="checkbox" value="0102" name="user-Character-0-1" id="0102">信用证管理</label></dt>
-								</shiro:hasPermission>
-								<dd>
-									<shiro:hasPermission name="0102-0001">
-										<label class=""><input type="checkbox" value="0102-0001" name="user-Character-0-1-0" id="0102-0001">查看</label>
-									</shiro:hasPermission>
-									<shiro:hasPermission name="0102-0002">
-										<label class=""><input type="checkbox" value="0102-0002" name="user-Character-0-1-0" id="0102-0002">修改</label>
-									</shiro:hasPermission>
-								</dd>
-							</dl>
-							</shiro:hasPermission>
-						</dd>
-					</dl>
-				</shiro:hasPermission>
-				<shiro:hasPermission name="02">
-				<dl class="permission-list">
-					<dt><label><input type="checkbox" value="02" name="user-Character-0" id="02">订单跟踪</label></dt>
-					<dd>
-						<shiro:hasPermission name="0201">
-						<dl class="cl permission-list2">
-							<dt>
-								<label class=""><input type="checkbox" value="0201" name="user-Character-1-0" id="0201">项目管理</label>
-							</dt>
-							<dd>
-								<shiro:hasPermission name="0201-0005">
-									<label class=""><input type="checkbox" value="0201-0005" name="user-Character-1-0-0" id="0201-0005">查看</label>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="0201-0001">
-									<label class=""><input type="checkbox" value="0201-0001" name="user-Character-1-0-0" id="0201-0001">新增</label>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="0201-0002">
-									<label class=""><input type="checkbox" value="0201-0002" name="user-Character-1-0-0" id="0201-0002">修改</label>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="0201-0003">
-									<label class=""><input type="checkbox" value="0201-0003" name="user-Character-1-0-0" id="0201-0003">收款</label>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="0201-0004">
-									<label class=""><input type="checkbox" value="0201-0004" name="user-Character-1-0-0" id="0201-0004">信用证</label>
-								</shiro:hasPermission>
-								<label class=""><input type="checkbox" value="0201-0006" name="user-Character-1-0-0" id="0201-0006">导出</label>
-							</dd>
+							</c:if>
+						</c:forEach></dd>
 						</dl>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="0202">
-						<dl class="cl permission-list2">
-							<dt>
-								<label class=""><input type="checkbox" value="0202" name="user-Character-1-0" id="0202">订单管理</label>
-							</dt>
-							<dd>
-								<shiro:hasPermission name="0202-0003">
-									<label class=""><input type="checkbox" value="0202-0003" name="user-Character-1-0-0" id="0202-0003">查看</label>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="0202-0001">
-									<label class=""><input type="checkbox" value="0202-0001" name="user-Character-1-0-0" id="0202-0001">订单录入</label>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="0202-0002">
-									<label class=""><input type="checkbox" value="0202-0002" name="user-Character-1-0-0" id="0202-0002">修改</label>
-								</shiro:hasPermission>
-								<label class=""><input type="checkbox" value="0202-0004" name="user-Character-1-0-0" id="0202-0004">导出</label>
-							</dd>
-						</dl>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="0203">
-							<dl class="cl permission-list2">
-								<dt>
-									<label class=""><input type="checkbox" value="0203" name="user-Character-1-0" id="0203">结算管理</label>
-								</dt>
-								<dd>
-									<shiro:hasPermission name="0203-0003">
-										<label class=""><input type="checkbox" value="0203-0003" name="user-Character-1-0-0" id="0203-0003">查看</label>
-									</shiro:hasPermission>
-									<shiro:hasPermission name="0203-0001">
-										<label class=""><input type="checkbox" value="0203-0001" name="user-Character-1-0-0" id="0203-0001">新增</label>
-									</shiro:hasPermission>
-									<shiro:hasPermission name="0203-0002">
-										<label class=""><input type="checkbox" value="0203-0002" name="user-Character-1-0-0" id="0203-0002">修改</label>
-									</shiro:hasPermission>
-								</dd>
-							</dl>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="0204">
-						<dl class="cl permission-list2">
-							<dt>
-								<label class=""><input type="checkbox" value="0204" name="user-Character-1-0" id="0204">支付管理</label>
-							</dt>
-							<dd>
-								<shiro:hasPermission name="0204-0003">
-									<label class=""><input type="checkbox" value="0204-0003" name="user-Character-1-0-0" id="0204-0003">查看</label>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="0204-0001">
-									<label class=""><input type="checkbox" value="0204-0001" name="user-Character-1-0-0" id="0204-0001">新增</label>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="0204-0002">
-									<label class=""><input type="checkbox" value="0204-0002" name="user-Character-1-0-0" id="0204-0002">修改</label>
-								</shiro:hasPermission>
-							</dd>
-						</dl>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="0205">
-						<dl class="cl permission-list2">
-							<dt>
-								<label class=""><input type="checkbox" value="0205" name="user-Character-1-0" id="0205">收款管理</label>
-							</dt>
-							<dd>
-								<shiro:hasPermission name="0205-0001">
-									<label class=""><input type="checkbox" value="0205-0001" name="0202-0002" id="0205-0001">查看</label>
-								</shiro:hasPermission>
-								<shiro:hasPermission name="0205-0002">
-									<label class=""><input type="checkbox" value="0205-0002" name="0202-0002" id="0205-0002">修改</label>
-								</shiro:hasPermission>
-							</dd>
-						</dl>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="0206">
-							<dl class="cl permission-list2">
-								<dt>
-									<label class=""><input type="checkbox" value="0206" name="user-Character-1-0" id="0206">订单追踪</label>
-								</dt>
-								<dd>
-									<shiro:hasPermission name="0206-0001">
-										<label class=""><input type="checkbox" value="0206-0001" name="0202-0002" id="0206-0001">查看</label>
-									</shiro:hasPermission>
-								</dd>
-							</dl>
-						</shiro:hasPermission>
-					</dd>
-				</dl>
-				</shiro:hasPermission>
-				<shiro:hasPermission name="03">
-				<dl class="permission-list">
-					<dt><label><input type="checkbox" value="03" name="user-Character-0" id="03">系统管理</label></dt>
-					<dd>
-						<shiro:hasPermission name="0301">
-							<dl class="cl permission-list2">
-								<dt>
-									<label class=""><input type="checkbox" value="0301" name="user-Character-1-0" id="0301">权限管理</label>
-								</dt>
-								<dd>
-									<shiro:hasPermission name="0301-0012">
-										<label class=""><input type="checkbox" value="0301-0012" name="user-Character-1-0-0" id="0301-0012">查看</label>
-									</shiro:hasPermission>
-									<shiro:hasPermission name="0301-0005">
-										<label class=""><input type="checkbox" value="0301-0005" name="user-Character-1-0-0" id="0301-0005">添加用户</label>
-									</shiro:hasPermission>
-									<shiro:hasPermission name="0301-0006">
-										<label class=""><input type="checkbox" value="0301-0006" name="user-Character-1-0-0" id="0301-0006">分配权限</label>
-									</shiro:hasPermission>
-									<shiro:hasPermission name="0301-0007">
-										<label class=""><input type="checkbox" value="0301-0007" name="user-Character-1-0-0" id="0301-0007">启用</label>
-									</shiro:hasPermission>
-									<shiro:hasPermission name="0301-0008">
-										<label class=""><input type="checkbox" value="0301-0008" name="user-Character-1-0-0" id="0301-0008">停用</label>
-									</shiro:hasPermission>
-									<shiro:hasPermission name="0301-0010">
-										<label class=""><input type="checkbox" value="0301-0010" name="user-Character-1-0-0" id="0301-0010">编辑</label>
-									</shiro:hasPermission>
-									<shiro:hasPermission name="0301-0009">
-										<label class=""><input type="checkbox" value="0301-0009" name="user-Character-1-0-0" id="0301-0009">删除</label>
-									</shiro:hasPermission>
-									<shiro:hasPermission name="0301-0011">
-										<label class=""><input type="checkbox" value="0301-0011" name="user-Character-1-0-0" id="0301-0011">密码初始化</label>
-									</shiro:hasPermission>
-								</dd>
-							</dl>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="0302">
-							<dl class="cl permission-list2">
-								<dt>
-									<label class=""><input type="checkbox" value="0302" name="user-Character-1-0" id="0302">系统日志</label>
-								</dt>
-								<dd>
-									<shiro:hasPermission name="0302-0001">
-										<label class=""><input type="checkbox" value="0302-0001" name="0302-0001" id="0302-0001">查看</label>
-									</shiro:hasPermission>
-								</dd>
-							</dl>
-						</shiro:hasPermission>
-					</dd>
-				</dl>
-				</shiro:hasPermission>
+					</c:if>
+				</c:forEach>
 			</div>
 		</div>
 		<div class="row cl">
@@ -279,7 +84,7 @@
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="${hxycStatic}/vendors/metronic4.5.2/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
 <script src="${hxycStatic}/vendors/metronic4.5.2/global/scripts/app.min.js" type="text/javascript"></script>
-<script src="${hxycStatic}/js/ots/company-add-select2.js" type="text/javascript"></script>
+<%--<script src="${hxycStatic}/js/ots/company-add-select2.js" type="text/javascript"></script>--%>
 <!-- END PAGE LEVEL PLUGINS -->
 
 <script type="text/javascript">

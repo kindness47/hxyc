@@ -1,40 +1,55 @@
 package com.hxyc.ots.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Description: 菜单实体对象
+ * @Description: 菜单对象
  * @Author: 于金谷
- * @Date: 2018/7/26 9:54
+ * @Date: 2018/11/15 17:04
  */
-public class Menu extends BaseModel {
+public class Menu implements Serializable {
+    private Integer id;
 
-    /**菜单编码*/
     private String menuCode;
 
-    /**菜单名称*/
     private String menuName;
 
-    /**父菜单ID*/
-    private String parentId;
+    private String parentCode;
 
-    /**父菜单名称*/
-    private String parentMenuName;
-
-    /**菜单URL*/
     private String url;
 
-    /**菜单样式*/
+    private String level;
+
     private String menuClass;
 
-    /**菜单类型 1 模块 2 菜单*/
-    private Integer menuType;
+    private String functionType;
 
-    /**排序*/
     private Integer sort;
 
-    /**级别 */
-    private Integer level;
+    private String title;
+
+    private Integer status;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+
+    private String createBy;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+
+    private String updateBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getMenuCode() {
         return menuCode;
@@ -52,20 +67,12 @@ public class Menu extends BaseModel {
         this.menuName = menuName == null ? null : menuName.trim();
     }
 
-    public String getParentId() {
-        return parentId;
+    public String getParentCode() {
+        return parentCode;
     }
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId == null ? null : parentId.trim();
-    }
-
-    public String getParentMenuName() {
-        return parentMenuName;
-    }
-
-    public void setParentMenuName(String parentMenuName) {
-        this.parentMenuName = parentMenuName == null ? null : parentMenuName.trim();
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode == null ? null : parentCode.trim();
     }
 
     public String getUrl() {
@@ -76,6 +83,14 @@ public class Menu extends BaseModel {
         this.url = url == null ? null : url.trim();
     }
 
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level == null ? null : level.trim();
+    }
+
     public String getMenuClass() {
         return menuClass;
     }
@@ -84,12 +99,12 @@ public class Menu extends BaseModel {
         this.menuClass = menuClass == null ? null : menuClass.trim();
     }
 
-    public Integer getMenuType() {
-        return menuType;
+    public String getFunctionType() {
+        return functionType;
     }
 
-    public void setMenuType(Integer menuType) {
-        this.menuType = menuType;
+    public void setFunctionType(String functionType) {
+        this.functionType = functionType == null ? null : functionType.trim();
     }
 
     public Integer getSort() {
@@ -100,11 +115,51 @@ public class Menu extends BaseModel {
         this.sort = sort;
     }
 
-    public Integer getLevel() {
-        return level;
+    public String getTitle() {
+        return title;
     }
 
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy == null ? null : createBy.trim();
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy == null ? null : updateBy.trim();
     }
 }

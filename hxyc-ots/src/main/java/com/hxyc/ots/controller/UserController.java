@@ -3,7 +3,9 @@ package com.hxyc.ots.controller;
 import com.hxjc.core.utils.SysUtils;
 import com.hxyc.ots.base.Constants;
 import com.hxyc.ots.base.Response;
+import com.hxyc.ots.model.Menu;
 import com.hxyc.ots.model.Users;
+import com.hxyc.ots.service.MenuService;
 import com.hxyc.ots.service.UserService;
 import com.hxyc.ots.utils.SystemUtil;
 import com.hxyc.ots.vo.UserVO;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +33,8 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private MenuService menuService;
 
     /**
      * 功能描述: 用户信息列表
@@ -68,6 +73,16 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/user-permission", method = RequestMethod.GET)
     public ModelAndView assignPermission(){
         ModelAndView mav = new ModelAndView("sysManage/user-permission");
+        Users sessionUser = SystemUtil.getSessionUser();
+        String roleName = sessionUser.getRoleName();
+        List<Menu> menus;
+        if (Constants.SUPER_ADMIN.equals(roleName)) {
+            menus = menuService.getAllMenus();
+        } else {
+            String userId = sessionUser.getId();
+            menus = menuService.getMenusByLoginUser(userId);
+        }
+        mav.addObject("menus", menus);
         return mav;
     }
 
