@@ -124,7 +124,7 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-2 col-sm-2">财务专员1：</label>
+			<label class="form-label col-xs-2 col-sm-2">财务专员：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<select id="financeAssistant" name="financeAssistant" class="form-control select2-multiple" multiple>
 					<c:forEach items="${financeUsers}" var="user">
