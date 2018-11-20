@@ -49,10 +49,11 @@
                     </div>
                     <button class="layui-btn layui-btn-sm" data-type="reload">搜索</button>
 
-                    <button class="layui-btn layui-btn-sm" lay-event="getFinish">
-                        <i class="layui-icon">&#xe605;</i>
-                        设置为已完成
-                    </button>
+                    <shiro:hasPermission name="0206-0002">
+                        <button class="layui-btn layui-btn-sm" lay-event="getFinish">
+                            <i class="layui-icon">&#xe605;</i>归档
+                        </button>
+                    </shiro:hasPermission>
                 </div>
             </div>
         </script>
