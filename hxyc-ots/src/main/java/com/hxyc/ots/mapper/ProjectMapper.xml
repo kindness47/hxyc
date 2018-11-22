@@ -317,64 +317,64 @@
 
   <update id="updateByPrimaryKeySelective" parameterType="com.hxyc.ots.model.Project" >
     update t_project
-    <set >
-      <if test="companyId != null" >
-        company_id = #{companyId,jdbcType=VARCHAR},
-      </if>
-      <if test="projectName != null" >
-        project_name = #{projectName,jdbcType=VARCHAR},
-      </if>
-      <if test="projectCode != null" >
-        project_code = #{projectCode,jdbcType=VARCHAR},
-      </if>
-      <if test="year != null" >
-        year = #{year,jdbcType=VARCHAR},
-      </if>
-      <if test="supplyUnit != null" >
-        supply_unit = #{supplyUnit,jdbcType=VARCHAR},
-      </if>
-      <if test="contractSignTime != null" >
-        contract_sign_time = #{contractSignTime,jdbcType=VARCHAR},
-      </if>
-      <if test="supplyTime != null" >
-        supply_time = #{supplyTime,jdbcType=VARCHAR},
-      </if>
-      <if test="contractNum != null" >
-        contract_num = #{contractNum,jdbcType=VARCHAR},
-      </if>
-      <if test="contractAmount != null" >
-        contract_amount = #{contractAmount,jdbcType=VARCHAR},
-      </if>
-      <if test="settlementMode != null" >
-        settlement_mode = #{settlementMode,jdbcType=VARCHAR},
-      </if>
-      <if test="baseFloatValue != null" >
-        base_float_value = #{baseFloatValue,jdbcType=VARCHAR},
-      </if>
-      <if test="extraCapitalAmount != null" >
-        extra_capital_amount = #{extraCapitalAmount,jdbcType=VARCHAR},
-      </if>
-      <if test="capitalTimeLimit != null" >
-        capital_time_limit = #{capitalTimeLimit,jdbcType=VARCHAR},
-      </if>
-      <if test="interestRate != null" >
-        interest_rate = #{interestRate,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
+      <set >
+        <if test="companyId != null" >
+          company_id = #{companyId,jdbcType=VARCHAR},
+        </if>
+        <if test="projectName != null" >
+          project_name = #{projectName,jdbcType=VARCHAR},
+        </if>
+        <if test="projectCode != null" >
+          project_code = #{projectCode,jdbcType=VARCHAR},
+        </if>
+        <if test="year != null" >
+          year = #{year,jdbcType=VARCHAR},
+        </if>
+        <if test="supplyUnit != null" >
+          supply_unit = #{supplyUnit,jdbcType=VARCHAR},
+        </if>
+        <if test="contractSignTime != null" >
+          contract_sign_time = #{contractSignTime,jdbcType=VARCHAR},
+        </if>
+        <if test="supplyTime != null" >
+          supply_time = #{supplyTime,jdbcType=VARCHAR},
+        </if>
+        <if test="contractNum != null" >
+          contract_num = #{contractNum,jdbcType=VARCHAR},
+        </if>
+        <if test="contractAmount != null" >
+          contract_amount = #{contractAmount,jdbcType=VARCHAR},
+        </if>
+        <if test="settlementMode != null" >
+          settlement_mode = #{settlementMode,jdbcType=VARCHAR},
+        </if>
+        <if test="baseFloatValue != null" >
+          base_float_value = #{baseFloatValue,jdbcType=VARCHAR},
+        </if>
+        <if test="extraCapitalAmount != null" >
+          extra_capital_amount = #{extraCapitalAmount,jdbcType=VARCHAR},
+        </if>
+        <if test="capitalTimeLimit != null" >
+          capital_time_limit = #{capitalTimeLimit,jdbcType=VARCHAR},
+        </if>
+        <if test="interestRate != null" >
+          interest_rate = #{interestRate,jdbcType=VARCHAR},
+        </if>
+        <if test="status != null" >
+          status = #{status,jdbcType=INTEGER},
+        </if>
+        <if test="createBy != null" >
+          create_by = #{createBy,jdbcType=VARCHAR},
+        </if>
+        <if test="createTime != null" >
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateBy != null" >
+          update_by = #{updateBy,jdbcType=VARCHAR},
+        </if>
+        <if test="updateTime != null" >
+          update_time = #{updateTime,jdbcType=TIMESTAMP},
+        </if>
         <if test="projectAssistant != null" >
             project_assistant = #{projectAssistant,jdbcType=VARCHAR},
         </if>
@@ -387,7 +387,10 @@
         <if test="financeAssistant != null" >
             finance_assistant = #{financeAssistant,jdbcType=VARCHAR},
         </if>
-    </set>
+        <if test="completion != null">
+            is_completion = #{completion,jdbcType=TINYINT}
+        </if>
+      </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <!--查询异常订单的项目信息-->

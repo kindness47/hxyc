@@ -135,7 +135,7 @@
 
     function initCompDeptTree(){
         $.ajax({
-            url: '${hxycStatic}/company-tree-list?completion=' + false,
+            url: '${hxycStatic}/company-tree-list-by-status?completion=' + false,
             type: 'get',
             dataType:'json',
             async:false,
@@ -176,7 +176,7 @@
                 ,page: true
                 ,limit: 10
                 ,cols: [[
-                    {type: 'checkbox', fixed: 'left'},
+                    {type: 'radio', fixed: 'left'},
                     {title:'操作', toolbar: '#view', width:66},
                     {field:'companyName', title:'公司名称', width:211, sort: true},
                     {field:'projectName', title:'项目名称', width:520, sort: true}

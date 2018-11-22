@@ -10,6 +10,7 @@ import com.hxyc.ots.utils.SystemUtil;
 import com.hxyc.ots.vo.CreditVO;
 import com.hxyc.ots.vo.PaymentVO;
 import com.hxyc.ots.vo.ReceiptVO;
+import com.hxyc.ots.vo.SettlementVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -119,5 +120,29 @@ public class PaymentController extends BaseController {
         }
 
     }
-
+    /**
+     * Description： 发票开立
+     * Author: 刘永红
+     * Date: Created in 2018/11/20 19:38
+     */
+    @RequestMapping("/settlement-bill-open")
+    public ModelAndView settlementBillOpen(SettlementVO settlementVO){
+        PaymentVO p = new PaymentVO();
+        p.setSettlementId(settlementVO.getId());
+        List<PaymentVO> list = paymentService.listPayment(p);
+        ModelAndView mav = new ModelAndView("ots/settlement-billopen");
+        //如果settlement已有对应的payment,
+        if(list.size() != 0)
+            mav.addObject("paymentVO",list.get(0));
+        else{
+            SettlementVO settlement = settlementService.getSettlement(settlementVO.getId());
+            PaymentVO paymentVO = new PaymentVO();
+            paymentVO.setCompanyName(settlement.getCompanyName());
+            paymentVO.setProjectName(settlement.getProjectName());
+            mav.addObject("paymentVO",paymentVO);
+            System.out.println("------------"+settlementVO.getId()+"---------->"+paymentVO.getCompanyName()+":"+paymentVO.getProjectName()
+            +":"+paymentVO.getBillOpenStatus());
+        }
+        return mav;
+    }
 }

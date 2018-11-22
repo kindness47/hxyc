@@ -49,7 +49,18 @@ public class CompanyController extends BaseController {
      */
     @RequestMapping(value = "/company-tree-list", method = RequestMethod.GET)
     @ResponseBody
-    public Response listCompanyByTree(@RequestParam("completion") String completion){
+    public Response listCompanyByTree(CompanyVO companyVO){
+        return returnSuccess(companyService.listCompany(companyVO));
+    }
+
+    /**
+     * Description： 根据项目完成状态查询Company  tree
+     * Author: 刘永红
+     * Date: Created in 2018/11/20 18:24
+     */
+    @RequestMapping(value = "/company-tree-list-by-status", method = RequestMethod.GET)
+    @ResponseBody
+    public Response listCompanyTreeByStatus(@RequestParam("completion") String completion){
         Map<String,Boolean> statusMap = new HashMap<String,Boolean>();
         statusMap.put("completion",Boolean.parseBoolean(completion));
         List<CompanyVO> companyList = companyService.listCompanyByStatus(statusMap);
@@ -109,7 +120,6 @@ public class CompanyController extends BaseController {
         List<CompanyVO> companyList = companyService.listExceptionCompanys(company);
         List<CompanyVO> newCompanyList = new ArrayList<>();
         for(CompanyVO companyVO:companyList) {
-            System.out.println("--------------------->>"+companyVO.getCompanyName()+"-->"+companyVO.getCompanyShortName());
             newCompanyList.add(companyVO);
         }
         int count;

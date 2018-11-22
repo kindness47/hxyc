@@ -41,7 +41,7 @@
     <shiro:hasPermission name="0201-0001">
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
         <%--<a href="javascript:;" onclick="deposit_sync()" class="btn btn-success radius"><i class="Hui-iconfont">&#xe640;</i> 同步数据</a>--%>
-        <a href="javascript:;" onclick="project_add('新增项目','project-add','','380')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增项目</a>
+        <a href="javascript:;" onclick="project_add('新增项目','project-add','','480')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增项目</a>
     </div>
     </shiro:hasPermission>
     <div class="clearfix"> </div>
@@ -78,7 +78,7 @@
                                 <a title="收款" href="javascript:;" onclick="receipt_add('新增收款','receipt-add','500','250','${project.companyId}','${project.id}', '${project.projectName}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe63a;</i></a>
                             </shiro:hasPermission>
                             <shiro:hasPermission name="0201-0002">
-                                <a title="编辑" onclick="project_edit('编辑','project-add','','380','${project.id}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                                <a title="编辑" onclick="project_edit('编辑','project-add','','480','${project.id}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                             </shiro:hasPermission>
                         </td>
                         <td><span class="long-text-hidden">${project.companyName}</span></td>

@@ -156,8 +156,15 @@ public class OrderAuditController extends BaseController {
         map.put("projectId",projectId);
         List<OrderAduitVO> orderAduitVOList = settlementService.selectOrderAudit(map);
         ModelAndView mov = new ModelAndView();
+
+        //查询ProjectVO对象
+        ProjectVO projectVO = new ProjectVO();
+        projectVO.setId(projectId);
+        List<ProjectVO> projectVOList = projectService.listProject(projectVO);
+        projectVO = projectVOList.size() == 0 ? null:projectVOList.get(0);
+
+        mov.addObject("project",projectVO);
         mov.addObject("orderAduitVOList",orderAduitVOList);
-        System.out.println(orderAduitVOList);
         mov.setViewName("ots/order-exception-list");
         return mov;
     }

@@ -144,7 +144,7 @@
 		<div class="modal-content radius">
 			<div class="modal-header" style="padding-top: 1px;">
 				<h3 class="modal-title">结算单选择列表</h3>
-				<a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+				<a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
 			</div>
 			<div class="modal-body">
 				<table class="table">
