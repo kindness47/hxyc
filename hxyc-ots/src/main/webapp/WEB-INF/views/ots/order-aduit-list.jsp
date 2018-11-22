@@ -82,10 +82,10 @@
     <div class="">
         <table class="table table-border table-bordered table-hover table-bg" style="width: 1700px;">
             <tr class="text-c" style="text-align: left">
-                <td>项目专员：</td><td>${projectCreator}</td>
-                <td>财务专员：</td><td>${financialCerator}</td>
-                <td>运营专员:</td><td>${orderCreator}</td>
-                <td>结算专员：</td><td>${settlementCreator}</td>
+                <td>项目专员：</td><td>${project.projectAssistant}</td>
+                <td>财务专员：</td><td>${project.financeAssistant}</td>
+                <td>运营专员:</td><td>${project.operateAssistant}</td>
+                <td>结算专员：</td><td>${project.settlementAssistant}</td>
             </tr>
         </table>
     </div>
@@ -210,8 +210,8 @@
                     <%--</th>--%>
                     <th colspan="6">订单信息</th>
                     <th colspan="6">供方结算</th>
-                    <th colspan="4">需方结算</th>
-                    <th colspan="7">支付流程</th>
+                    <th colspan="2">需方结算</th>
+                    <th colspan="9">支付流程</th>
                 </tr>
                 <tr class="text-c">
                     <th width="20">序号</th>

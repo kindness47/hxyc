@@ -62,7 +62,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public void updateProject(Project project) {
-        projectMapper.updateByPrimaryKey(project);
+        projectMapper.updateByPrimaryKeySelective(project);
     }
 
     /**

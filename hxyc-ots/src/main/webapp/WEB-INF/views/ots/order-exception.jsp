@@ -48,11 +48,6 @@
                         <input class="input-text radius size-M" name="id" placeholder="输入项目名称" id="projectName" autocomplete="off">
                     </div>
                     <button class="layui-btn layui-btn-sm" data-type="reload">搜索</button>
-
-                    <%--<button class="layui-btn layui-btn-sm" lay-event="getFinish">
-                        <i class="layui-icon">&#xe605;</i>
-                        设置为已完成
-                    </button>--%>
                 </div>
             </div>
         </script>
@@ -205,30 +200,6 @@
                     layer.full(index);
                 }
             });
-            //头工具栏事件
-            /*laytable.on('toolbar(demotable)', function(obj){
-                var checkStatus = laytable.checkStatus(obj.config.id);
-                switch(obj.event){
-                    case 'getFinish':
-                        var data = checkStatus.data;
-                        var jsonData = JSON.stringify(data);
-                        //layer.alert(jsonData);
-                        layer.open({
-                            title:'提示信息'
-                            ,content:'是否设置为已完成'
-                            ,yes:function () {
-                                getFinish(jsonData);
-                            }
-                        });
-                        break;
-                };
-            });*/
-            /*laytable.on('checkbox(demotable)', function(obj){
-                console.log(obj.data); //所在行的所有相关数据
-                console.log(obj.value); //得到修改后的值
-                console.log(obj.field); //当前编辑的字段名
-            });*/
-
             var $ = layui.$, active = {
                 reload: function(){
                     var projectName = $('#projectName');
@@ -253,33 +224,6 @@
             });
         });
     }
-   /* var getFinish = function (jsonData) {
-        $.ajax({
-            url: '\${hxycStatic}/project-list-setfinish',
-            type: 'get',
-            data:{"jsonData":jsonData},
-            dataType:'json',
-            async:false,
-            success: function(msg) {
-                layer.open({
-                    title:'操作结果'
-                    ,content:'成功'
-                    , end: function () {
-                        location.reload();
-                    }
-                });
-            },
-            error:function (msg) {
-                layer.open({
-                    title:'操作结果'
-                    ,content:'失败'
-                    , end: function () {
-                        location.reload();
-                    }
-                });
-            }
-        });
-    }*/
 </script>
 </body>
 </html>

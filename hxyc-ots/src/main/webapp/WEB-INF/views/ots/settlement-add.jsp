@@ -44,7 +44,6 @@
 				<input type="text" class="input-text" style="display: none" value="${settlementVO.companyId}"  id="companyId" name="companyId" >
 				<input type="text" class="input-text" style="display: none" value="${settlementVO.projectId}"  id="projectId" name="projectId" >
 				<input type="text" class="input-text" readonly id="projectSelect" placeholder="选择项目" value="${settlementVO.projectName}" />
-
 			</div>
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>订单号(点击选择)：</label>
 			<div class="formControls col-xs-4 col-sm-4">

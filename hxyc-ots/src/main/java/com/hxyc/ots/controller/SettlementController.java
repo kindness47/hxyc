@@ -125,6 +125,4 @@ public class SettlementController extends BaseController {
         }
 
     }
-
-
 }

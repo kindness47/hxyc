@@ -76,6 +76,8 @@
                     <tr class="text-c">
                         <td>
                             <a title="编辑" href="javascript:;" onclick="settlement_edit('编辑','settlement-edit?id=${settlementVO.id}','1000','620')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            <%--<a title="发票开立" href="javascript:;" onclick="bill_open('发票开立','settlement-bill-open?id=${settlementVO.id}','699','432')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6b6;</i></a>
+                            --%>
                         </td>
                         <td><span class="long-text-hidden">${settlementVO.companyName}</span></td>
                         <td><span class="long-text-hidden">${settlementVO.projectName}</span></td>
@@ -132,6 +134,18 @@
         layer_show(title,url,w,h);
     }
 
+    /* 发票开立 */
+    function bill_open(title,url,w,h){
+        layer.open({
+            type: 2,
+            area: [w+'px', h +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shade: 0.4,
+            title: "<h4>"+title+"</h4>",
+            content: url
+        });
+    }
 </script>
 </body>
 </html>

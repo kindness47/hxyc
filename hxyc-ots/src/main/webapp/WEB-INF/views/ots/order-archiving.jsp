@@ -126,7 +126,7 @@
 
     function initCompDeptTree(){
         $.ajax({
-            url: '${hxycStatic}/company-tree-list?completion=' + true,
+            url: '${hxycStatic}/company-tree-list-by-status?completion=' + true,
             type: 'get',
             dataType:'json',
             async:false,

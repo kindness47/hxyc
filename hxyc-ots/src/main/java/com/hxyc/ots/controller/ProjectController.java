@@ -89,7 +89,6 @@ public class ProjectController extends BaseController {
             project.setUpdateBy(SystemUtil.getLoginUserName());
             project.setUpdateTime(new Date());
             project.setCompletion(true);
-            System.out.println(project);
             projectService.updateProject(project);
         }
 
@@ -130,8 +129,6 @@ public class ProjectController extends BaseController {
     @RequestMapping(value = "/project-save", method = RequestMethod.POST)
     @ResponseBody
     public Response saveProject(Project project) {
-        System.out.println("project------------>"+project.getCompletion()+project.getProjectName()+
-                (project.getCompletion() instanceof Boolean ));
         String id = project.getId();
         if (StringUtils.isBlank(id)) { // 新增
             String projectName = project.getProjectName();
@@ -198,12 +195,12 @@ public class ProjectController extends BaseController {
      * Author: 刘永红
      * Date: Created in 2018/11/8 17:09
      */
-    @RequestMapping(value = "/project-detail",method = RequestMethod.GET)
+    /*@RequestMapping(value = "/project-detail",method = RequestMethod.GET)
     public ModelAndView projectDetails(ProjectVO projectVO){
         ModelAndView mav = new ModelAndView("ots/project-detail");
         mav.addObject("project",projectService.listProject(projectVO).get(0));
         return mav;
-    }
+    }*/
     /**
      * Description： 查询异常项目信息
      * Author: 刘永红
