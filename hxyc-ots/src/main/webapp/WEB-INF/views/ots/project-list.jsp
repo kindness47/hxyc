@@ -49,22 +49,21 @@
         <table id="projectTable" class="table table-border table-bordered table-hover table-bg table-sort">
             <thead>
                 <tr class="text-c">
-                    <th width="80">操作</th>
-                    <th width="180">公司名称</th>
-                    <th width="180">项目名称</th>
-                    <th width="80">年份</th>
-                    <th width="120">供应单位</th>
-                    <th width="100">签订时间</th>
-                    <th width="120">供货时间</th>
-                    <th width="80">合同数量（T）</th>
-                    <th width="80">合同金额（万元）</th>
-                    <th width="100">结算模式</th>
-                    <th width="80">浮动值（元）</th>
-                    <th width="100">垫资额</th>
-                    <th width="80">垫资期限</th>
-                    <th width="200">利息标准</th>
-                    <th width="150">创建时间</th>
-                    <th width="50">是否完工</th>
+                    <th width="130">操作</th>
+                    <th width="200">公司名称</th>
+                    <th width="200">项目名称</th>
+                    <th width="100">年份</th>
+                    <th width="200">供应单位</th>
+                    <th width="120">签订时间</th>
+                    <th width="140">供货时间</th>
+                    <th width="130">合同数量（T）</th>
+                    <th width="170">合同金额（万元）</th>
+                    <th width="120">结算模式</th>
+                    <th width="240">裸价浮动值（元）</th>
+                    <th width="120">垫资额</th>
+                    <th width="100">垫资期限</th>
+                    <th width="220">利息标准</th>
+                    <th width="170">创建时间</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,7 +85,7 @@
                         <td>${project.year}</td>
                         <td><span class="long-text-hidden">${project.supplyUnit}</span></td>
                         <td>${project.contractSignTime}</td>
-                        <td><span class="long-text-hidden" style="width: 80px">${project.supplyTime}</span></td>
+                        <td><span class="long-text-hidden" style="width: 140px">${project.supplyTime}</span></td>
                         <td>${project.contractNum}</td>
                         <td>${project.contractAmount}</td>
                         <td>
@@ -101,11 +100,11 @@
                         <td>${project.capitalTimeLimit}</td>
                         <td><span class="long-text-hidden">${project.interestRate}</span></td>
                         <td><f:formatDate value="${project.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                        <td>
+                       <%-- <td>
                             <c:choose>
                             <c:when test="${project.completion == false}">在建</c:when>
                             <c:when test="${project.completion == true}">竣工</c:when>
-                        </c:choose></td>
+                        </c:choose></td>--%>
                     </tr>
                 </c:forEach>
             </tbody>
