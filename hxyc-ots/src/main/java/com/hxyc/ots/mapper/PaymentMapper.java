@@ -50,4 +50,11 @@ public interface PaymentMapper {
      * @return
      */
     int update(Payment payment);
+
+    /**
+     * Description： 更新发票开立信息
+     * Author: 刘永红
+     * Date: Created in 2018/11/23 14:32
+     */
+    int updateBillOpen(Payment payment);
 }
