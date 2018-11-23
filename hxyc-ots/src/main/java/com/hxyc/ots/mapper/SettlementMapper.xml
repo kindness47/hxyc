@@ -119,7 +119,7 @@
 
   <select id="selectById"  resultMap="extendResultMap" parameterType="java.lang.String" >
     select 
-    se.*,company_name,project_name
+    se.*,company_short_name,project_name
     from t_settlement se left join t_company comp on se.company_id = comp.id
     left join t_project proj on se.project_id = proj.id
     where se.id = #{id,jdbcType=VARCHAR}

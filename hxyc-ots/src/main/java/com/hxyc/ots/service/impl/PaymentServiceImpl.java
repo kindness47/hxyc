@@ -82,4 +82,9 @@ public class PaymentServiceImpl implements PaymentService {
         receipt.setReceiptBalance(banlanceAmount);
         receiptService.updateReceiptBanlance(receipt);
     }
+
+    @Override
+    public int updateBillOpen(Payment payment) {
+        return paymentMapper.updateBillOpen(payment);
+    }
 }

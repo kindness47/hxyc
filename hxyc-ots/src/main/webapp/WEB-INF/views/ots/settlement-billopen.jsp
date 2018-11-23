@@ -1,4 +1,4 @@
-﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿﻿﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../public/head.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE HTML>
@@ -24,14 +24,16 @@
 </head>
 <body>
 <div class="page-container">
-    <div class="row c1 f-12">
+    <div class="row c1 f-20">
         <label class="form-label text-near-right col-xs-3">公司名称:</label>
-        <label class="form-label col-xs-3">${paymentVO.companyName}</label>
-        <label class="form-label text-near-right col-xs-2">项目名称:</label>
-        <label class="form-label col-xs-3">${paymentVO.projectName}</label>
+        <label class="form-label col-xs-8">${paymentVO.companyName}</label>
+    </div>
+    <div class="row c1 f-20">
+        <label class="form-label text-near-right col-xs-3">项目名称:</label>
+        <label class="form-label col-xs-8">${paymentVO.projectName}</label>
     </div>
     <div class="clearfix"></div>
-    <form action="#" method="post" class="form form-horizontal" id="payment-billopen">
+    <form action="${hxycStatic}/payment-save" method="post" class="form form-horizontal" id="payment-billopen">
         <div class="row cl">
             <label class="form-label text-near-right col-xs-3">结算单号:</label>
             <div class="formControls col-xs-8">
@@ -41,6 +43,7 @@
                     <input type="text" name="settlementCode" readonly class="input-text"  value="${paymentVO.settlementCode}">
                 </c:if>
                 <c:if test="${paymentVO.id == null}">
+                    <input type="hidden" name="settlementId" value="${paymentVO.settlementId}">
                     <input type="text" name="settlementCode" class="input-text"  value="${paymentVO.settlementCode}">
                 </c:if>
             </div>
@@ -71,7 +74,7 @@
         </div>
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                <button onClick="javascript:;" class="btn btn-primary radius" type="submit">
+                <button class="btn btn-primary radius" id="submitButton">
                     <i class="Hui-iconfont">&#xe632;</i> 保存
                 </button>
                 <button onClick="javascript:void (0);" id="cancelButton" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
@@ -92,21 +95,20 @@
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
-        $("#payment-billopen").on('click',function(){
-            $.post({
+        $("#submitButton").click(function(){
+            $.ajax({
+                type:'post',
                 url:'${hxycStatic}/payment-save',
-                data:$("payment-billopen").serializeArray(),
+                data:$("#payment-billopen").serializeArray(),
                 dataType:'json',
                 success:function (data) {
-                    parent.layer.msg(data.message,{icon:1},function(){
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
-                    });
-                },false:function (data) {
-                    parent.layer.msg(data.message,{icon:2},function(){
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
-                });
+                    parent.layer.msg(data.message,{icon:1,time:500});
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.location.reload();
+                    parent.layer.close(index);
+                },
+                error:function (data) {
+                    parent.layer.msg(data.message,{icon:2,time:500});
                 }
             });
         });

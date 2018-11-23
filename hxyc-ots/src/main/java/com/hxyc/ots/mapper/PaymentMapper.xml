@@ -184,4 +184,31 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
+  <update id="updateBillOpen" parameterType="com.hxyc.ots.model.Payment" >
+    update t_payment
+    <set >
+      <if test="settlementId != null" >
+        settlement_id = #{settlementId,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentCode != null" >
+        payment_code = #{paymentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="billOpenTime != null" >
+        bill_open_time = #{billOpenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billOpenStatus != null" >
+        bill_open_status = #{billOpenStatus,jdbcType=INTEGER},
+      </if>
+      <if test="billOpenRemark != null" >
+        bill_open_remark = #{billOpenRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

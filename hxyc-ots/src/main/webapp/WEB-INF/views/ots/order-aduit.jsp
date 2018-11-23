@@ -1,4 +1,4 @@
-﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿﻿﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../public/head.jsp"%>
 <!DOCTYPE HTML>
 <html>
@@ -18,13 +18,14 @@
     <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/skin/green/skin.css" id="skin" />
     <link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
     <link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/layui.css"  media="all">
+    <link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/ots-table.css" />
     <link rel="stylesheet" href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
     <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
     <![endif]-->
     <title>订单审查</title>
     <style type="text/css">
-        .Hui-aside{position: absolute;top:44px;bottom:0;left:0;padding-top:10px;width:256px;z-index:99;overflow:auto; background-color:rgba(238,238,238,0.98);_background-color:rgb(238,238,238);border-right: 1px solid #e5e5e5}
-        .Hui-article-box{position: absolute;top:44px;right:16px;bottom: 0;left:299px; overflow:hidden; z-index:1; background-color:#fff}
+        .Hui-aside{position: absolute;top:-3px;bottom:0;left:0;padding-top:10px;width:200px;z-index:99;overflow:auto; background-color:rgba(238,238,238,0.5);border-right: 1px solid #e5e5e5;border-radius:1%}
+        .Hui-article-box{position: absolute;top:-3px;right:0px;bottom: 0;left:200px; overflow:hidden; z-index:1; background-color:#fff;border-radius:1%}
     </style>
 </head>
 <body>
@@ -176,7 +177,7 @@
                 ,page: true
                 ,limit: 10
                 ,cols: [[
-                    {type: 'radio', fixed: 'left'},
+                    {title:'选择',type: 'radio', fixed: 'left'},
                     {title:'操作', toolbar: '#view', width:66},
                     {field:'companyName', title:'公司名称', width:211, sort: true},
                     {field:'projectName', title:'项目名称', width:520, sort: true}
