@@ -121,6 +121,28 @@ public class PaymentController extends BaseController {
 
     }
     /**
+     * Description： 添加发票开立信息
+     * Author: 刘永红
+     * Date: Created in 2018/11/23 14:38
+     */
+    @RequestMapping(value = "/payment-billopen-save", method = RequestMethod.POST)
+    @ResponseBody
+    public Response saveBillOpenInfo(Payment payment){
+        if (StringUtils.isEmpty(payment.getId())){
+            payment.setId(UUID.randomUUID().toString().replaceAll("-",""));
+            payment.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            payment.setCreateBy(SystemUtil.getLoginUserName());
+            paymentService.addPayment(payment);
+            return returnSuccess("新增成功");
+        }else {
+            payment.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+            payment.setUpdateBy(SystemUtil.getLoginUserName());
+            paymentService.updateBillOpen(payment);
+            return returnSuccess("修改成功");
+        }
+    }
+
+    /**
      * Description： 发票开立
      * Author: 刘永红
      * Date: Created in 2018/11/20 19:38
@@ -128,20 +150,21 @@ public class PaymentController extends BaseController {
     @RequestMapping("/settlement-bill-open")
     public ModelAndView settlementBillOpen(SettlementVO settlementVO){
         PaymentVO p = new PaymentVO();
-        p.setSettlementId(settlementVO.getId());
+        String settlementId = settlementVO.getId();
+        p.setSettlementId(settlementId);
         List<PaymentVO> list = paymentService.listPayment(p);
         ModelAndView mav = new ModelAndView("ots/settlement-billopen");
-        //如果settlement已有对应的payment,
+        //如果settlement已有对应的payment,如果没有，则返回一个paymentVO对象
         if(list.size() != 0)
             mav.addObject("paymentVO",list.get(0));
         else{
-            SettlementVO settlement = settlementService.getSettlement(settlementVO.getId());
+            SettlementVO settlement = settlementService.getSettlement(settlementId);
             PaymentVO paymentVO = new PaymentVO();
+            paymentVO.setSettlementId(settlementId);
+            paymentVO.setSettlementCode(settlement.getSettlementCode());
             paymentVO.setCompanyName(settlement.getCompanyName());
             paymentVO.setProjectName(settlement.getProjectName());
-            mav.addObject("paymentVO",paymentVO);
-            System.out.println("------------"+settlementVO.getId()+"---------->"+paymentVO.getCompanyName()+":"+paymentVO.getProjectName()
-            +":"+paymentVO.getBillOpenStatus());
+            mav.addObject("paymentVO", paymentVO);
         }
         return mav;
     }

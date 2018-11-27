@@ -1,15 +1,16 @@
 package com.hxyc.ots.service.impl;
 
-import com.hxyc.ots.base.Constants;
 import com.hxyc.ots.mapper.CompanyMapper;
 import com.hxyc.ots.model.Company;
 import com.hxyc.ots.service.CompanyService;
+import com.hxyc.ots.utils.SortList;
 import com.hxyc.ots.vo.CompanyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -92,11 +93,6 @@ public class CompanyServiceImpl implements CompanyService {
             c.setLevel(1);
             return companyMapper.listCompanys(c);
         }
-        if(companyList.size() == 0) {
-            CompanyVO c = new CompanyVO();
-            c.setLevel(1);
-            return companyMapper.listCompanys(c);
-        }
         List<String> idList = new ArrayList<>();
         boolean isFa ;
         List<CompanyVO> hasFaCompanyVOList = new ArrayList<>();
@@ -120,7 +116,27 @@ public class CompanyServiceImpl implements CompanyService {
                 isFa = companyVO.getLevel() == (Integer)1;
             }
         }
-        return hasFaCompanyVOList;
+
+        //对公司列表排序,将level为1、2、3的分开排序
+        List<CompanyVO> companyVOListLevel1 = new ArrayList<>();
+        List<CompanyVO> companyVOListLevel2 = new ArrayList<>();
+        List<CompanyVO> companyVOListLevel3 = new ArrayList<>();
+        for(CompanyVO companyVO : hasFaCompanyVOList){
+            switch (companyVO.getLevel()){
+                case 1: companyVOListLevel1.add(companyVO); break;
+                case 2: companyVOListLevel2.add(companyVO); break;
+                case 3: companyVOListLevel3.add(companyVO); break;
+            }
+        }
+        //通过sort字段对每个等级再排序
+        Collections.sort(companyVOListLevel1,new SortList<CompanyVO>("sort",true));
+        Collections.sort(companyVOListLevel2,new SortList<CompanyVO>("sort",true));
+        Collections.sort(companyVOListLevel2,new SortList<CompanyVO>("sort",true));
+        List<CompanyVO> resultCompanyList = new ArrayList<>();
+        resultCompanyList.addAll(companyVOListLevel1);
+        resultCompanyList.addAll(companyVOListLevel2);
+        resultCompanyList.addAll(companyVOListLevel3);
+        return resultCompanyList;
     }
 
     @Override
@@ -155,6 +171,25 @@ public class CompanyServiceImpl implements CompanyService {
                 isFa = companyVO.getLevel() == (Integer)1;
             }
         }
-        return hasFaCompanyVOList;
+        //对公司列表排序,将level为1、2、3的分开排序
+        List<CompanyVO> companyVOListLevel1 = new ArrayList<>();
+        List<CompanyVO> companyVOListLevel2 = new ArrayList<>();
+        List<CompanyVO> companyVOListLevel3 = new ArrayList<>();
+        for(CompanyVO companyVO : hasFaCompanyVOList){
+            switch (companyVO.getLevel()){
+                case 1: companyVOListLevel1.add(companyVO); break;
+                case 2: companyVOListLevel2.add(companyVO); break;
+                case 3: companyVOListLevel3.add(companyVO); break;
+            }
+        }
+        //通过sort字段对每个等级再排序
+        Collections.sort(companyVOListLevel1,new SortList<CompanyVO>("sort",true));
+        Collections.sort(companyVOListLevel2,new SortList<CompanyVO>("sort",true));
+        Collections.sort(companyVOListLevel2,new SortList<CompanyVO>("sort",true));
+        List<CompanyVO> resultCompanyList = new ArrayList<>();
+        resultCompanyList.addAll(companyVOListLevel1);
+        resultCompanyList.addAll(companyVOListLevel2);
+        resultCompanyList.addAll(companyVOListLevel3);
+        return resultCompanyList;
     }
 }

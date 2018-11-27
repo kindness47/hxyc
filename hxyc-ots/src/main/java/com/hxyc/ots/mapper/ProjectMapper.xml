@@ -65,8 +65,9 @@
   <select id="select" resultMap="VOResultMap" parameterType="com.hxyc.ots.vo.ProjectVO" >
     select 
     proj.*,comp.company_name
-    from t_project proj left join t_company comp on comp.id = proj.company_id
-    <where>
+    from t_project proj left join t_company comp on comp.id = proj.company_id and comp.status = 1
+    where
+      proj.status = 1
       <if test="companyId != null and companyId != ''" >
         and company_id = #{companyId,jdbcType=VARCHAR}
       </if>
@@ -82,7 +83,6 @@
       <if test="completion != null">
         and proj.is_completion = #{completion,jdbcType=TINYINT}
       </if>
-    </where>
     order by proj.create_time desc
     <if test="pageStart != null and pageEnd != null and pageEnd != 0">
       limit #{pageStart,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
@@ -93,8 +93,8 @@
     select count(1) from (
     select
     proj.*,comp.company_name
-    from t_project proj left join t_company comp on comp.id = proj.company_id
-    <where>
+    from t_project proj left join t_company comp on comp.id = proj.company_id and comp.status = 1
+    where proj.status = 1
       <if test="companyId != null">
         and company_id = #{companyId,jdbcType=VARCHAR}
       </if>
@@ -110,8 +110,6 @@
       <if test="completion != null">
         and proj.is_completion = #{completion,jdbcType=TINYINT}
       </if>
-    </where>
-
     )aa
   </select>
 
@@ -298,7 +296,7 @@
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="completion != null" >
-        #{is_completion,jdbcType=TINYINT},
+        #{completion,jdbcType=TINYINT},
       </if>
         <if test="projectAssistant != null" >
             #{projectAssistant,jdbcType=VARCHAR},

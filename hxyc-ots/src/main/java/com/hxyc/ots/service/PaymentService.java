@@ -37,4 +37,6 @@ public interface PaymentService {
      * @return
      */
     PaymentVO getPayment(String id);
+
+    int updateBillOpen(Payment payment);
 }
