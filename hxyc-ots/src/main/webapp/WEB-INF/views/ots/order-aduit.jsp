@@ -26,10 +26,13 @@
     <style type="text/css">
         .Hui-aside{position: absolute;top:-3px;bottom:0;left:0;padding-top:10px;width:200px;z-index:99;overflow:auto; background-color:rgba(238,238,238,0.5);border-right: 1px solid #e5e5e5;border-radius:1%}
         .Hui-article-box{position: absolute;top:-3px;right:0px;bottom: 0;left:200px; overflow:hidden; z-index:1; background-color:#fff;border-radius:1%}
+        .row{box-sizing:border-box;margin-left:0px !important;margin-right:0px !important;}
     </style>
 </head>
 <body>
+<%--
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单跟踪 <span class="c-gray en">&gt;</span> 订单审查 <a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" onclick="location.replace(location.href)" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+--%>
 
 <aside class="Hui-aside">
     <ul id="compDeptTree" class="ztree"></ul>
@@ -55,6 +58,9 @@
                             <i class="layui-icon">&#xe605;</i>归档
                         </button>
                     </shiro:hasPermission>
+                   <%--
+                   <a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" onclick="location.replace(location.href)" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+                    --%>
                 </div>
             </div>
         </script>
@@ -169,7 +175,6 @@
             //渲染
             laytable.render({
                 elem: '#projectTable'
-                ,width: 850
                 ,height: 550
                 ,url: requrl
                 ,toolbar:'#toolbarDemo'
