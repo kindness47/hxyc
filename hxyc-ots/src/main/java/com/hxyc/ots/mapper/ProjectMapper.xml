@@ -296,7 +296,7 @@
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="completion != null" >
-        #{is_completion,jdbcType=TINYINT},
+        #{completion,jdbcType=TINYINT},
       </if>
         <if test="projectAssistant != null" >
             #{projectAssistant,jdbcType=VARCHAR},
