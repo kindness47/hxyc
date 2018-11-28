@@ -197,7 +197,7 @@
                 projectName:{
                     required:true,
                     minlength:1,
-                    maxlength:40
+                    maxlength:80
                 }
             },
             onkeyup:false,
