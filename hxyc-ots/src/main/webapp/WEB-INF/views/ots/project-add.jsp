@@ -88,10 +88,10 @@
 		<div class="row cl">
 			<label  class="form-label col-xs-2 col-sm-2">结算模式：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<select id="settlementMode" name="settlementMode" class="bs-select form-control">
-					<option value="1" <c:if test="${'1'==project.settlementMode}">selected</c:if>>信用证</option>
-					<option value="2" <c:if test="${'2'==project.settlementMode}">selected</c:if>>代购</option>
-					<option value="3" <c:if test="${'3'==project.settlementMode}">selected</c:if>>信用证-例外</option>
+				<select id="settlementMode" name="settlementMode" class="form-control select2">
+					<option id="settlementMode1" value="1">信用证</option>
+					<option id="settlementMode2" value="2">代购</option>
+					<option id="settlementMode3" value="3">信用证-例外</option>
 				</select>
 			</div>
 			<label  class="form-label col-xs-2 col-sm-2">裸价浮动值（元）：</label>
