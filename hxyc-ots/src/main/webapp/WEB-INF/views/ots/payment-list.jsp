@@ -71,8 +71,9 @@
                     <tr class="text-c">
                         <td>
                             <a title="编辑" href="javascript:;" onclick="payment_edit('编辑','payment-edit?id=${payment.id}','1000','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                            <a title="发票开立" href="javascript:;" onclick="bill_open('发票开立','payment-bill-open?id=${payment.id}','699','432')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6b6;</i></a>
-
+                            <shiro:hasPermission name="0204-0004">
+                                <a title="发票开立" href="javascript:;" onclick="bill_open('发票开立','payment-bill-open?id=${payment.id}','699','432')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6b6;</i></a>
+                            </shiro:hasPermission>
                         </td>
                         <td><span class="long-text-hidden">${payment.companyName}</span></td>
                         <td><span class="long-text-hidden">${payment.projectName}</span></td>
