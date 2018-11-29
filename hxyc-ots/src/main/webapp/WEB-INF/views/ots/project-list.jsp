@@ -245,7 +245,14 @@
                     body.find("#capitalTimeLimit").val(obj.capitalTimeLimit);
                     body.find("#interestRate").val(obj.interestRate);
                     body.find("#settlementMode").val(obj.settlementMode).trigger('change');
+                    optionId = "#settlementMode" + obj.settlementMode;
+                    optionText = body.find(optionId).text();
+                    body.find("#select2-settlementMode-container").text(optionText);
                     body.find("#completion").val(obj.completion);
+
+                    // 调用子页面方法初始化
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.initSelect2(obj);
                 });
             }
         });
