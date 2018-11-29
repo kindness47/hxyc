@@ -1,0 +1,2 @@
+INSERT INTO `t_sys_menu`(`menu_code`,`menu_name`,`parent_code`,`level`,`function_type`,`sort`,`url`,`menu_class`,`title`)
+	VALUES('0204-0004','发票开立','0204','4','2',4,'','','')
