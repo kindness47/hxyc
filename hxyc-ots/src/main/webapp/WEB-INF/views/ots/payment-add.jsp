@@ -54,20 +54,22 @@
 				</select>
 			</div>
 		</div>
-		<div class="row cl">
-		<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>需方发票开立时间：</label>
-		<div class="formControls col-xs-4 col-sm-4">
-		<input type="text" onfocus="WdatePicker({ maxDate:'#F{\'%y-%M-%d\'}' })" readonly value="<fmt:formatDate value="${paymentVO.billOpenTime}" pattern="yyyy-MM-dd" ></fmt:formatDate>" id="billOpenTime" name="billOpenTime" class="input-text Wdate">
-		</div>
-		<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>需方发票开立状态：</label>
-		<div class="formControls col-xs-4 col-sm-4">
-		<select id="billOpenStatus" name="billOpenStatus">
-		<option value="1" <c:if test="${1==paymentVO.billOpenStatus}">selected</c:if>>正常</option>
-		<option value="2" <c:if test="${2==paymentVO.billOpenStatus}">selected</c:if>>异常</option>
-		</select>
-		<input type="text" class="input-text" value="${paymentVO.billOpenRemark}" placeholder="情况说明" id="billOpenRemark" name="billOpenRemark">
-		</div>
-		</div>
+        <%--
+        <div class="row cl">
+        <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>需方发票开立时间：</label>
+        <div class="formControls col-xs-4 col-sm-4">
+        <input type="text" onfocus="WdatePicker({ maxDate:'#F{\'%y-%M-%d\'}' })" readonly value="<fmt:formatDate value="${paymentVO.billOpenTime}" pattern="yyyy-MM-dd" ></fmt:formatDate>" id="billOpenTime" name="billOpenTime" class="input-text Wdate">
+        </div>
+        <label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>需方发票开立状态：</label>
+        <div class="formControls col-xs-4 col-sm-4">
+        <select id="billOpenStatus" name="billOpenStatus">
+        <option value="1" <c:if test="${1==paymentVO.billOpenStatus}">selected</c:if>>正常</option>
+        <option value="2" <c:if test="${2==paymentVO.billOpenStatus}">selected</c:if>>异常</option>
+        </select>
+        <input type="text" class="input-text" value="${paymentVO.billOpenRemark}" placeholder="情况说明" id="billOpenRemark" name="billOpenRemark">
+        </div>
+        </div>
+        --%>
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>审批完成时间：</label>
 			<div class="formControls col-xs-4 col-sm-4">

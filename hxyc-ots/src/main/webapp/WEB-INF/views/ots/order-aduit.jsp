@@ -1,4 +1,4 @@
-﻿﻿﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿﻿﻿﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../public/head.jsp"%>
 <!DOCTYPE HTML>
 <html>
@@ -24,9 +24,15 @@
     <![endif]-->
     <title>订单审查</title>
     <style type="text/css">
-        .Hui-aside{position: absolute;top:-3px;bottom:0;left:0;padding-top:10px;width:200px;z-index:99;overflow:auto; background-color:rgba(238,238,238,0.5);border-right: 1px solid #e5e5e5;border-radius:1%}
-        .Hui-article-box{position: absolute;top:-3px;right:0px;bottom: 0;left:200px; overflow:hidden; z-index:1; background-color:#fff;border-radius:1%}
+        .Hui-aside{position: absolute;top:0px;bottom:0;left:0;padding-top:30px;width:230px;z-index:99;overflow:auto; background-color:rgba(238,238,238,0.5);border-right: 1px solid #e5e5e5;border-radius:1%}
+        .Hui-article-box{position: absolute;top:0px;right:0px;bottom: 0;left:230px; overflow:hidden; z-index:1; background-color:#fff;border-radius:1%}
         .row{box-sizing:border-box;margin-left:0px !important;margin-right:0px !important;}
+        .aduit-table-header{height: 40px; }
+        .header-search{text-align: right !important;}
+        .layui-table-cell:hover{
+            white-space:normal;
+            overflow:auto;
+        }
     </style>
 </head>
 <body>
@@ -37,14 +43,16 @@
 <aside class="Hui-aside">
     <ul id="compDeptTree" class="ztree"></ul>
 </aside>
+<%--
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
+--%>
 <section class="Hui-article-box">
     <div id="iframe_box" class="Hui-article" style="margin-left: 20px">
 
         <script type="text/html" id="toolbarDemo">
             <div class="demoTable">
-                <div class="row cl">
-                    <div class="col-xs-2 col-sm-2">搜索项目：</div>
+                <div class="row cl aduit-table-header">
+                    <div class="col-xs-2 col-sm-2 header-search">搜索项目：</div>
                     <div class="form-group formControls col-xs-2 col-sm-2">
                         <input class="input-text radius size-M" name="id" placeholder="输入公司名称" id="companyName" autocomplete="off">
                     </div>
@@ -58,15 +66,15 @@
                             <i class="layui-icon">&#xe605;</i>归档
                         </button>
                     </shiro:hasPermission>
-                   <%--
-                   <a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:1px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" onclick="location.replace(location.href)" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
-                    --%>
+
+                   <a class="btn btn-success radius r" style="line-height:0.8em;margin-top:1px;margin-right:10px;padding-left: 3px;padding-right: 3px;height: 22px;" href="javascript:location.replace(location.href);" onclick="location.replace(location.href)" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+
                 </div>
             </div>
         </script>
         <table id="projectTable" class="layui-hide" lay-filter="demotable"></table>
 
-        <script type="text/html" id="view">
+        <script type="text/html" id="view" class="layui-table-hover">
             <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="view">查看</a>
         </script>
     </div>
@@ -175,7 +183,7 @@
             //渲染
             laytable.render({
                 elem: '#projectTable'
-                ,height: 550
+                ,height: 522
                 ,url: requrl
                 ,toolbar:'#toolbarDemo'
                 //,size: 'sm'
@@ -185,8 +193,7 @@
                     {title:'选择',type: 'radio', fixed: 'left'},
                     {title:'操作', toolbar: '#view', width:66},
                     {field:'companyName', title:'公司名称', width:211, sort: true},
-                    {field:'projectName', title:'项目名称', width:520, sort: true}
-
+                    {field:'projectName', title:'项目名称', width:500, sort: true}
                 ]]
             });
 

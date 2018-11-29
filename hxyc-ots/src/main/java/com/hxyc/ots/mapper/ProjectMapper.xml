@@ -410,6 +410,9 @@
       OR sett.`settlement_delivery_status` = 2 OR sett.`supplier_settlement_status` = 2 OR pay.`approval_status` = 2
       OR pay.`bill_open_time` = 2 OR pay.`payment_status` = 2
       ) GROUP BY comp.`company_name`,proj.`project_name`,proj.`id`,proj.`is_completion`
+    <if test="pageStart != null and pageEnd != null and pageEnd != 0">
+      limit #{pageStart,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </if>
   </select>
 
   <select id="selectExceptionProjectCount" resultType="java.lang.Integer" parameterType="com.hxyc.ots.vo.ProjectVO">

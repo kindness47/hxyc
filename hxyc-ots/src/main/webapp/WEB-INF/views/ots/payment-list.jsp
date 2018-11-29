@@ -1,4 +1,4 @@
-﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../public/head.jsp"%>
 <!DOCTYPE HTML>
 <html>
@@ -71,6 +71,8 @@
                     <tr class="text-c">
                         <td>
                             <a title="编辑" href="javascript:;" onclick="payment_edit('编辑','payment-edit?id=${payment.id}','1000','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            <a title="发票开立" href="javascript:;" onclick="bill_open('发票开立','payment-bill-open?id=${payment.id}','699','432')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6b6;</i></a>
+
                         </td>
                         <td><span class="long-text-hidden">${payment.companyName}</span></td>
                         <td><span class="long-text-hidden">${payment.projectName}</span></td>
@@ -122,6 +124,18 @@
         layer_show(title,url,w,h);
     }
 
+    /* 发票开立 */
+    function bill_open(title,url,w,h){
+        layer.open({
+            type: 2,
+            area: [w+'px', h +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shade: 0.4,
+            title: "<h4>"+title+"</h4>",
+            content: url
+        });
+    }
 </script>
 </body>
 </html>

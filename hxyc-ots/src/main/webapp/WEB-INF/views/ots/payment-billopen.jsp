@@ -32,22 +32,16 @@
         <label class="form-label text-near-right col-xs-3">项目名称:</label>
         <label class="form-label col-xs-8">${paymentVO.projectName}</label>
     </div>
-    <div class="clearfix"></div>
-    <form action="${hxycStatic}/payment-save" method="post" class="form form-horizontal" id="payment-billopen">
-        <div class="row cl">
-            <label class="form-label text-near-right col-xs-3">结算单号:</label>
-            <div class="formControls col-xs-8">
-                <c:if test="${paymentVO.id != null}">
-                    <input type="hidden" name="id" value="${paymentVO.id}">
-                    <input type="hidden" name="settlementId" value="${paymentVO.settlementId}">
-                    <input type="text" name="settlementCode" readonly class="input-text"  value="${paymentVO.settlementCode}">
-                </c:if>
-                <c:if test="${paymentVO.id == null}">
-                    <input type="hidden" name="settlementId" value="${paymentVO.settlementId}">
-                    <input type="text" name="settlementCode" class="input-text"  value="${paymentVO.settlementCode}">
-                </c:if>
-            </div>
+    <div class="row cl">
+        <label class="form-label text-near-right col-xs-3">结算单号:</label>
+        <div class="formControls col-xs-8">
+            <input type="text" name="settlementCode" readonly class="input-text"  value="${paymentVO.settlementCode}">
         </div>
+    </div>
+    <div class="clearfix"></div>
+    <form class="form form-horizontal" id="payment-billopen">
+        <input type="hidden" name="id" value="${paymentVO.id}">
+        <input type="hidden" name="settlementId" value="${paymentVO.settlementId}">
         <div class="row cl">
             <label class="form-label text-near-right col-xs-3">发票开立时间:</label>
             <div class="formControls col-xs-8">
@@ -69,7 +63,7 @@
         <div class="row cl">
             <label class="form-label text-near-right col-xs-3">发票开立备注:</label>
             <div class="formControls col-xs-8">
-                <textarea name="billOpenRemark" cols="2" rows="" class="textarea" value="${paymentVO.billOpenRemark}"></textarea>
+                <input type="text" name = "billOpenRemark" class="input-text" value="${paymentVO.billOpenRemark}">
             </div>
         </div>
         <div class="row cl">
@@ -96,19 +90,33 @@
             parent.layer.close(index);
         });
         $("#submitButton").click(function(){
+            var index = parent.layer.getFrameIndex(window.name);
+
             $.ajax({
                 type:'post',
-                url:'${hxycStatic}/payment-save',
+                url:'${hxycStatic}/payment-billopen-save',
                 data:$("#payment-billopen").serializeArray(),
                 dataType:'json',
                 success:function (data) {
-                    parent.layer.msg(data.message,{icon:1,time:500});
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.location.reload();
-                    parent.layer.close(index);
+                    layer.open({
+                        title:'操作结果'
+                        ,content:data.message
+                        , end: function () {
+                            parent.layer.close(index);
+                        }
+                    });
                 },
                 error:function (data) {
-                    parent.layer.msg(data.message,{icon:2,time:500});
+                    layer.open({
+                        title:'操作结果'
+                        ,content:"数据请求失败"
+                        , end: function () {
+                            parent.layer.close(index);
+                        }
+                    });
+                },
+                complete:function () {
+                    parent.location.reload();
                 }
             });
         });
