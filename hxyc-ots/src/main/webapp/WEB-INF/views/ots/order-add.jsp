@@ -141,23 +141,16 @@ $(function(){
                 url: "order-save",
                 type:"post",
                 async:false,
-                beforeSend: function () {
-                    $("#loading").modal('show');
-                },
                 success: function (data) {
                     if (data.success) {
-                        parent.layer.msg(data.message, {icon: 6, time: 1000}, function () {
+                        parent.layer.msg(data.message, {icon: 6, time: 2000}, function () {
                             var index = parent.layer.getFrameIndex(window.name);
                             parent.location.reload();
                             parent.layer.close(index);
                         });
                     } else {
-                        parent.layer.msg(data.message, {icon: 5, time: 1000});
+                        parent.layer.msg(data.message, {icon: 5, time: 2000});
                     }
-                    $("#loading").modal('hide');
-                },
-				error:function () {
-                    $("#loading").modal('hide');
                 }
             });
             return false;
