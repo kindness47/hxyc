@@ -43,7 +43,7 @@ public class MenuController extends BaseController{
         if(menu.getId() == null) {
             //新增
             Menu m;
-            if(menu.getLevel()!=Constants.LEVEL3 && menu.getMenuName()!= null) {
+            if(!menu.getLevel().equals(Constants.LEVEL3) && menu.getMenuName()!= null) {
                 m = new Menu();
                 m.setMenuName(menu.getMenuName());
                 if(menuService.select(m).size()>0)
