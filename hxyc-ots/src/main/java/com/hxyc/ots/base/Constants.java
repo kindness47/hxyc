@@ -55,4 +55,11 @@ public class Constants {
     public final static Map<String,Integer> completionCountMap = new HashMap<>();
     public final static Map<String,Integer> exceptionCountMap = new HashMap<>();
 
+    /**
+     * 菜单level
+     * LEVEL1菜单目录(一级目录);LEVEL2功能菜单(二级目录);LEVEL3菜单功能(页面级)
+     */
+    public final static String LEVEL1 = "2";
+    public final static String LEVEL2 = "3";
+    public final static String LEVEL3 = "4";
 }

@@ -11,6 +11,28 @@ import java.util.Date;
  * @Date: 2018/11/15 17:04
  */
 public class Menu implements Serializable {
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                ", menuCode='" + menuCode + '\'' +
+                ", menuName='" + menuName + '\'' +
+                ", parentCode='" + parentCode + '\'' +
+                ", url='" + url + '\'' +
+                ", level='" + level + '\'' +
+                ", menuClass='" + menuClass + '\'' +
+                ", functionType='" + functionType + '\'' +
+                ", sort=" + sort +
+                ", title='" + title + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", createBy='" + createBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateBy='" + updateBy + '\'' +
+                '}';
+    }
+
     private Integer id;
 
     private String menuCode;

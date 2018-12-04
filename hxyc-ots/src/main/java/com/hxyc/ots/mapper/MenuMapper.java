@@ -33,4 +33,12 @@ public interface MenuMapper {
      * @Date create in 2018/11/15 17:24
      */
     List<Menu> getMenusByLoginUser(@Param("userId") String userId);
+    /**
+     * Description： 获取所有功能菜单
+     * Author: 刘永红
+     * Date: Created in 2018/12/4 15:28
+     */
+    List<Menu> getAll();
+
+    List<Menu> select(Menu menu);
 }

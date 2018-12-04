@@ -23,4 +23,46 @@ public interface MenuService {
      * @Date create in 2018/11/15 17:20
      */
     List<Menu> getMenusByLoginUser(String userId);
+
+    /**
+     * Description： 插入菜单
+     * Author: 刘永红
+     * Date: Created in 2018/12/4 8:49
+     */
+    int insert(Menu menu);
+
+    /**
+     * Description： 删除菜单
+     * Author: 刘永红
+     * Date: Created in 2018/12/4 9:03
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     * Description： 获取menu信息
+     * Author: 刘永红
+     * Date: Created in 2018/12/4 9:47
+     */
+    Menu selectByPrimaryKey(Integer id);
+
+    /**
+     * Description： 更新
+     * Author: 刘永红
+     * Date: Created in 2018/12/4 9:57
+     */
+    int updateByPrimaryKeySelective(Menu record);
+
+    /**
+     * Description： 取得所有菜单项
+     * Author: 刘永红
+     * Date: Created in 2018/12/4 16:26
+     */
+    List<Menu> getAll();
+
+    /**
+     * Description： 根据条件查询菜单
+     * Author: 刘永红
+     * Date: Created in 2018/12/4 16:26
+     */
+    List<Menu> select(Menu menu);
 }

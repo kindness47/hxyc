@@ -42,4 +42,34 @@ public class MenuServiceImpl implements MenuService {
     public List<Menu> getMenusByLoginUser(String userId) {
         return menuMapper.getMenusByLoginUser(userId);
     }
+
+    @Override
+    public int insert(Menu menu) {
+        return menuMapper.insert(menu);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Integer id) {
+        return menuMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Menu selectByPrimaryKey(Integer id) {
+        return menuMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Menu record) {
+        return menuMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public List<Menu> getAll() {
+        return menuMapper.getAll();
+    }
+
+    @Override
+    public List<Menu> select(Menu menu) {
+        return menuMapper.select(menu);
+    }
 }
