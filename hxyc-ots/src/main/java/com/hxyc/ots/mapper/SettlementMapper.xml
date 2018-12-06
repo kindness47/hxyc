@@ -346,29 +346,33 @@
   </update>
 
 <select id="selectOrderAudit" resultMap="AduitResultMap" parameterType="java.util.Map">
-SELECT  comp.`company_short_name`,comp.`company_name`,proj.`project_name`,proj.`create_by`,
-	<include refid="Order_Aduit_List" />
-	FROM `t_company` comp LEFT JOIN `t_project` proj ON comp.`id` = proj.`company_id` AND proj.`status` = '1'
-	LEFT JOIN `t_order` o ON proj.`id` = o.`project_id` AND o.`status` = '1'
-	LEFT JOIN `t_settlement` sett ON o.`order_code` = sett.`order_id` AND sett.`status` = '1'
-	LEFT JOIN `t_payment` pay ON sett.`id` = pay.`settlement_id` AND pay.`status` = '1'
-	LEFT JOIN `t_credit` cre ON comp.`id` = cre.`company_id` AND cre.`status` = '1'
-	WHERE comp.`status`= '1' AND
-	<if test="projectId != null and projectId != ''">
-      proj.`id` = #{projectId,jdbcType=VARCHAR} AND
-    </if>
-    <if test="completion == '0'">
-      proj.`is_completion` = false AND
-    </if>
-    <if test="completion == '1'">
-      proj.`is_completion` = true AND
-    </if>
-	(o.`delivery_status` = '0' OR sett.`supplier_settlement_status` = '2' OR sett.`settlement_delivery_status` = '2' OR
-	sett.`bill_delivery_status` ='2' OR sett.`buyer_settlement_status` = '2' OR pay.`bill_open_status` = '2' OR
-	pay.`approval_status` = '2' OR pay.`payment_status` = '2')
-
-	GROUP BY <include refid="Order_Aduit_List" />
-
+SELECT tod.order_code,tod.order_time,tod.order_status,tod.delivery_time,tod.delivery_status,tod.receive_num,tod.quality,tod.service,tod.order_exception_desc,tod.delivery_exception_desc
+    ,tod.create_by order_create_by,tod.quality_remark,tod.service_remark,res.payment_time,res.settlement_mode,res.*
+    FROM (SELECT * FROM t_order o WHERE o.status = 1) tod
+    LEFT JOIN
+    (SELECT
+	  se.*,
+          pay.approval_time,pay.approval_status,pay.approval_remark,pay.credit_surplus_amount,pay.payment_amount,pay.payment_remark,pay.payment_status,pay.settlement_id,pay.remarks,pay.payment_time,
+          pay.bill_open_time,pay.bill_open_status,pay.bill_open_remark,
+          comp.company_short_name,
+          proj.project_name,proj.create_by project_create_by,
+          pay.create_by payment_create_by
+        FROM
+        t_settlement se
+          LEFT JOIN  t_payment pay
+            ON pay.settlement_id = se.id AND pay.status = 1
+          LEFT JOIN t_company comp
+            ON se.company_id = comp.id AND comp.status = 1
+          LEFT JOIN t_project proj
+            ON se.project_id = proj.id AND proj.status = 1
+	  WHERE se.status = 1
+	  <if test="projectId != null">
+	    AND proj.id = #{projectId,jdbcType=VARCHAR}
+      </if>
+    )res ON tod.order_code = res.order_id WHERE res.`supplier_settlement_status` = '2' OR res.`settlement_delivery_status` = '2' OR
+	res.`bill_delivery_status` ='2' OR res.`buyer_settlement_status` = '2' OR res.`bill_open_status` = '2' OR
+	res.`approval_status` = '2' OR res.`payment_status` = '2' OR tod.delivery_status = '0'
+    ORDER BY delivery_time ASC , res.settlement_mode ASC,res.payment_time ASC
 </select>
 
 </mapper>

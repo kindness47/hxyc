@@ -160,7 +160,7 @@ public class OrderAuditController extends BaseController {
         //查询ProjectVO对象
         ProjectVO projectVO = new ProjectVO();
         projectVO.setId(projectId);
-        List<ProjectVO> projectVOList = projectService.listProject(projectVO);
+        List<ProjectVO> projectVOList = projectService.listProjectByParam(projectVO);
         projectVO = projectVOList.size() == 0 ? null:projectVOList.get(0);
 
         mov.addObject("project",projectVO);

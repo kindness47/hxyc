@@ -78,7 +78,7 @@
         and comp.company_name like concat('%',concat(#{companyName,jdbcType=VARCHAR},'%'))
       </if>
       <if test="id != null" >
-        and id = #{id,jdbcType=VARCHAR}
+        and proj.id = #{id,jdbcType=VARCHAR}
       </if>
       <if test="completion != null">
         and proj.is_completion = #{completion,jdbcType=TINYINT}
