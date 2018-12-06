@@ -1,5 +1,6 @@
 package com.hxyc.ots.controller;
 
+import com.hxyc.ots.base.Constants;
 import com.hxyc.ots.base.Response;
 import com.hxyc.ots.model.Payment;
 import com.hxyc.ots.service.CreditService;
@@ -10,7 +11,6 @@ import com.hxyc.ots.utils.SystemUtil;
 import com.hxyc.ots.vo.CreditVO;
 import com.hxyc.ots.vo.PaymentVO;
 import com.hxyc.ots.vo.ReceiptVO;
-import com.hxyc.ots.vo.SettlementVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -108,6 +107,8 @@ public class PaymentController extends BaseController {
     public Response savePayment(Payment payment){
         if (StringUtils.isEmpty(payment.getId())){
             payment.setId(UUID.randomUUID().toString().replaceAll("-",""));
+            // 新增支付信息为有效 add by joyu 20181206
+            payment.setStatus(Constants.ONE);
             payment.setCreateTime(new Timestamp(System.currentTimeMillis()));
             payment.setCreateBy(SystemUtil.getLoginUserName());
             paymentService.addPayment(payment);

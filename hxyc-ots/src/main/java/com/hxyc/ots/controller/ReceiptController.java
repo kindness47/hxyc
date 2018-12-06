@@ -1,13 +1,10 @@
 package com.hxyc.ots.controller;
 
-import com.hxjc.core.utils.CodeUtils;
+import com.hxyc.ots.base.Constants;
 import com.hxyc.ots.base.Response;
-import com.hxyc.ots.model.Credit;
 import com.hxyc.ots.model.Receipt;
-import com.hxyc.ots.service.CreditService;
 import com.hxyc.ots.service.ReceiptService;
 import com.hxyc.ots.utils.SystemUtil;
-import com.hxyc.ots.vo.CreditVO;
 import com.hxyc.ots.vo.ReceiptVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +73,7 @@ public class ReceiptController extends BaseController {
         if(StringUtils.isBlank(id)) {
             receipt.setCreateBy(SystemUtil.getLoginUserName());
             receipt.setCreateTime(new Date());
-            receipt.setStatus(1);
+            receipt.setStatus(Constants.ONE);
             receipt.setReceiptBalance(receipt.getReceiptAmount());
             receiptService.saveReceipt(receipt);
             return returnSuccess("新增成功！");

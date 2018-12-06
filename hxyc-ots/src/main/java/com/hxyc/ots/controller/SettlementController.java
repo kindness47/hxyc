@@ -1,15 +1,11 @@
 package com.hxyc.ots.controller;
 
+import com.hxyc.ots.base.Constants;
 import com.hxyc.ots.base.Response;
-import com.hxyc.ots.model.Order;
-import com.hxyc.ots.model.Project;
 import com.hxyc.ots.model.Settlement;
-import com.hxyc.ots.model.Users;
-import com.hxyc.ots.service.OrderService;
 import com.hxyc.ots.service.ProjectService;
 import com.hxyc.ots.service.SettlementService;
 import com.hxyc.ots.utils.SystemUtil;
-import com.hxyc.ots.vo.OrderVO;
 import com.hxyc.ots.vo.ProjectVO;
 import com.hxyc.ots.vo.SettlementVO;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @Description:结算管理
@@ -113,6 +112,8 @@ public class SettlementController extends BaseController {
     public Response saveSettlement(Settlement settlement){
         if (StringUtils.isEmpty(settlement.getId())){
             settlement.setId(UUID.randomUUID().toString().replaceAll("-",""));
+            // 新增结算信息为有效 add by joyu 20181206
+            settlement.setStatus(Constants.ONE);
             settlement.setCreateTime(new Timestamp(System.currentTimeMillis()));
             settlement.setCreateBy(SystemUtil.getLoginUserName());
             settlementService.addSettlement(settlement);
