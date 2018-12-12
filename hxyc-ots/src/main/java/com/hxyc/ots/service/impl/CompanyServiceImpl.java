@@ -131,7 +131,7 @@ public class CompanyServiceImpl implements CompanyService {
         //通过sort字段对每个等级再排序
         Collections.sort(companyVOListLevel1,new SortList<CompanyVO>("sort",true));
         Collections.sort(companyVOListLevel2,new SortList<CompanyVO>("sort",true));
-        Collections.sort(companyVOListLevel2,new SortList<CompanyVO>("sort",true));
+        Collections.sort(companyVOListLevel3,new SortList<CompanyVO>("sort",true));
         List<CompanyVO> resultCompanyList = new ArrayList<>();
         resultCompanyList.addAll(companyVOListLevel1);
         resultCompanyList.addAll(companyVOListLevel2);
@@ -185,7 +185,7 @@ public class CompanyServiceImpl implements CompanyService {
         //通过sort字段对每个等级再排序
         Collections.sort(companyVOListLevel1,new SortList<CompanyVO>("sort",true));
         Collections.sort(companyVOListLevel2,new SortList<CompanyVO>("sort",true));
-        Collections.sort(companyVOListLevel2,new SortList<CompanyVO>("sort",true));
+        Collections.sort(companyVOListLevel3,new SortList<CompanyVO>("sort",true));
         List<CompanyVO> resultCompanyList = new ArrayList<>();
         resultCompanyList.addAll(companyVOListLevel1);
         resultCompanyList.addAll(companyVOListLevel2);
