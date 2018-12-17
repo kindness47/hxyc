@@ -348,7 +348,11 @@
 <select id="selectOrderAudit" resultMap="AduitResultMap" parameterType="java.util.Map">
 SELECT tod.order_code,tod.order_time,tod.order_status,tod.delivery_time,tod.delivery_status,tod.receive_num,tod.quality,tod.service,tod.order_exception_desc,tod.delivery_exception_desc
     ,tod.create_by order_create_by,tod.quality_remark,tod.service_remark,res.payment_time,res.settlement_mode,res.*
-    FROM (SELECT * FROM t_order o WHERE o.status = 1) tod
+    FROM (SELECT * FROM t_order o WHERE o.status = 1
+    <if test="projectId != null">
+        AND o.`project_id`=#{projectId,jdbcType=VARCHAR}
+    </if>
+    ) tod
     LEFT JOIN
     (SELECT
 	  se.*,
@@ -366,9 +370,6 @@ SELECT tod.order_code,tod.order_time,tod.order_status,tod.delivery_time,tod.deli
           LEFT JOIN t_project proj
             ON se.project_id = proj.id AND proj.status = 1
 	  WHERE se.status = 1
-	  <if test="projectId != null">
-	    AND proj.id = #{projectId,jdbcType=VARCHAR}
-      </if>
     )res ON tod.order_code = res.order_id WHERE res.`supplier_settlement_status` = '2' OR res.`settlement_delivery_status` = '2' OR
 	res.`bill_delivery_status` ='2' OR res.`buyer_settlement_status` = '2' OR res.`bill_open_status` = '2' OR
 	res.`approval_status` = '2' OR res.`payment_status` = '2' OR tod.delivery_status = '0'
