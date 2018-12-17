@@ -118,7 +118,38 @@
     select
     <include refid="Base_Column_List" />
     from t_project
-    where project_name = #{projectName,jdbcType=VARCHAR}
+    where project_name = #{projectName,jdbcType=VARCHAR} and status=1
+  </select>
+
+  <!-- 按汇总日期获取项目信息 -->
+  <select id="projectDetailByDateSum" resultMap="VOResultMap" parameterType="java.util.Map">
+    select a.*, b.company_name from t_project a
+    inner join t_company b on b.id=a.company_id and b.status=1
+    <where>
+      <choose>
+        <when test="title == '今天'">
+          a.status=1 AND a.create_time BETWEEN (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT(NOW(),'%Y-%m-%d 23:59:59'))
+        </when>
+        <when test="title == '昨天'">
+          a.status=1 AND a.create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 23:59:59'))
+        </when>
+        <when test="title == '上周'">
+          a.status=1 AND a.create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 WEEK), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( SUBDATE(CURDATE(), WEEKDAY(CURDATE()) + 1), '%Y-%m-%d 23:59:59'))
+        </when>
+        <when test="title == '本周'">
+          a.status=1 AND a.create_time BETWEEN (SELECT DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), '%Y-%m-%d 00:00:00')) AND (SELECT DATE_FORMAT( DATE_ADD(SUBDATE(CURDATE(), WEEKDAY(CURDATE())), INTERVAL 6 DAY), '%Y-%m-%d 23:59:59'))
+        </when>
+        <when test="title == '上月'">
+          a.status=1 AND a.create_time BETWEEN (SELECT DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT(LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH)), '%Y-%m-%d 23:59:59'))
+        </when>
+        <when test="title == '本月'">
+          a.status=1 AND a.create_time BETWEEN (SELECT DATE_FORMAT( CURDATE(), '%Y-%m-01 00:00:00')) AND (SELECT DATE_FORMAT( LAST_DAY(CURDATE()), '%Y-%m-%d 23:59:59'))
+        </when>
+        <otherwise>
+          a.status=1
+        </otherwise>
+      </choose>
+    </where>
   </select>
 
 

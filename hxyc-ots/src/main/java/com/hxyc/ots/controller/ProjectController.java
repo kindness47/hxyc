@@ -17,15 +17,12 @@ import com.hxyc.ots.vo.UserVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -270,5 +267,18 @@ public class ProjectController extends BaseController {
             list.add(excelVO);
         }
         excelExport.writeExcel(titleColumn, titleName, titleSize, list);
+    }
+
+    /**
+     * 功能描述: 按汇总日期获取项目信息
+     * @Auther: 于金谷
+     * @Date create in 2018/12/17 14:04
+     */
+    @RequestMapping(value = "/project/{title}", method = RequestMethod.GET)
+    public ModelAndView projectDetailByDateSum(@PathVariable("title") String title){
+        ModelAndView mav = new ModelAndView("ots/project-detail");
+        List<ProjectVO> projectList = projectService.projectDetailByDateSum(title);
+        mav.addObject("projectList", projectList);
+        return mav;
     }
 }

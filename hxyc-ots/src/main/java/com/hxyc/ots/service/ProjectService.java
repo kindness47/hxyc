@@ -1,6 +1,5 @@
 package com.hxyc.ots.service;
 
-import com.hxyc.ots.model.Order;
 import com.hxyc.ots.model.Project;
 import com.hxyc.ots.vo.ProjectVO;
 import com.hxyc.ots.vo.WelcomeVO;
@@ -71,4 +70,11 @@ public interface ProjectService {
      * @Date create in 2018/11/6 16:47
      */
     List<WelcomeVO> getWelcomeList();
+
+    /**
+     * 功能描述: 按汇总日期获取项目信息
+     * @Auther: 于金谷
+     * @Date create in 2018/12/17 14:08
+     */
+    List<ProjectVO> projectDetailByDateSum(String title);
 }

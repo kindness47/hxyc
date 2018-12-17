@@ -70,4 +70,11 @@ public interface ProjectMapper {
      * @Date create in 2018/11/6 16:50
      */
     List<WelcomeVO> getWelcomeList();
+
+    /**
+     * 功能描述: 按汇总日期获取项目信息
+     * @Auther: 于金谷
+     * @Date create in 2018/12/17 14:10
+     */
+    List<ProjectVO> projectDetailByDateSum(@Param("title") String title);
 }

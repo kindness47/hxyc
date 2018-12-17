@@ -97,6 +97,17 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.getWelcomeList();
     }
 
+    /**
+     * 功能描述: 按汇总日期获取项目信息
+     * @param title 汇总日期
+     * @Auther: 于金谷
+     * @Date create in 2018/12/17 14:08
+     */
+    @Override
+    public List<ProjectVO> projectDetailByDateSum(String title) {
+        return projectMapper.projectDetailByDateSum(title);
+    }
+
     @Override
     public List<ProjectVO> selectExceptionProject(ProjectVO projectVO) {
         return projectMapper.selectExceptionProject(projectVO);

@@ -44,7 +44,7 @@
 			<c:forEach items="${welcomeList}" var="welcome">
 				<tr class="text-c">
 					<td>${welcome.title}</td>
-					<td>${welcome.projectNum}</td>
+					<td><a href="javascript:;" onclick="project_detail('项目详情-${welcome.title}','project/${welcome.title}','','480')">${welcome.projectNum}</a></td>
 					<td>${welcome.orderNum}</td>
 					<td>${welcome.settlementNum}</td>
 					<td>${welcome.paymentNum}</td>
@@ -55,7 +55,24 @@
 	</table>
 </div>
 <footer class="footer mt-20">Copyright 四川华西集采电子商务有限公司</footer>
+<!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/laypage/1.2/laypage.js"></script>
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="${hxycStatic}/js/ots/project-table.js" type="text/javascript"></script>
+<script type="text/javascript">
+    /*项目详情*/
+    function project_detail(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+</script>
 </body>
 </html>
