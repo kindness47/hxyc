@@ -69,6 +69,15 @@ public class Settlement extends BaseModel {
     /**结算金额*/
     private Double settlementAmount;
 
+    //结算模式对应的id
+    private String settlementModeId;
+
+    //供方结算金额
+    private Double supplierSettleAmount;
+
+    //剩余金额
+    private Double balanceOfSettlement;
+
     public String getOrderId() {
         return orderId;
     }
@@ -211,5 +220,29 @@ public class Settlement extends BaseModel {
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    public String getSettlementModeId() {
+        return settlementModeId;
+    }
+
+    public void setSettlementModeId(String settlementModeId) {
+        this.settlementModeId = settlementModeId;
+    }
+
+    public Double getSupplierSettleAmount() {
+        return supplierSettleAmount;
+    }
+
+    public void setSupplierSettleAmount(Double supplierSettleAmount) {
+        this.supplierSettleAmount = supplierSettleAmount;
+    }
+
+    public Double getBalanceOfSettlement() {
+        return balanceOfSettlement;
+    }
+
+    public void setBalanceOfSettlement(Double balanceOfSettlement) {
+        this.balanceOfSettlement = balanceOfSettlement;
     }
 }

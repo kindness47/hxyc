@@ -11,6 +11,7 @@ import com.hxyc.ots.vo.SettlementVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -110,6 +111,14 @@ public class SettlementController extends BaseController {
     @RequestMapping(value = "/settlement-save", method = RequestMethod.POST)
     @ResponseBody
     public Response saveSettlement(Settlement settlement){
+        if(settlement.getSettlementAmount() == null)
+            settlement.setSettlementAmount(new Double(0));
+        if(settlement.getBalanceOfSettlement() == null)
+            settlement.setBalanceOfSettlement(new Double(0));
+
+        if(settlement.getSettlementMode() == 1 && settlement.getBalanceOfSettlement() < 0)
+            return returnValidateError("信用证模式下余额不允许为负");
+
         if (StringUtils.isEmpty(settlement.getId())){
             settlement.setId(UUID.randomUUID().toString().replaceAll("-",""));
             // 新增结算信息为有效 add by joyu 20181206
@@ -121,9 +130,22 @@ public class SettlementController extends BaseController {
         }else {
             settlement.setUpdateTime(new Timestamp(System.currentTimeMillis()));
             settlement.setUpdateBy(SystemUtil.getLoginUserName());
+            System.out.println(settlement);
             settlementService.updateSettlement(settlement);
             return returnSuccess("修改成功");
         }
 
+    }
+
+    /**
+     * Description： 根据id获取结算单
+     * Author: 刘永红
+     * Date: Created in 2018/12/19 11:19
+     */
+    @RequestMapping(value = "/settlement/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public SettlementVO getSettlementById(@PathVariable("id") String id){
+        SettlementVO settlementVO = settlementService.getSettlement(id);
+        return settlementVO;
     }
 }

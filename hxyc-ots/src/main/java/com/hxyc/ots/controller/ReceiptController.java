@@ -4,6 +4,7 @@ import com.hxyc.ots.base.Constants;
 import com.hxyc.ots.base.Response;
 import com.hxyc.ots.model.Receipt;
 import com.hxyc.ots.service.ReceiptService;
+import com.hxyc.ots.utils.SortList;
 import com.hxyc.ots.utils.SystemUtil;
 import com.hxyc.ots.vo.ReceiptVO;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +47,14 @@ public class ReceiptController extends BaseController {
     @ResponseBody
     public Response listReceiptSelect(ReceiptVO receiptVO){
         List<ReceiptVO> receiptList = receiptService.listReceipt(receiptVO);
+        return returnSuccess(receiptList);
+    }
+
+    @RequestMapping(value = "credit-list",method = RequestMethod.POST)
+    @ResponseBody
+    public Response creditList(ReceiptVO receiptVO){
+        List<ReceiptVO> receiptList = receiptService.listReceipt(receiptVO);
+        Collections.sort(receiptList,new SortList<ReceiptVO>("createTime",true));
         return returnSuccess(receiptList);
     }
 

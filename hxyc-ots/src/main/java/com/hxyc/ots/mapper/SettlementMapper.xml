@@ -21,6 +21,9 @@
     <result column="buyer_settlement_remark" property="buyerSettlementRemark" jdbcType="VARCHAR" />
     <result column="settlement_mode" property="settlementMode" jdbcType="INTEGER" />
     <result column="settlement_amount" property="settlementAmount" jdbcType="DOUBLE" />
+    <result column="settlement_mode_id" property="settlementModeId" jdbcType="VARCHAR" />
+    <result column="supplier_settle_amount" property="supplierSettleAmount" jdbcType="DOUBLE" />
+    <result column="balance_of_settlement" property="balanceOfSettlement" jdbcType="DOUBLE" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -74,8 +77,8 @@
   <sql id="Base_Column_List" >
     id, order_id, company_id, project_id, settlement_code, supplier_settlement_time, supplier_settlement_status, supplier_settlement_remark,
     settlement_delivery_time, settlement_delivery_status,settlement_delivery_remark, bill_delivery_time, bill_delivery_status, bill_delivery_remark,
-    buyer_settlement_time, buyer_settlement_status,buyer_settlement_remark,
-    settlement_mode, settlement_amount, status, create_by, create_time, update_by, update_time
+    buyer_settlement_time, buyer_settlement_status,buyer_settlement_remark,settlement_mode, settlement_amount,
+    settlement_mode_id, supplier_settle_amount, balance_of_settlement, status, create_by, create_time, update_by, update_time
   </sql>
   <sql id="Order_Aduit_List">
     comp.`company_short_name`,comp.`company_name`,proj.`project_name`,proj.`create_by`,
@@ -255,18 +258,16 @@
       settlement_delivery_time, settlement_delivery_status, settlement_delivery_remark,
       bill_delivery_time, bill_delivery_status, bill_delivery_remark,
       buyer_settlement_time, buyer_settlement_status, buyer_settlement_remark,
-      settlement_mode,
-      settlement_amount, status, create_by, 
-      create_time, update_by, update_time
+      settlement_mode,settlement_amount, settlement_mode_id, supplier_settle_amount, balance_of_settlement,
+      status, create_by, create_time, update_by, update_time
       )
     values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{settlementCode,jdbcType=VARCHAR},
       #{supplierSettlementTime,jdbcType=TIMESTAMP}, #{supplierSettlementStatus,jdbcType=INTEGER}, #{supplierSettlementRemark,jdbcType=VARCHAR},
       #{settlementDeliveryTime,jdbcType=TIMESTAMP}, #{settlementDeliveryStatus,jdbcType=INTEGER}, #{settlementDeliveryRemark,jdbcType=VARCHAR},
       #{billDeliveryTime,jdbcType=TIMESTAMP}, #{billDeliveryStatus,jdbcType=INTEGER}, #{billDeliveryRemark,jdbcType=VARCHAR},
       #{buyerSettlementTime,jdbcType=TIMESTAMP}, #{buyerSettlementStatus,jdbcType=INTEGER}, #{buyerSettlementRemark,jdbcType=VARCHAR},
-       #{settlementMode,jdbcType=INTEGER},
-      #{settlementAmount,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      #{settlementMode,jdbcType=INTEGER},#{settlementAmount,jdbcType=DOUBLE}, #{settlementModeId,jdbcType=VARCHAR}, #{supplierSettleAmount,jdbcType=DOUBLE}, #{balanceOfSettlement,jdbcType=DOUBLE},
+      #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
 
@@ -327,6 +328,15 @@
       </if>
       <if test="settlementAmount != null" >
         settlement_amount = #{settlementAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="settlementModeId != null">
+        settlement_mode_id = #{settlementModeId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierSettleAmount != null">
+        supplier_settle_amount = #{supplierSettleAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="balanceOfSettlement != null">
+        balance_of_settlement = #{balanceOfSettlement,jdbcType=DOUBLE},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},

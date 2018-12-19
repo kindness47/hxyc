@@ -130,24 +130,47 @@
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算方式：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<select id="settlementMode" name="settlementMode">
+				<select id="settlementMode" name="settlementMode" class="select" onchange="changeSettlementMode()">
+					<option value="">-- 请选择 --</option>
 					<option value="1" <c:if test="${1==settlementVO.settlementMode}">selected</c:if>>信用证</option>
 					<option value="2" <c:if test="${2==settlementVO.settlementMode}">selected</c:if>>代购</option>
-					<option value="3" <c:if test="${3==settlementVO.settlementMode}">selected</c:if>>信用证-例外</option>
+					<option value="3" <c:if test="${3==settlementVO.settlementMode}">selected</c:if>>例外</option>
 				</select>
 			</div>
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算金额(元)：</label>
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>需方结算金额(元)：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="text" class="input-text" value="${settlementVO.settlementAmount}" placeholder="" id="settlementAmount" name="settlementAmount">
 			</div>
 		</div>
+
+        <div class="row cl hidden" id="mode_div">
+            <label class="form-label col-xs-2 col-sm-2" id="modeName"></label>
+            <div class="formControls col-xs-6 col-sm-6 ">
+                <select id="modeId" name="settlementModeId" onchange="changeModeId()"></select>
+            </div>
+            <label class="form-label col-xs-1 col-sm-1">余额(万元)：</label>
+            <div class="formControls col-xs-2 col-sm-2 ">
+                <input type="text" readonly class="input-text" id="balanceOfSettlement" name="balanceOfSettlement" value="${settlementVO.balanceOfSettlement}">
+            </div>
+        </div>
+
+		<div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">供方结算金额：</label>
+            <div class="formControls col-xs-8 col-sm-8 " id="supplierSettleAmountDiv">
+                <input type="text" class="input-text" name="supplierSettleAmount" id="supplierSettleAmount" value="${settlementVO.supplierSettleAmount}">
+            </div>
+        </div>
 		<div class="row cl">
 			<div style="text-align: center">
-				<input id="saveBtn" class="btn btn-primary radius" type="button" value="&nbsp;&nbsp;保 存&nbsp;&nbsp;">
+				<input id="saveBtn" class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;保 存&nbsp;&nbsp;">
 				<input id="delBtn" class="btn btn-primary radius" type="button" value="&nbsp;&nbsp;取 消&nbsp;&nbsp;">
 			</div>
 		</div>
 	</form>
+	<div>
+		<input type="hidden" value="${settlementVO.balanceOfSettlement}" id="balance">
+		<input type="hidden" value="${settlementVO.settlementMode}" id="modeFlag">
+	</div>
 </article>
 
 
@@ -251,34 +274,54 @@ $(function(){
         parent.layer.close(index);
     });
 
-    $("#saveBtn").click(function () {
-        $.ajax({
-            url: '${hxycStatic}/settlement-save',
-            type: 'post',
-            dataType:'json',
-            data: $("#form-settlement-add").serializeArray(),
-            beforeSend: function () {
-                $("#loading").modal('show');
+    $("#form-settlement-add").validate({
+        rules:{
+            companyId:{
+                required:true
             },
-            success: function(msg) {
-                parent.layer.msg(msg.message, {icon: 6, time: 1000}, function () {
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.location.reload();
-                    parent.layer.close(index);
-                });
-                $("#loading").modal('hide');
+            projectId:{
+                required:true
             },
-            error:function (msg) {
-                //alert('失败，'+msg.message);
-                parent.layer.msg(msg.message, {icon: 5, time: 1000});
-                $("#loading").modal('hide');
+            settlementAmount:{
+                required:true
             }
-        });
+        },
+
+        submitHandler:function(form){
+            $(form).ajaxSubmit({
+                url: '${hxycStatic}/settlement-save',
+                type: 'post',
+                dataType:'json',
+                beforeSend: function () {
+                    //$("#loading").modal('show');
+                },
+                success: function(msg) {
+                    if(msg.success) {
+                        parent.layer.msg(msg.message, {icon: 6, time: 1000}, function () {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.location.reload();
+                            parent.layer.close(index);
+                        });
+                        //$("#loading").modal('hide');
+                    }else {
+                        parent.layer.msg(msg.message, {icon: 2, time: 2000});
+                        //$("#loading").modal('hide');
+                    }
+                },
+                error:function (msg) {
+                    //alert('失败，'+msg.message);
+                    parent.layer.msg(msg.message, {icon: 5, time: 1000});
+                    $("#loading").modal('hide');
+                }
+            });
+        }
     });
 });
 	$("#projectSelect").click(function () {
-    	initProjectDeptTree();
-
+	    if($("#settlementMode").val() != "")
+	        alert("请先将结算模式重置再选择项目");
+	    else
+    	    initProjectDeptTree();
 	});
 
     var setting = {
@@ -359,14 +402,14 @@ function initProjectTable2(compnayId) {
         laytable.render({
             elem: '#projectPopTable'
             ,width: 500
-            ,height: 350
+            ,height: 354
             ,url: requrl
             //,size: 'sm'
             ,page: true
-            ,limit: 8
+            ,limit: 7
             ,cols: [[
                 //{type: 'checkbox', fixed: 'left'},
-                {fixed: 'center', title:'选择', toolbar: '#barRadio', width:50},
+                {fixed: 'center', title:'选择', toolbar: '#barRadio', width:60},
                 {field:'projectName', title:'项目名称', width:300, sort: true}
             ]]
         });
@@ -427,14 +470,14 @@ $("#orderNoSelect").click(function () {
         laytable.render({
             elem: '#orderPopTable'
             ,width: 650
-            ,height: 360
+            ,height: 371
             ,url: '${hxycStatic}/order-list-by-projId?projectId='+projectId
             //,size: 'sm'
             ,page: true
-            ,limit: 8
+            ,limit: 7
             ,cols: [[
                 //{type: 'checkbox', fixed: 'left'},
-                {fixed: 'center', title:'选择', toolbar: '#barRadio1', width:50},
+                {fixed: 'center', title:'选择', toolbar: '#barRadio1', width:60},
                 {field:'projectName', title:'项目名称', width:100},
                 {field:'orderCode', title:'订单号', width:350, sort: true},
 				{field:'orderBatchNo', title:'批次号', width:180}
@@ -478,6 +521,138 @@ $("#orderNoSelect").click(function () {
         });
         $("#modal-order-select").modal("show");
     });
+});
+
+//格式化时间函数   时间戳->字符串
+var formatDate = function(timestamp){
+    var date = new Date(timestamp);
+    var year = date.getFullYear()
+		,month = date.getMonth()+1
+		,day = date.getDate()
+        //,hour = date.getHours()
+        //,minute = date.getMinutes()
+        //,second = date.getSeconds()
+	;
+    return year+"-"+month+"-"+day;
+}
+
+//当结算模式不为空是，加载对应信息
+//isInit true/false   true:修改  false:新增
+var loadInfo = function (isInit) {
+    var mode = $("#settlementMode").val().toString();
+    if(mode == ""){
+        //alert("未选择");
+        $("#mode_div").addClass("hidden");
+        $("#modeName").text("");
+        $("#modeId").html("");
+        $("#balanceOfSettlement").val("");
+    }else if(mode == '1'){
+        //选择结算模式为信用证
+        //获取当前公司、项目下的列表
+        $.ajax({
+            type:"get",
+            url:"credit-select",
+            data:{"companyId":$("#companyId").val()},
+            contentType:"application/json",
+            dataType:"json",
+            success:function (data) {
+                if(data.result.length >0){
+                    $("#modeName").text("信用证:");
+                    var htmlStr = "";
+                    for(var i = 0; i<data.result.length; i++){
+                        var credit = data.result[i],className,
+                            creditType = credit.creditType == 1 ? "大证":"小证";
+						className = $("#balance").val() == credit.restAmount && $("#modeFlag").val()=="1" ? "selected old='old'":"";
+
+                        htmlStr += "<option value='"+credit.id+"' rest='"+credit.restAmount+"' "+className+">"+creditType+"||余额:"+credit.restAmount+
+                            "||开证金额:"+credit.openAmount+"||编码:"+credit.creditCode+"</option>";
+                    }
+                    //为确保不丢失精度，用扩大倍数法进行计算
+					if(!isInit)
+                    	$("#balanceOfSettlement").val((data.result[0].restAmount*1000000-$("#settlementAmount").val()*100).toFixed(0)/1000000);
+                    $("#modeId").html(htmlStr);
+                    $("#mode_div").removeClass("hidden");
+                }else{
+                    alert("该公司没有信用证");
+                    $("#settlementMode").val("");
+                    $("#modeName").text("");
+                    $("#modeId").html("");
+                    $("#balanceOfSettlement").val("");
+                    $("#mode_div").addClass("hidden");
+                }
+            }
+        });
+    }else if(mode == '2'){
+        //选择结算模式为代购
+        //获取公司的收款信息
+        $.ajax({
+            type:"get",
+            url:"receipt-select",
+            data:{"projectId":$("#projectId").val()},
+            contentType:"application/json",
+            dataType:"json",
+            success:function (data) {
+                if(data.result.length >0){
+                    $("#modeName").text("代购:");
+                    var htmlStr = "";
+                    for(var i = 0; i<data.result.length; i++){
+                        var receipt = data.result[i],className;
+						className = $("#balance").val() == receipt.receiptBalance && $("#modeFlag").val() == "2" ? "selected old='old'":"";
+                        htmlStr += "<option value='"+receipt.id+"' rest='"+receipt.receiptBalance+"' "+className+">余额:"+receipt.receiptBalance+
+                            "||收款金额:"+receipt.receiptAmount+"||收款日期:"+formatDate(receipt.createTime)+"</option>";
+                    }
+                    //为确保不丢失精度，用扩大倍数法进行计算
+                    if(!isInit)
+                    	$("#balanceOfSettlement").val((data.result[0].receiptBalance*1000000-$("#settlementAmount").val()*100).toFixed(0)/1000000);
+                    $("#modeId").html(htmlStr);
+                    $("#mode_div").removeClass("hidden");
+                }else{
+                    alert("该公司没有收款");
+                    $("#settlementMode").val("");
+                    $("#modeName").text("");
+                    $("#modeId").html("");
+                    $("#balanceOfSettlement").val("");
+                    $("#mode_div").addClass("hidden");
+                }
+            }
+        });
+    }else{
+        $("#modeName").text("");
+        $("#modeId").html("");
+        $("#balanceOfSettlement").val("");
+        $("#mode_div").addClass("hidden");
+    }
+}
+
+//如果settlementMode有默认值，remove 'hidden'
+if($("#settlementMode").val() != "")
+    loadInfo(true);
+
+//选择模式
+var changeSettlementMode = function () {
+	var mode = $("#settlementMode").val().toString();
+	if($("#companyId").val() == ""){
+		alert("项目不能为空");
+		$("#settlementMode").val("");
+		return ;
+	}
+	loadInfo(false);
+}
+//当结算模式发生改变更新余额
+var changeModeId = function () {
+    //为确保不丢失精度，用扩大倍数法进行计算
+    if ($("#settlementMode").val().toString() == '1' || $("#settlementMode").val().toString() == '2')
+        if ($("#modeId").find("option:selected").attr("old") != "old") {
+            $("#balanceOfSettlement").val(($("#modeId").find("option:selected").attr("rest") * 1000000 - $("#settlementAmount").val() * 100).toFixed(0) / 1000000);
+        }else
+            $("#balanceOfSettlement").val(($("#modeId").find("option:selected").attr("rest")));
+
+}
+//当需方结算金额输入框失去焦点时更新余额
+$("#settlementAmount").blur(function () {
+	//为确保不丢失精度，用扩大倍数法进行计算
+	if($("#settlementMode").val().toString() == '1' || $("#settlementMode").val().toString() == '2')
+		$("#balanceOfSettlement").val(($("#modeId").find("option:selected").attr("rest")*1000000-$("#settlementAmount").val()*100).toFixed(0)/1000000);
 });
 
 

@@ -4,11 +4,13 @@ import com.hxyc.ots.mapper.CreditMapper;
 import com.hxyc.ots.model.Company;
 import com.hxyc.ots.model.Credit;
 import com.hxyc.ots.service.CreditService;
+import com.hxyc.ots.utils.SortList;
 import com.hxyc.ots.vo.CreditVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,6 +33,7 @@ public class CreditServiceImpl implements CreditService {
     @Override
     public List<CreditVO> listCredit(CreditVO creditVO) {
         List<CreditVO> creditList = creditMapper.listCredit(creditVO);
+        Collections.sort(creditList,new SortList<CreditVO>("openTime",true));
         return creditList;
     }
 

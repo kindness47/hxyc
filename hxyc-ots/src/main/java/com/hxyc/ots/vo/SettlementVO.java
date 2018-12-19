@@ -99,11 +99,4 @@ public class SettlementVO extends Settlement {
         this.sortDesc = sortDesc;
     }
 
-    @Override
-    public String toString() {
-        return "SettlementVO{" +
-                "companyName='" + companyName + '\'' +
-                ", projectName='" + projectName + '\'' +
-                '}';
-    }
 }
