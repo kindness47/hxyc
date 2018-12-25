@@ -211,4 +211,12 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="getPaidSettleAmount" parameterType="java.lang.String" resultType="java.lang.Double">
+    SELECT SUM(payment_amount) FROM `t_payment`
+    WHERE `status` = 1
+     <if test="settlementId != null and settlementId != ''">
+        and `settlement_id` = #{settlementId,jdbcType=VARCHAR}
+     </if>
+  </select>
 </mapper>

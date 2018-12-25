@@ -20,6 +20,7 @@
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/layui.css"  media="all">
 	<link rel="stylesheet" type="text/css"  href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" />
+	<link rel="stylesheet" type="text/css"  href="${hxycStatic}/js/ots/css/jquery-ui.min.css" />
 	<!--[if IE 6]>
 	<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<![endif]-->
@@ -121,7 +122,9 @@
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="text" class="input-text" value="${paymentVO.paymentAmount}" placeholder="" id="paymentAmount" name="paymentAmount">
 			</div>
-			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>账户余额(结算已减)(万元)：</label>
+			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>
+                <a id="show-option" title="信用证和代购模式结算时余额已减,例外模式将在点击保存后从选取的信用证/代购中减去需方结算金额" style="color: #2a6496">账户余额</a>
+                (悬停查看详情)(万)：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="text" class="input-text hidden" placeholder="" id="originAmount">
 				<input type="text" class="input-text" value="${paymentVO.creditSurplusAmount}" placeholder="" id="creditSurplusAmount" name="creditSurplusAmount">
@@ -131,13 +134,18 @@
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2">供方结算金额(仅展示)(元)：</label>
 			<label class="form-label col-xs-2 col-sm-2" style="text-align: left;">
-				<span id="supplierSettleAmount" style="text-align: left;margin-top: 10px;"></span>
+				<input type="text" class="input-text" id="supplierSettleAmount" disabled="true">
 			</label>
+			<label class="form-label col-xs-2 col-sm-2 col-xs-offset-2">已付供方(仅展示)(元)：</label>
+			<label class="form-label col-xs-2 col-sm-2" style="text-align: left;">
+				<input type="text" class="input-text" id="paidSettleAmount" disabled="true">
+			</label>
+		</div>
+		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>其他备注：</label>
 			<div class="formControls col-xs-4 col-sm-4">
 				<input type="text" class="input-text" value="${paymentVO.remarks}" placeholder="" id="remarks" name="remarks">
 			</div>
-
 		</div>
 		<div class="row cl">
 			<div style="text-align: center">
@@ -146,7 +154,7 @@
 			</div>
 		</div>
 	</form>
-	<div> <input type="hidden" value="${paymentVO.creditSurplusAmount}"></div>
+	<input disabled type="hidden" value="${paymentVO.id}" id="paymentId" >
 </article>
 
 <!-- 弹出框 begin -->
@@ -204,6 +212,8 @@
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="${hxycStatic}/js/ots/decimal.js"></script>
+<script type="text/javascript" src="${hxycStatic}/js/ots/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	$('.skin-minimal input').iCheck({
@@ -211,6 +221,12 @@ $(function(){
 		radioClass: 'iradio-blue',
 		increaseArea: '20%'
 	});
+    $( "#show-option" ).tooltip({
+        show: {
+            effect: "slideDown",
+            delay: 250
+        }
+    });
 
     $("#delBtn").on("click",function () {
         var index = parent.layer.getFrameIndex(window.name);
@@ -218,6 +234,44 @@ $(function(){
     });
 
     $("#saveBtn").click(function () {
+        //当付款金额大于供方结算金额，不允许保存
+        if($("#supplierSettleAmount").val() != "" && $("#paidSettleAmount").val() != "" ){
+            if($("#settlementId").val()!= null){
+                //修改  减去
+                if(new Decimal($("#paymentAmount").val()).mul(new Decimal(10000)).toNumber() > new Decimal($("#supplierSettleAmount").val()).sub(new Decimal($("#paidSettleAmount").val())).toNumber()){
+                    layui.use("layer",function () {
+                        var layer = layui.layer;
+                        layer.open({
+                            title:"提示"
+                            ,content:"付款金额大于供方剩余结算金额，请仔细检查是否填写错误，点击确定调整付款金额为供方结算金额！"
+                            ,yes:function (index,layero) {
+                                $("#paymentAmount").val(new Decimal($("#supplierSettleAmount").val()).sub(new Decimal($("#paidSettleAmount").val())).div(new Decimal(10000)).toNumber());
+                                layer.close(index);
+                            }
+                        });
+                    });
+                    return false;
+                }
+			}else{
+
+                if(new Decimal($("#paymentAmount").val()).mul(new Decimal(10000)).toNumber() >$("#supplierSettleAmount").val()){
+                    layui.use("layer",function () {
+                        var layer = layui.layer;
+                        layer.open({
+                            title:"提示"
+                            ,content:"付款金额大于供方剩余结算金额，请仔细检查是否填写错误，点击确定调整付款金额为供方结算金额！"
+                            ,yes:function (index,layero) {
+                                $("#paymentAmount").val(new Decimal($("#supplierSettleAmount").val()).sub(new Decimal($("#paidSettleAmount").val())).div(new Decimal(10000)).toNumber());
+                                layer.close(index);
+                            }
+                        });
+                    });
+                    return false;
+                }
+			}
+
+		}
+
         $.ajax({
             url: '${hxycStatic}/payment-save',
             type: 'post',
@@ -227,12 +281,17 @@ $(function(){
                 $("#loading").modal('show');
             },
             success: function(msg) {
-                parent.layer.msg(msg.message, {icon: 6, time: 1000}, function () {
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.location.reload();
-                    parent.layer.close(index);
-                });
-                $("#loading").modal('hide');
+                if(msg.success) {
+                    parent.layer.msg(msg.message, {icon: 6, time: 1000}, function () {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.location.reload();
+                        parent.layer.close(index);
+                    });
+                    $("#loading").modal('hide');
+                }else{
+                    parent.layer.msg(msg.message, {icon: 2, time: 1000});
+                    $("#loading").modal('hide');
+                }
             },
 			error:function (msg) {
 				//alert('失败，'+msg.message);
@@ -429,30 +488,79 @@ var formatDate = function(timestamp){
     return year+"-"+month+"-"+day;
 }
 
-var initsettlementMode = function (settlementMode,settlementModeId) {
+var initsettlementMode = function (settlementMode,settlementModeId,settlementId) {
     var url ="";
-    if(settlementMode == "1")
-        url = "credit/"+settlementModeId;
-    else if(settlementMode == "2")
-        url = "receipt/"+settlementModeId;
-    else
-        return false;
-	$.ajax({
-		type:"post",
-		url:url,
-		dataType:"json",
-		success:function (data) {
-		    var str = "",modeInfo = data;
-		    if(settlementMode == "1") {
-                var creditType = modeInfo.creditType == 1 ? "大证":"小证";
-                str = "<option value='" + modeInfo.id + "'>" + creditType + "||余额:" + modeInfo.restAmount +
-                    "||开证金额:" + modeInfo.openAmount + "||编码:" + modeInfo.creditCode + "</option>"
-            }else if(settlementMode == "2")
-		        str ="<option value='"+modeInfo.id+"'>余额:"+modeInfo.receiptBalance+
-                    "||收款金额:"+modeInfo.receiptAmount+"||收款日期:"+formatDate(modeInfo.createTime)+"</option>";
-		    $("#paymentSourceId").html(str);
+    if(settlementMode == "1" || settlementMode == "2"){
+            url = settlementMode == "1"?"${hxycStatic}/credit/"+settlementModeId:"${hxycStatic}/receipt/"+settlementModeId;
+        $.ajax({
+            type:"post",
+            url:url,
+            dataType:"json",
+            success:function (modeInfo) {
+                var htmlStr = "";
+                if(settlementMode == "1") {
+                    var creditType = modeInfo.creditType == "1" ? "大证":"小证";
+                    htmlStr = "<option value='" + modeInfo.id + "'>" + creditType + "||余额:" + modeInfo.restAmount +
+                        "||开证金额:" + modeInfo.openAmount + "||编码:" + modeInfo.creditCode + "</option>"
+                }else if(settlementMode == "2")
+                    htmlStr ="<option value='"+modeInfo.id+"'>余额:"+modeInfo.receiptBalance+
+                        "||收款金额:"+modeInfo.receiptAmount+"||收款日期:"+formatDate(modeInfo.createTime)+"</option>";
+                $("#paymentSourceId").html(htmlStr);
+            }
+        });
+    }else if(settlementMode == 3){
+        if(settlementId != null){
+			url = "${hxycStatic}/getcredit-or-receipt/"+settlementId;
+			$.post(url,function (data) {
+				if(data.success){
+					var list = data.result;
+					var htmlStr = "";
+					var paymentSourceId = $("#paymentSourceIdDiv").attr("paymentSourceId");
+					if($("#paymentId").val() != ""){
+						//修改
+                        for (var i = 0; i < list.length; i++) {
+                            var modeInfo = list[i];
+                            if (paymentSourceId == modeInfo.id) {
+                                if (modeInfo.creditCode != null)
+                                    htmlStr = "<option value='" + modeInfo.id + "'>信用证||余额:" + modeInfo.restAmount +
+                                        "||开证金额:" + modeInfo.openAmount + "||编码:" + modeInfo.creditCode + "</option>";
+                                else
+                                    htmlStr = "<option value='" + modeInfo.id + "'>收款||余额:" + modeInfo.receiptBalance +
+                                        "||收款金额:" + modeInfo.receiptAmount + "||收款日期:" + formatDate(modeInfo.createTime) + "</option>";
+                            }
+                        }
+					}else {
+					    //初始化
+                        for (var i = 0; i < list.length; i++) {
+                            var modeInfo = list[i];
+                            var isSelected = paymentSourceId == modeInfo.id ? "selected" : "";
+                            if (modeInfo.creditCode != null)
+                                htmlStr += "<option value='" + modeInfo.id + "' " + isSelected + ">信用证||余额:" + modeInfo.restAmount +
+                                    "||开证金额:" + modeInfo.openAmount + "||编码:" + modeInfo.creditCode + "</option>";
+                            else
+                                htmlStr += "<option value='" + modeInfo.id + "' " + isSelected+ ">收款||余额:" + modeInfo.receiptBalance +
+                                    "||收款金额:" + modeInfo.receiptAmount + "||收款日期:" + formatDate(modeInfo.createTime) + "</option>";
+                        }
+                    }
+                    $("#paymentSourceId").html(htmlStr);
+				}else
+					alert("未找到信用证/收款信息");
+			});
         }
-	});
+	}
+}
+
+//获取已支付金额
+var paidSettleAmount = function(settlementId){
+    if(settlementId != null)
+        $.post("${hxycStatic}/getpaidSettleAmount/"+settlementId,function (data) {
+            //alert(data.result);
+            if(data.success){
+                $("#paidSettleAmount").val(new Decimal(data.result).mul(new Decimal(10000)).toNumber());
+            }else {
+                $("#paidSettleAmount").val("0");
+            }
+        });
 }
 
 function initSettlementTable2(compnayId) {
@@ -491,19 +599,21 @@ function initSettlementTable2(compnayId) {
 				$("#settlementId").val(data.id);
 				$("#settlementMode").val(data.settlementMode);
 				$("#creditSurplusAmount").val(data.balanceOfSettlement);
-				$("#supplierSettleAmount").text(data.supplierSettleAmount);
+				$("#supplierSettleAmount").val(data.supplierSettleAmount);
+                paidSettleAmount(data.id);
             }else {
                 $("#settlementCodeSelect").val(data.settlementCode);
                 $("#settlementId").val(data.id);
                 $("#settlementMode").val(data.settlementMode);
-                $("#creditSurplusAmount").val(data.balanceOfSettlement);
-                $("#supplierSettleAmount").text(data.supplierSettleAmount);
+				$("#creditSurplusAmount").val(data.balanceOfSettlement);
+                $("#supplierSettleAmount").val(data.supplierSettleAmount);
                 $("#paymentSourceId").val("");
+                paidSettleAmount(data.id);
 			}
 
 			//$("#paymentSourceId").val(data.settlementModeId);
 			//初始化paymentSourceId对应的信息
-			initsettlementMode(data.settlementMode,data.settlementModeId);
+			initsettlementMode(data.settlementMode,data.settlementModeId,data.id);
 			/*if (1 == data.settlementMode){//信用证
                 initXYZPaySelect(data.projectId);
 			}else {//例外 代购
@@ -532,8 +642,8 @@ function initSettlementTable2(compnayId) {
                 });
             }
         };
-
         $('.demoTable .layui-btn').on('click', function(){
+
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
@@ -546,14 +656,14 @@ var showSupplierSettleAmount = function () {
     if(settlementId != ""){
         $.ajax({
             type:"post",
-            url:"settlement/"+settlementId,
+            url:"${hxycStatic}/settlement/"+settlementId,
             dataType:"json",
 			async:false,
             success:function (data) {
                 //alert("success");
                 var settlementVO = data;
                 if(settlementVO.supplierSettleAmount != null)
-                	$("#supplierSettleAmount").text(settlementVO.supplierSettleAmount);
+                	$("#supplierSettleAmount").val(settlementVO.supplierSettleAmount);
             },
             error:function (data) {
 				alert("获取供方结算金额失败");
@@ -562,9 +672,14 @@ var showSupplierSettleAmount = function () {
     }
 }
 
+
 //初始化付款账户
-initsettlementMode($("#settlementMode").val(),$("#paymentSourceIdDiv").attr("paymentSourceId"));
+initsettlementMode($("#settlementMode").val(),$("#paymentSourceIdDiv").attr("paymentSourceId"),$("#settlementId").val());
 showSupplierSettleAmount();
+//初始化已支付金额
+var settlementId = $("#settlementId").val();
+if(settlementId != null)
+    paidSettleAmount(settlementId);
 
 
 </script>

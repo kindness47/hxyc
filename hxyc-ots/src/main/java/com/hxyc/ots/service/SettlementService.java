@@ -47,4 +47,6 @@ public interface SettlementService {
     Integer getCount(SettlementVO settlementVO);
 
     List<OrderAduitVO> selectOrderAudit(Map map);
+
+    void update(Settlement s);
 }

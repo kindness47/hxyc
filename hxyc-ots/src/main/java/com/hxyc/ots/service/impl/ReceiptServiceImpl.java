@@ -72,9 +72,9 @@ public class ReceiptServiceImpl implements ReceiptService {
 
     @Override
     public synchronized void updateReceiptBanlance(Receipt receipt) {
-        if (0 > receipt.getReceiptBalance()){
+        /*if (0 > receipt.getReceiptBalance()){
             throw new RuntimeException("账户余额不能小于0");
-        }
+        }*/
         receiptMapper.update(receipt);
     }
 }

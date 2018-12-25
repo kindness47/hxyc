@@ -130,7 +130,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-red">*</span>结算方式：</label>
 			<div class="formControls col-xs-4 col-sm-4">
-				<select id="settlementMode" name="settlementMode" class="select" onchange="changeSettlementMode()">
+				<select id="settlementMode" name="settlementMode" class="select" onchange="changeSettlementMode()" style="height: 30px;">
 					<option value="">-- 请选择 --</option>
 					<option value="1" <c:if test="${1==settlementVO.settlementMode}">selected</c:if>>信用证</option>
 					<option value="2" <c:if test="${2==settlementVO.settlementMode}">selected</c:if>>代购</option>
@@ -155,7 +155,7 @@
         </div>
 
 		<div class="row cl">
-            <label class="form-label col-xs-2 col-sm-2">供方结算金额：</label>
+            <label class="form-label col-xs-2 col-sm-2">供方结算金额(元)：</label>
             <div class="formControls col-xs-8 col-sm-8 " id="supplierSettleAmountDiv">
                 <input type="text" class="input-text" name="supplierSettleAmount" id="supplierSettleAmount" value="${settlementVO.supplierSettleAmount}">
             </div>
@@ -260,6 +260,7 @@
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="${hxycStatic}/js/ots/decimal.js"></script>
 <script type="text/javascript">
 $(function(){
 
@@ -317,6 +318,10 @@ $(function(){
         }
     });
 });
+
+	if($("#settlementAmount").val() == "")
+        $("#settlementAmount").val("0");
+
 	$("#projectSelect").click(function () {
 	    if($("#settlementMode").val() != "")
 	        alert("请先将结算模式重置再选择项目");
@@ -569,7 +574,7 @@ var loadInfo = function (isInit) {
                     }
                     //为确保不丢失精度，用扩大倍数法进行计算
 					if(!isInit)
-                    	$("#balanceOfSettlement").val((data.result[0].restAmount*1000000-$("#settlementAmount").val()*100).toFixed(0)/1000000);
+					    $("#balanceOfSettlement").val(new Decimal(data.result[0].restAmount).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
                     $("#modeId").html(htmlStr);
                     $("#mode_div").removeClass("hidden");
                 }else{
@@ -603,7 +608,7 @@ var loadInfo = function (isInit) {
                     }
                     //为确保不丢失精度，用扩大倍数法进行计算
                     if(!isInit)
-                    	$("#balanceOfSettlement").val((data.result[0].receiptBalance*1000000-$("#settlementAmount").val()*100).toFixed(0)/1000000);
+                        $("#balanceOfSettlement").val(new Decimal(data.result[0].receiptBalance).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
                     $("#modeId").html(htmlStr);
                     $("#mode_div").removeClass("hidden");
                 }else{
@@ -643,16 +648,17 @@ var changeModeId = function () {
     //为确保不丢失精度，用扩大倍数法进行计算
     if ($("#settlementMode").val().toString() == '1' || $("#settlementMode").val().toString() == '2')
         if ($("#modeId").find("option:selected").attr("old") != "old") {
-            $("#balanceOfSettlement").val(($("#modeId").find("option:selected").attr("rest") * 1000000 - $("#settlementAmount").val() * 100).toFixed(0) / 1000000);
+            $("#balanceOfSettlement").val(new Decimal($("#modeId").find("option:selected").attr("rest")).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val()=="")).div(new Decimal(10000)));
         }else
             $("#balanceOfSettlement").val(($("#modeId").find("option:selected").attr("rest")));
 
 }
 //当需方结算金额输入框失去焦点时更新余额
 $("#settlementAmount").blur(function () {
-	//为确保不丢失精度，用扩大倍数法进行计算
-	if($("#settlementMode").val().toString() == '1' || $("#settlementMode").val().toString() == '2')
-		$("#balanceOfSettlement").val(($("#modeId").find("option:selected").attr("rest")*1000000-$("#settlementAmount").val()*100).toFixed(0)/1000000);
+	if($("#modeId").find("option:selected").attr("old") != "old")
+		//为确保不丢失精度，用扩大倍数法进行计算
+		if($("#settlementMode").val().toString() == '1' || $("#settlementMode").val().toString() == '2')
+            $("#balanceOfSettlement").val(new Decimal($("#modeId").find("option:selected").attr("rest")).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)));
 });
 
 

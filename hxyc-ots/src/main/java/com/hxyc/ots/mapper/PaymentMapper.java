@@ -3,6 +3,7 @@ package com.hxyc.ots.mapper;
 import com.hxjc.core.utils.DataSource;
 import com.hxyc.ots.model.Payment;
 import com.hxyc.ots.vo.PaymentVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -57,4 +58,6 @@ public interface PaymentMapper {
      * Date: Created in 2018/11/23 14:32
      */
     int updateBillOpen(Payment payment);
+
+    Double getPaidSettleAmount(@Param(value = "settlementId")String settlementId);
 }

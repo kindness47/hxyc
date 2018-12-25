@@ -39,4 +39,7 @@ public interface PaymentService {
     PaymentVO getPayment(String id);
 
     int updateBillOpen(Payment payment);
+
+    //获取已支付金额
+    Double getPaidSettleAmount(String settlementId);
 }
