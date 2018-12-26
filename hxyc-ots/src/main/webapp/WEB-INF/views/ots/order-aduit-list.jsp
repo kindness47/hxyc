@@ -225,7 +225,7 @@
                     <th width="30">服务</th>
                     <th width="120">结算方式</th>
                     <th width="120">开证/收款</th>
-                    <th width="120">开证/收款</th>
+                    <th width="120">开/收时间</th>
                     <th width="100" class="hidden">结算单号</th>
                     <th width="120">结算时间</th>
                     <th width="20">√×</th>
@@ -276,9 +276,11 @@
                         <td>
                             <c:if test="${1==orderAduitVO.service}"><span style="color: green">好</span></c:if><c:if test="${0==orderAduitVO.service}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.serviceRemark}"><span style="color: red">差</span></a></c:if>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <c:if test="${1==orderAduitVO.settlementMode}">信用证</c:if><c:if test="${2==orderAduitVO.settlementMode}">代购</c:if><c:if test="${3==orderAduitVO.settlementMode}">例外</c:if>
+                        </td>
+                        <td><c:if test="${1==orderAduitVO.settlementMode}">${orderAduitVO.openAmount}</c:if></td><c:if test="${2==orderAduitVO.settlementMode}">${orderAduitVO.receiptAmount}</c:if>
+                        <td><f:formatDate value="${orderAduitVO.openTime}" pattern="MM-dd"/></td>
                         <td class="hidden">${orderAduitVO.settlementCode}</td>
                         <td><f:formatDate value="${orderAduitVO.supplierSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.supplierSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.supplierSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.supplierSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
@@ -286,10 +288,10 @@
                         <td><c:if test="${1==orderAduitVO.settlementDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.settlementDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.settlementDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
                         <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td></td>
+                        <td>${orderAduitVO.supplierSettleAmount}</td>
                         <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.buyerSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.buyerSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.buyerSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
-                        <td></td>
+                        <td>${orderAduitVO.settlementAmount}</td>
                         <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
                         <td><f:formatDate value="${orderAduitVO.approvalTime}" pattern="MM-dd"/></td>
@@ -302,7 +304,7 @@
                         </td>
                         <td>${orderAduitVO.paymentAmount}</td>
                             <%--<td>${orderAduitVO.creditSurplusAmount}</td>--%>
-                        <td></td>
+                        <td>${orderAduitVO.balanceOfSettlement}</td>
                         <td><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.remarks}">${orderAduitVO.remarks}</a></td>
                     </tr>
                 </c:forEach>
