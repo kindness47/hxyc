@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
     <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
     <![endif]-->
-    <title>订单审查</title>
+    <title>订单追踪</title>
     <style type="text/css">
         .Hui-aside{position: absolute;top:0px;bottom:0;left:0;padding-top:30px;width:230px;z-index:99;overflow:auto; background-color:rgba(238,238,238,0.5);border-right: 1px solid #e5e5e5;border-radius:1%}
         .Hui-article-box{position: absolute;top:0px;right:0px;bottom: 0;left:230px; overflow:hidden; z-index:1; background-color:#fff;border-radius:1%}
@@ -33,6 +33,12 @@
             white-space:normal;
             overflow:auto;
         }
+      .myspan {
+          font-weight: bold;
+          margin-left: 10px;
+          color: #01a0e4;
+
+      }
     </style>
 </head>
 <body>
@@ -48,7 +54,6 @@
 --%>
 <section class="Hui-article-box">
     <div id="iframe_box" class="Hui-article" style="margin-left: 20px">
-
         <script type="text/html" id="toolbarDemo">
             <div class="demoTable">
                 <div class="row cl aduit-table-header">
@@ -207,7 +212,7 @@
                         type: 2,
                         content:'aduit-list?projectId='+data.id,
                         area: ['800px', '500px'],
-                        title: data.projectName+' --订单跟踪详情',
+                        title: '&nbsp;',
                         maxmin: true,
                         closeBtn:1
                     });

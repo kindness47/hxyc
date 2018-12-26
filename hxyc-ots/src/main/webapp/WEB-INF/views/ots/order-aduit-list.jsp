@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
     <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
     <![endif]-->
-    <title>审查订单列表</title>
+    <title>项目订单详情列表</title>
     <style type="text/css">
         .myspan {
             font-weight: bold;
@@ -62,11 +62,11 @@
             word-break: break-all;
         }
         .scroll-table-head{
-            width: 1700px;
+            width: 2200px;
             padding-right: 17px
         }
         .scroll-table-body{
-            width: 1700px;
+            width: 2200px;
             height: 315px;
             margin-top: -2px;
         }
@@ -77,45 +77,43 @@
 </head>
 <body>
 <div class="page-container">
+    <div style="font-weight: bold;font-size: 18px;text-align: center">
+        <span><a class="myspan" onclick="fullScreen();" style="font-size: 10px;">新窗口打开</a></span>【${project.projectName}】项目订单详情
+    </div>
     <div class="clearfix"> </div>
-
     <div class="">
-        <table class="table table-border table-bordered table-hover table-bg" style="width: 1700px;">
+        <table class="table table-border table-bordered table-hover table-bg" style="width: 2200px; margin-top: 15px;">
             <tr class="text-c" style="text-align: left">
-                <td>项目专员：</td><td>${project.projectAssistant}</td>
-                <td>财务专员：</td><td>${project.financeAssistant}</td>
-                <td>运营专员:</td><td>${project.operateAssistant}</td>
-                <td>结算专员：</td><td>${project.settlementAssistant}</td>
+                <td style="background-color: #f5fafe;">项目专员：</td><td>${project.projectAssistant}</td>
+                <td style="background-color: #f5fafe;">财务专员：</td><td>${project.financeAssistant}</td>
+                <td style="background-color: #f5fafe;">运营专员:</td><td>${project.operateAssistant}</td>
+                <td style="background-color: #f5fafe;">结算专员：</td><td>${project.settlementAssistant}</td>
             </tr>
         </table>
     </div>
     <div class="clearfix"> </div>
-
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
+    <div class="cl" style="padding: 15px;">
         <div class="row cl">
-            <table class="table table-border table-bordered table-hover table-bg" style="width: 1700px;">
-                <tr class="text-c"><td>供应单位：</td><td>${project.supplyUnit}</td><td>合同签订时间：</td><td>${project.contractSignTime}</td><td>供货时间段：</td><td>${project.supplyTime}</td>
-                    <td>合同数量（T）：</td><td>${project.contractNum}</td><td>合同金额（万元）：</td><td>${project.contractAmount}</td></tr>
+            <table class="table table-border table-bordered table-hover table-bg" style="width: 2200px;">
+                <tr class="text-c"><td style="background-color: #f5fafe;">供应单位：</td><td>${project.supplyUnit}</td><td style="background-color: #f5fafe;">合同签订时间：</td><td>${project.contractSignTime}</td><td style="background-color: #f5fafe;">供货时间段：</td><td>${project.supplyTime}</td>
+                    <td style="background-color: #f5fafe;">合同数量（T）：</td><td>${project.contractNum}</td><td style="background-color: #f5fafe;">合同金额（万元）：</td><td>${project.contractAmount}</td></tr>
 
-                <tr class="text-c"><td>结算模式：</td><td><c:if test="${1==project.settlementMode}">信用证</c:if><c:if test="${2==project.settlementMode}">代购</c:if><c:if test="${3==project.settlementMode}">信用证-例外</c:if></td>
-                    <td>基价浮动值(元/吨)：</td><td>${project.baseFloatValue}</td><td>例外垫资(万元):</td><td>${project.extraCapitalAmount}</td>
-                    <td>垫资期限：</td><td>${project.capitalTimeLimit}</td><td>利息标准：</td><td>${project.interestRate}</td>
+                <tr class="text-c"><td style="background-color: #f5fafe;">结算模式：</td><td><c:if test="${1==project.settlementMode}">信用证</c:if><c:if test="${2==project.settlementMode}">代购</c:if><c:if test="${3==project.settlementMode}">信用证-例外</c:if></td>
+                    <td style="background-color: #f5fafe;">基价浮动值(元/吨)：</td><td>${project.baseFloatValue}</td><td style="background-color: #f5fafe;">例外垫资(万元):</td><td>${project.extraCapitalAmount}</td>
+                    <td style="background-color: #f5fafe;">垫资期限：</td><td>${project.capitalTimeLimit}</td><td style="background-color: #f5fafe;">利息标准：</td><td>${project.interestRate}</td>
                 </tr>
             </table>
         </div>
     </div>
-
-    <div style="font-weight: bold;font-size: 18px;text-align: center">
-        <span><a class="myspan" onclick="fullScreen();" style="font-size: 10px;">新窗口打开</a></span>【${project.projectName}】订单跟踪表 - <span id="viewSettlementType"></span>
-    </div>
-    <div class="clearfix"> </div>
+<%--    <div class="clearfix"> </div>--%>
     <!-- 订单及结算信息部分-->
-    <div style="margin: 5 5;" id="mynav">
+<%--    <div style="margin: 5 5;" id="mynav">
         <span><a class="myspan bgcolor" onclick="init();">全部</a></span><span><a class="myspan" onclick="xyz();">信用证</a></span>
-        <%--<span><a class="myspan bgcolor" onclick="xyz();">信用证</a></span>--%>
+        &lt;%&ndash;<span><a class="myspan bgcolor" onclick="xyz();">信用证</a></span>&ndash;%&gt;
         <span><a class="myspan" onclick="daigou();">代购</a></span><span><a class="myspan" onclick="liwai();">例外</a></span>
-    </div>
+    </div>--%>
     <!-- 收款信息部分-->
+<%--
     <div class="clearfix"> </div>
     <div class="mt-20" id="fukuaninfo" style="height:315px;">
         <div>
@@ -160,7 +158,7 @@
                             <c:if test="${1==receipt.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.paymentRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
                         <td width="80">${receipt.paymentAmount}</td>
-                            <%--<td width="80">${receipt.creditSurplusAmount}</td>--%>
+                            &lt;%&ndash;<td width="80">${receipt.creditSurplusAmount}</td>&ndash;%&gt;
                         <td width="80"></td>
                         <td width="120"><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${receipt.remarks}">${receipt.remarks}</a></td>
                     </tr>
@@ -186,7 +184,7 @@
                             <c:if test="${1==receipt.paymentStatus}"><span style="color: green">√</span></c:if><c:if test="${2==receipt.paymentStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${receipt.paymentRemark}"><span style="color: red">×</span></a></c:if>
                         </td>
                         <td width="80">${receipt.paymentAmount}</td>
-                            <%--<td width="80">${receipt.creditSurplusAmount}</td>--%>
+                            &lt;%&ndash;<td width="80">${receipt.creditSurplusAmount}</td>&ndash;%&gt;
                         <td width="80"></td>
                         <td width="120"><a href="javascript:void(0);" class="remark" data-toggle="tooltip" data-placement="top" title="${receipt.remarks}">${receipt.remarks}</a></td>
                     </tr>
@@ -196,6 +194,7 @@
             </table>
         </div>
     </div>
+--%>
 
     <div class="clearfix"> </div>
     <div class="mt-20" style="height:315px;">
@@ -203,28 +202,30 @@
             <table id="orderAduitTable" class="table table-border table-bordered table-hover table-bg table-sort scroll-table-head">
                 <thead>
                 <tr class="text-c">
-                    <th colspan="3">跟踪节点</th>
+                    <th colspan="1">#</th>
                     <%--<th colspan="2">--%>
                     <%--<span><a class="myspan" onclick="init();">全部</a></span><span><a class="myspan" onclick="xyz();">信用证</a></span>--%>
                     <%--<span><a class="myspan" onclick="daigou();">代购</a></span><span><a class="myspan" onclick="liwai();">例外</a></span>--%>
                     <%--</th>--%>
                     <th colspan="6">订单信息</th>
-                    <th colspan="6">供方结算</th>
-                    <th colspan="2">需方结算</th>
+                    <th colspan="3">结算模式</th>
+                    <th colspan="7">供方结算</th>
+                    <th colspan="3">需方结算</th>
                     <th colspan="9">支付流程</th>
                 </tr>
                 <tr class="text-c">
                     <th width="20">序号</th>
-                    <th width="120">开证金额</th>
-                    <th width="120">开证日期</th>
-                    <th width="50" class="hidden">结算模式</th>
-                    <th width="100" class="hidden">订单号</th>
+                 <%--   <th width="50" class="hidden">结算模式</th>
+                    <th width="100" class="hidden">订单号</th>--%>
                     <th width="120">订单时间</th>
                     <th width="120">交验时间</th>
                     <th width="20">√×</th>
                     <th width="120">验收数量</th>
                     <th width="30">质量</th>
                     <th width="30">服务</th>
+                    <th width="120">结算方式</th>
+                    <th width="120">开证/收款</th>
+                    <th width="120">开证/收款</th>
                     <th width="100" class="hidden">结算单号</th>
                     <th width="120">结算时间</th>
                     <th width="20">√×</th>
@@ -232,8 +233,10 @@
                     <th width="20">√×</th>
                     <th width="120">发票送达</th>
                     <th width="20">√×</th>
+                    <th width="120">结算金额</th>
                     <th width="120">结算时间</th>
                     <th width="20">√×</th>
+                    <th width="120">结算金额</th>
                     <th width="120">发票开立</th>
                     <th width="20">√×</th>
                     <th width="120">审批完成</th>
@@ -243,7 +246,6 @@
                     <th width="80">付款金额</th>
                     <th width="80">余额</th>
                     <th width="140">其他备注</th>
-
                 </tr>
                 </thead>
             </table>
@@ -256,14 +258,12 @@
                         <td>
                                 ${status.index+1}
                         </td>
-                        <td></td>
-                        <td></td>
                             <%--<td>${orderAduitVO.openAmount}</td>--%>
                             <%--<td><f:formatDate value="${orderAduitVO.openTime}" pattern="MM-dd"/></td>--%>
-                        <td class="hidden">
+                        <%--<td class="hidden">
                             <c:if test="${1==orderAduitVO.settlementMode}">信用证</c:if><c:if test="${2==orderAduitVO.settlementMode}">代购</c:if><c:if test="${3==orderAduitVO.settlementMode}">信用证-例外</c:if>
                         </td>
-                        <td class="hidden">${orderAduitVO.orderCode}</td>
+                        <td class="hidden">${orderAduitVO.orderCode}</td>--%>
                         <td><f:formatDate value="${orderAduitVO.orderTime}" pattern="MM-dd"/></td>
                         <td><f:formatDate value="${orderAduitVO.deliveryTime}" pattern="MM-dd"/></td>
                         <td>
@@ -276,6 +276,9 @@
                         <td>
                             <c:if test="${1==orderAduitVO.service}"><span style="color: green">好</span></c:if><c:if test="${0==orderAduitVO.service}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.serviceRemark}"><span style="color: red">差</span></a></c:if>
                         </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td class="hidden">${orderAduitVO.settlementCode}</td>
                         <td><f:formatDate value="${orderAduitVO.supplierSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.supplierSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.supplierSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.supplierSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
@@ -283,8 +286,10 @@
                         <td><c:if test="${1==orderAduitVO.settlementDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.settlementDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.settlementDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
                         <td><f:formatDate value="${orderAduitVO.billDeliveryTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billDeliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billDeliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billDeliveryRemark}"><span style="color: red">×</span></a></c:if></td>
+                        <td></td>
                         <td><f:formatDate value="${orderAduitVO.buyerSettlementTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.buyerSettlementStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.buyerSettlementStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.buyerSettlementRemark}"><span style="color: red">×</span></a></c:if></td>
+                        <td></td>
                         <td><f:formatDate value="${orderAduitVO.billOpenTime}" pattern="MM-dd"/></td>
                         <td><c:if test="${1==orderAduitVO.billOpenStatus}"><span style="color: green">√</span></c:if><c:if test="${2==orderAduitVO.billOpenStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.billOpenRemark}"><span style="color: red">×</span></a></c:if></td>
                         <td><f:formatDate value="${orderAduitVO.approvalTime}" pattern="MM-dd"/></td>
