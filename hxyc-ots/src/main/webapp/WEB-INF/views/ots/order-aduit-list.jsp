@@ -1,5 +1,7 @@
-﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page import="java.text.DecimalFormat" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../public/head.jsp"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -269,7 +271,9 @@
                         <td>
                             <c:if test="${1==orderAduitVO.deliveryStatus}"><span style="color: green">√</span></c:if><c:if test="${0==orderAduitVO.deliveryStatus}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.deliveryExceptionDesc}"><span style="color: red">×</span></a></c:if>
                         </td>
-                        <td>${orderAduitVO.receiveNum}</td>
+                        <td>
+                            <fmt:formatNumber type="number" value="${orderAduitVO.receiveNum}" maxFractionDigits="2"/>
+                        </td>
                         <td>
                             <c:if test="${1==orderAduitVO.quality}"><span style="color: green">好</span></c:if><c:if test="${0==orderAduitVO.quality}"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="${orderAduitVO.qualityRemark}"><span style="color: red">差</span></a></c:if>
                         </td>
