@@ -42,9 +42,18 @@
     left join t_project b on b.id=a.project_id and b.status=1
     left join t_company c on c.id=b.company_id and c.status=1
     where a.status=1
-    <if test="receiveNum != null and receiveNum != ''" >
-      and a.receive_num = #{receiveNum,jdbcType=VARCHAR}
+    <if test="projectName != null and projectName != ''" >
+      and b.project_name like CONCAT('%',#{projectName,jdbcType=VARCHAR},'%')
     </if>
+    <if test="orderCode != null and orderCode != ''" >
+      and a.order_code like CONCAT('%',#{orderCode,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="orderBatchNo != null and orderBatchNo != ''" >
+      and a.order_batch_no like CONCAT('%',#{orderBatchNo,jdbcType=VARCHAR},'%')
+    </if>
+   <!-- <if test="receiveNum != null and receiveNum != ''" >
+      and a.receive_num = #{receiveNum,jdbcType=VARCHAR}
+    </if>-->
     <if test="startDate != null and startDate != '' and  endDate != null and endDate != '' " >
       and a.order_time BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
     </if>

@@ -36,7 +36,9 @@
 		<input type="text" onclick="WdatePicker()" id="datemin" name="startDate"  class="input-text Wdate" readonly style="width:120px;">
 		-
 		<input type="text" onclick="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}'})" id="datemax" name="endDate"  class="input-text Wdate" readonly style="width:120px;">
-		<input type="text" class="input-text" style="width:250px" name="receiveNum" placeholder="请输入验收数量">
+        <input type="text" class="input-text" style="width:120px" name="projectName" placeholder="请输入项目名称">
+        <input type="text" class="input-text" style="width:120px" name="orderCode" placeholder="请输入订单编号">
+        <input type="text" class="input-text" style="width:120px" name="orderBatchNo" placeholder="请输入批次号">
 		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 查询</button>
         <shiro:hasPermission name="0202-0004">
             <a href="order/exportExcel" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 导出</a>
