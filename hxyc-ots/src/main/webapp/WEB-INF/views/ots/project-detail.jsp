@@ -35,7 +35,7 @@
                     <th width="100">年份</th>
                     <th width="200">供应单位</th>
                     <th width="120">签订时间</th>
-                    <th width="140">供货时间</th>0
+                    <th width="140">供货时间</th>
                     <th width="130">合同数量（T）</th>
                     <th width="170">合同金额（万元）</th>
                     <th width="120">结算模式</th>
