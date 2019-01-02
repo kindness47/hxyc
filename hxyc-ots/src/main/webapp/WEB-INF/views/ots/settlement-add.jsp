@@ -555,10 +555,9 @@ var loadInfo = function (isInit) {
         //选择结算模式为信用证
         //获取当前公司、项目下的列表
         $.ajax({
-            type:"get",
+            type:"post",
             url:"credit-select",
             data:{"companyId":$("#companyId").val()},
-            contentType:"application/json",
             dataType:"json",
             success:function (data) {
                 if(data.result.length >0){
@@ -574,16 +573,16 @@ var loadInfo = function (isInit) {
                     }
                     //为确保不丢失精度，用扩大倍数法进行计算
 					if(!isInit)
-					    $("#balanceOfSettlement").val(new Decimal(data.result[0].restAmount).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
+					    $("#balanceOfSettlement").val(new Decimal(data.result[0].restAmount).mul(new Decimal(10000)).add(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
                     $("#modeId").html(htmlStr);
                     $("#mode_div").removeClass("hidden");
                 }else{
-                    alert("该公司没有信用证");
-                    $("#settlementMode").val("");
+                    //alert("该公司没有信用证");
+                    /*$("#settlementMode").val("");
                     $("#modeName").text("");
                     $("#modeId").html("");
                     $("#balanceOfSettlement").val("");
-                    $("#mode_div").addClass("hidden");
+                    $("#mode_div").addClass("hidden");*/
                 }
             }
         });
@@ -591,11 +590,10 @@ var loadInfo = function (isInit) {
         //选择结算模式为代购
         //获取公司的收款信息
         $.ajax({
-            type:"get",
+            type:"post",
             url:"receipt-select",
             data:{"projectId":$("#projectId").val()},
-            contentType:"application/json",
-            dataType:"json",
+			dataType:"json",
             success:function (data) {
                 if(data.result.length >0){
                     $("#modeName").text("代购:");
@@ -608,16 +606,17 @@ var loadInfo = function (isInit) {
                     }
                     //为确保不丢失精度，用扩大倍数法进行计算
                     if(!isInit)
-                        $("#balanceOfSettlement").val(new Decimal(data.result[0].receiptBalance).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
+                        $("#balanceOfSettlement").val(new Decimal(data.result[0].receiptBalance).mul(new Decimal(10000)).add(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
                     $("#modeId").html(htmlStr);
                     $("#mode_div").removeClass("hidden");
                 }else{
-                    alert("该公司没有收款");
-                    $("#settlementMode").val("");
+                    //alert("该项目没有收款");
+                    //$("#mode_div").removeClass("hidden");
+                    /*$("#settlementMode").val("");
                     $("#modeName").text("");
                     $("#modeId").html("");
                     $("#balanceOfSettlement").val("");
-                    $("#mode_div").addClass("hidden");
+                    $("#mode_div").addClass("hidden");*/
                 }
             }
         });

@@ -111,7 +111,7 @@
 					</c:forEach>
 				</select>--%>
 				<div paymentSourceId="${paymentVO.paymentSourceId}" id="paymentSourceIdDiv"></div>
-				<select id="paymentSourceId" name="paymentSourceId" class="select" style="height:30px;" readonly="">
+				<select id="paymentSourceId" name="paymentSourceId" class="select" style="height:30px;" readonly="" onchange="changeMode()">
 
 				</select>
 			</div>
@@ -155,6 +155,8 @@
 		</div>
 	</form>
 	<input disabled type="hidden" value="${paymentVO.id}" id="paymentId" >
+	<input type="hidden" value="${paymentVO.projectId}" id="projectId">
+	<input type="hidden" value="${paymentVO.companyName}" id="companyName">
 </article>
 
 <!-- 弹出框 begin -->
@@ -487,16 +489,17 @@ var formatDate = function(timestamp){
     ;
     return year+"-"+month+"-"+day;
 }
+/*var changeMode = function () {
+    alert($("#paymentSourceId").find("option:selected").attr("rest")+"--->"+$("#settlementAmount").val());
+    $("#creditSurplusAmount").val(new Decimal($("#paymentSourceId").find("option:selected").attr("rest")).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
+}*/
 
 var initsettlementMode = function (settlementMode,settlementModeId,settlementId) {
     var url ="";
     if(settlementMode == "1" || settlementMode == "2"){
+        if(settlementModeId != null && settlementModeId != ""){
             url = settlementMode == "1"?"${hxycStatic}/credit/"+settlementModeId:"${hxycStatic}/receipt/"+settlementModeId;
-        $.ajax({
-            type:"post",
-            url:url,
-            dataType:"json",
-            success:function (modeInfo) {
+            $.post(url,function (modeInfo) {
                 var htmlStr = "";
                 if(settlementMode == "1") {
                     var creditType = modeInfo.creditType == "1" ? "大证":"小证";
@@ -506,8 +509,38 @@ var initsettlementMode = function (settlementMode,settlementModeId,settlementId)
                     htmlStr ="<option value='"+modeInfo.id+"'>余额:"+modeInfo.receiptBalance+
                         "||收款金额:"+modeInfo.receiptAmount+"||收款日期:"+formatDate(modeInfo.createTime)+"</option>";
                 $("#paymentSourceId").html(htmlStr);
+            });
+        }else{
+            if(settlementMode == "1"){
+                $.post("credit-select",{"projectId":$("#projectId").val()},function(data) {
+                    if (data.result.length > 0) {
+                        var htmlStr = "";
+                        for(var i = 0; i<data.result.length; i++){
+                            var credit = data.result[i],
+                                creditType = credit.creditType == 1 ? "大证":"小证";
+                            htmlStr += "<option value='"+credit.id+"' rest='"+credit.restAmount+"'>"+creditType+"||余额:"+credit.restAmount+
+                                "||开证金额:"+credit.openAmount+"||编码:"+credit.creditCode+"</option>";
+                        }
+                        $("#paymentSourceId").html(htmlStr);
+                    } else
+                        alert("该项目没有开立信用证");
+                });
+            }else if(settlementMode == "2"){
+			    $.post("receipt-select",{"projectId":$("#projectId").val()},function(data){
+                    if(data.result.length >0){
+                        var htmlStr = "";
+                        for(var i = 0; i<data.result.length; i++){
+                            var receipt = data.result[i];
+                            htmlStr += "<option value='"+receipt.id+"' rest='"+receipt.receiptBalance+"'>余额:"+receipt.receiptBalance+
+                                "||收款金额:"+receipt.receiptAmount+"||收款日期:"+formatDate(receipt.createTime)+"</option>";
+                        }
+                        $("#paymentSourceId").html(htmlStr);
+
+                    }else
+                        alert("该项目没有收款");
+				});
             }
-        });
+        }
     }else if(settlementMode == 3){
         if(settlementId != null){
 			url = "${hxycStatic}/getcredit-or-receipt/"+settlementId;
@@ -550,13 +583,18 @@ var initsettlementMode = function (settlementMode,settlementModeId,settlementId)
 	}
 }
 
+
+
 //获取已支付金额
 var paidSettleAmount = function(settlementId){
     if(settlementId != null)
         $.post("${hxycStatic}/getpaidSettleAmount/"+settlementId,function (data) {
             //alert(data.result);
             if(data.success){
-                $("#paidSettleAmount").val(new Decimal(data.result).mul(new Decimal(10000)).toNumber());
+                if(data.result == 0)
+                    $("#paidSettleAmount").val("0");
+                else
+                    $("#paidSettleAmount").val(new Decimal(data.result).mul(new Decimal(10000)).toNumber());
             }else {
                 $("#paidSettleAmount").val("0");
             }
@@ -600,7 +638,7 @@ function initSettlementTable2(compnayId) {
 				$("#settlementMode").val(data.settlementMode);
 				$("#creditSurplusAmount").val(data.balanceOfSettlement);
 				$("#supplierSettleAmount").val(data.supplierSettleAmount);
-                paidSettleAmount(data.id);
+				$("#projectId").val(data.projectId);
             }else {
                 $("#settlementCodeSelect").val(data.settlementCode);
                 $("#settlementId").val(data.id);
@@ -608,12 +646,15 @@ function initSettlementTable2(compnayId) {
 				$("#creditSurplusAmount").val(data.balanceOfSettlement);
                 $("#supplierSettleAmount").val(data.supplierSettleAmount);
                 $("#paymentSourceId").val("");
-                paidSettleAmount(data.id);
+                $("#projectId").val(data.projectId);
+
 			}
+            paidSettleAmount(data.id);
 
 			//$("#paymentSourceId").val(data.settlementModeId);
 			//初始化paymentSourceId对应的信息
 			initsettlementMode(data.settlementMode,data.settlementModeId,data.id);
+
 			/*if (1 == data.settlementMode){//信用证
                 initXYZPaySelect(data.projectId);
 			}else {//例外 代购
@@ -678,8 +719,9 @@ initsettlementMode($("#settlementMode").val(),$("#paymentSourceIdDiv").attr("pay
 showSupplierSettleAmount();
 //初始化已支付金额
 var settlementId = $("#settlementId").val();
-if(settlementId != null)
+if(settlementId != null && settlementId != "") {
     paidSettleAmount(settlementId);
+}
 
 
 </script>

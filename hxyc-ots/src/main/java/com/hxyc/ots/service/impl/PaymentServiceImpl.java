@@ -17,6 +17,7 @@ import com.hxyc.ots.vo.CreditVO;
 import com.hxyc.ots.vo.PaymentVO;
 import com.hxyc.ots.vo.ReceiptVO;
 import com.hxyc.ots.vo.SettlementVO;
+import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,59 +55,95 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional(rollbackFor = { Exception.class })
     public void addPayment(Payment payment){
         //updateCreditOrReceiptBanlance(payment);
+        //查询之前的结算
         SettlementVO settlementVO = settlementService.getSettlement(payment.getSettlementId());
-        if(settlementVO.getSettlementMode() == 3){
-            //用***支付例外
-            String paySourceId = payment.getPaymentSourceId();
-            CreditVO creditVO = creditService.getCreditById(paySourceId);
+        if(StringUtils.isNullOrEmpty(settlementVO.getSettlementModeId())){
+            //支付时选择
 
-            PaymentVO p = new PaymentVO();
-            p.setSettlementId(payment.getSettlementId());
-            List<PaymentVO> list = paymentMapper.select(p);
-            //当未支付过此结算单，更新需方结算
-            if(list.size() == 0) {
-                if (creditVO != null) {
-                    //用信用证支付例外
-                    //更新信用证余额  剩余金额 = 信用证余额(万元)-需方结算金额(元)
-                    Double restAmount = DoubleOperationUtil.sub(creditVO.getRestAmount(), DoubleOperationUtil.div(settlementVO.getSettlementAmount(),10000));
-                    if (restAmount < new Double(0))
-                        throw new RuntimeException();
-                    //更新信用证余额
-                    Credit credit = new Credit();
-                    credit.setId(creditVO.getId());
+            Credit credit = creditService.getCreditById(payment.getPaymentSourceId());
+            if(credit != null){
+                //信用证支付
+                Double restAmount = DoubleOperationUtil.add(credit.getRestAmount(),DoubleOperationUtil.div(payment.getCreditSurplusAmount(),10000));
+                if(restAmount < 0){
+                    throw new RuntimeException();
+                }
+                else {
                     credit.setRestAmount(restAmount);
-                    credit.setUpdateBy(SystemUtil.getLoginUserName());
-                    credit.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                     creditService.updateCreditBalance(credit);
-                    //更新结算单余额
                     Settlement s = new Settlement();
                     s.setId(settlementVO.getId());
                     s.setBalanceOfSettlement(restAmount);
-                    s.setUpdateBy(SystemUtil.getLoginUserName());
-                    s.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                    s.setSettlementModeId(payment.getPaymentSourceId());
                     settlementService.update(s);
-
                     payment.setCreditSurplusAmount(restAmount);
-                } else {
-                    ReceiptVO receiptVO = receiptService.getReceiptById(paySourceId);
-                    Double restAmount = DoubleOperationUtil.sub(receiptVO.getReceiptBalance(), DoubleOperationUtil.div(settlementVO.getSettlementAmount(),10000));
+                }
+            }else{
+                //代购支付
+                Receipt receipt = receiptService.getReceiptById(payment.getPaymentSourceId());
+                Double restAmount = DoubleOperationUtil.add(receipt.getReceiptBalance(),DoubleOperationUtil.div(payment.getCreditSurplusAmount(),10000));
+                updateReceiptBanlance(receipt.getId(),restAmount);
+                Settlement s = new Settlement();
+                s.setId(settlementVO.getId());
+                s.setBalanceOfSettlement(restAmount);
+                s.setSettlementModeId(payment.getPaymentSourceId());
+                settlementService.update(s);
+                payment.setCreditSurplusAmount(restAmount);
+            }
+        }else {
+            //结算时选择
+            if (settlementVO.getSettlementMode() == 3) {
+                //用***支付例外
+                String paySourceId = payment.getPaymentSourceId();
+                CreditVO creditVO = creditService.getCreditById(paySourceId);
 
-                    //更新收款余额
-                    Receipt r = new Receipt();
-                    r.setId(receiptVO.getId());
-                    r.setReceiptBalance(restAmount);
-                    r.setUpdateBy(SystemUtil.getLoginUserName());
-                    r.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-                    receiptService.updateReceiptBanlance(r);
+                PaymentVO p = new PaymentVO();
+                p.setSettlementId(payment.getSettlementId());
+                List<PaymentVO> list = paymentMapper.select(p);
+                //当未支付过此结算单，更新需方结算
+                if (list.size() == 0) {
+                    if (creditVO != null) {
+                        //用信用证支付例外
+                        //更新信用证余额  剩余金额 = 信用证余额(万元)-需方结算金额(元)
+                        Double restAmount = DoubleOperationUtil.sub(creditVO.getRestAmount(), DoubleOperationUtil.div(settlementVO.getSettlementAmount(), 10000));
+                        if (restAmount < new Double(0))
+                            throw new RuntimeException();
+                        //更新信用证余额
+                        Credit credit = new Credit();
+                        credit.setId(creditVO.getId());
+                        credit.setRestAmount(restAmount);
+                        credit.setUpdateBy(SystemUtil.getLoginUserName());
+                        credit.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                        creditService.updateCreditBalance(credit);
+                        //更新结算单余额
+                        Settlement s = new Settlement();
+                        s.setId(settlementVO.getId());
+                        s.setBalanceOfSettlement(restAmount);
+                        s.setUpdateBy(SystemUtil.getLoginUserName());
+                        s.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                        settlementService.update(s);
 
-                    Settlement s = new Settlement();
-                    s.setId(settlementVO.getId());
-                    s.setBalanceOfSettlement(restAmount);
-                    s.setUpdateBy(SystemUtil.getLoginUserName());
-                    s.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-                    settlementService.update(s);
+                        payment.setCreditSurplusAmount(restAmount);
+                    } else {
+                        ReceiptVO receiptVO = receiptService.getReceiptById(paySourceId);
+                        Double restAmount = DoubleOperationUtil.sub(receiptVO.getReceiptBalance(), DoubleOperationUtil.div(settlementVO.getSettlementAmount(), 10000));
 
-                    payment.setCreditSurplusAmount(restAmount);
+                        //更新收款余额
+                        Receipt r = new Receipt();
+                        r.setId(receiptVO.getId());
+                        r.setReceiptBalance(restAmount);
+                        r.setUpdateBy(SystemUtil.getLoginUserName());
+                        r.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                        receiptService.updateReceiptBanlance(r);
+
+                        Settlement s = new Settlement();
+                        s.setId(settlementVO.getId());
+                        s.setBalanceOfSettlement(restAmount);
+                        s.setUpdateBy(SystemUtil.getLoginUserName());
+                        s.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                        settlementService.update(s);
+
+                        payment.setCreditSurplusAmount(restAmount);
+                    }
                 }
             }
         }

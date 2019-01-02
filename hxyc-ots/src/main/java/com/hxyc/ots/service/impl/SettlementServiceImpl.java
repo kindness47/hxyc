@@ -13,6 +13,7 @@ import com.hxyc.ots.utils.DoubleOperationUtil;
 import com.hxyc.ots.utils.SystemUtil;
 import com.hxyc.ots.vo.OrderAduitVO;
 import com.hxyc.ots.vo.SettlementVO;
+import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,10 +51,18 @@ public class SettlementServiceImpl implements SettlementService {
         //更新 信用证/代购余额
         if(settlement.getSettlementMode() == 1) {
             //选择结算模式为信用证   更新信用证余额
-            updateCreditBalance(settlement.getSettlementModeId(),settlement.getBalanceOfSettlement());
+            if(!StringUtils.isNullOrEmpty(settlement.getSettlementModeId()))
+                updateCreditBalance(settlement.getSettlementModeId(),settlement.getBalanceOfSettlement());
+            else
+                settlement.setBalanceOfSettlement(DoubleOperationUtil.sub(0,settlement.getSettlementAmount()));
         }else if(settlement.getSettlementMode() == 2){
             //选择模式为代购   更新收款余额
-            updateReceiptBalance(settlement.getSettlementModeId(),settlement.getBalanceOfSettlement());
+            if(!StringUtils.isNullOrEmpty(settlement.getSettlementModeId()))
+                updateReceiptBalance(settlement.getSettlementModeId(),settlement.getBalanceOfSettlement());
+            else{
+                settlement.setBalanceOfSettlement(DoubleOperationUtil.sub(0,settlement.getSettlementAmount()));
+            }
+
         }else{
             settlement.setBalanceOfSettlement(DoubleOperationUtil.sub(0,settlement.getSettlementAmount()));
         }

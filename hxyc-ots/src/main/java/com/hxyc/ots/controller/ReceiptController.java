@@ -43,7 +43,7 @@ public class ReceiptController extends BaseController {
         return mav;
     }
 
-    @RequestMapping(value = "/receipt-select", method = RequestMethod.GET)
+    @RequestMapping(value = "/receipt-select", method = RequestMethod.POST)
     @ResponseBody
     public Response listReceiptSelect(ReceiptVO receiptVO){
         List<ReceiptVO> receiptList = receiptService.listReceipt(receiptVO);

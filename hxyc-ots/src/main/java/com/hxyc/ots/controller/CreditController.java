@@ -41,7 +41,7 @@ public class CreditController extends BaseController {
         return mav;
     }
 
-    @RequestMapping(value = "/credit-select", method = RequestMethod.GET)
+    @RequestMapping(value = "/credit-select", method = RequestMethod.POST)
     @ResponseBody
     public Response listCreditSelect(CreditVO creditVO){
         List<CreditVO> creditList = creditService.listCredit(creditVO);
