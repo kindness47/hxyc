@@ -20,7 +20,9 @@
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/vendors/H-ui/static/h-ui.admin/css/style.css" />
 	<link rel="stylesheet" type="text/css" href="${hxycStatic}/js/ots/css/layui.css"  media="all">
 	<link rel="stylesheet" type="text/css"  href="${hxycStatic}/vendors/H-ui/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" />
-	<!--[if IE 6]>
+    <link rel="stylesheet" type="text/css"  href="${hxycStatic}/js/ots/css/jquery-ui.min.css" />
+
+    <!--[if IE 6]>
 	<script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<![endif]-->
 	<title>新增结算单</title>
@@ -148,9 +150,9 @@
             <div class="formControls col-xs-6 col-sm-6 ">
                 <select id="modeId" name="settlementModeId" onchange="changeModeId()"></select>
             </div>
-            <label class="form-label col-xs-1 col-sm-1">余额(万元)：</label>
+            <label class="form-label col-xs-1 col-sm-1"><a href="javascript:;" id="show-option" title="如未自动算出或计算有误,请手动填写">余额</a>(万元)：</label>
             <div class="formControls col-xs-2 col-sm-2 ">
-                <input type="text" readonly class="input-text" id="balanceOfSettlement" name="balanceOfSettlement" value="${settlementVO.balanceOfSettlement}">
+                <input type="text" class="input-text" id="balanceOfSettlement" name="balanceOfSettlement" value="${settlementVO.balanceOfSettlement}">
             </div>
         </div>
 
@@ -261,8 +263,17 @@
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="${hxycStatic}/vendors/H-ui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript" src="${hxycStatic}/js/ots/decimal.js"></script>
+<script type="text/javascript" src="${hxycStatic}/js/ots/jquery-ui.min.js"></script>
+
 <script type="text/javascript">
 $(function(){
+
+    $( "#show-option" ).tooltip({
+        show: {
+            effect: "slideDown",
+            delay: 250
+        }
+    });
 
 	$('.skin-minimal input').iCheck({
 		checkboxClass: 'icheckbox-blue',
@@ -562,7 +573,7 @@ var loadInfo = function (isInit) {
             success:function (data) {
                 if(data.result.length >0){
                     $("#modeName").text("信用证:");
-                    var htmlStr = "";
+                    var htmlStr = "<option value='' rest='0'>--请选择--</option>";
                     for(var i = 0; i<data.result.length; i++){
                         var credit = data.result[i],className,
                             creditType = credit.creditType == 1 ? "大证":"小证";
@@ -573,7 +584,8 @@ var loadInfo = function (isInit) {
                     }
                     //为确保不丢失精度，用扩大倍数法进行计算
 					if(!isInit)
-					    $("#balanceOfSettlement").val(new Decimal(data.result[0].restAmount).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
+					    //$("#balanceOfSettlement").val(new Decimal(data.result[0].restAmount).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
+					    $("#balanceOfSettlement").val(new Decimal(0).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
                     $("#modeId").html(htmlStr);
                     $("#mode_div").removeClass("hidden");
                 }else{
@@ -597,7 +609,7 @@ var loadInfo = function (isInit) {
             success:function (data) {
                 if(data.result.length >0){
                     $("#modeName").text("代购:");
-                    var htmlStr = "";
+                    var htmlStr = "<option value='' rest='0'>--请选择--</option>";
                     for(var i = 0; i<data.result.length; i++){
                         var receipt = data.result[i],className;
 						className = $("#balance").val() == receipt.receiptBalance && $("#modeFlag").val() == "2" ? "selected old='old'":"";
@@ -606,7 +618,8 @@ var loadInfo = function (isInit) {
                     }
                     //为确保不丢失精度，用扩大倍数法进行计算
                     if(!isInit)
-                        $("#balanceOfSettlement").val(new Decimal(data.result[0].receiptBalance).mul(new Decimal(10000)).add(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
+                        //$("#balanceOfSettlement").val(new Decimal(data.result[0].receiptBalance).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
+                        $("#balanceOfSettlement").val(new Decimal(0).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
                     $("#modeId").html(htmlStr);
                     $("#mode_div").removeClass("hidden");
                 }else{
