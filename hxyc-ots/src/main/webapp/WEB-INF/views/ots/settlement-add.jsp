@@ -578,11 +578,11 @@ var loadInfo = function (isInit) {
                     $("#mode_div").removeClass("hidden");
                 }else{
                     //alert("该公司没有信用证");
-                    $("#settlementMode").val("");
+                    //$("#settlementMode").val("");
                     $("#modeName").text("");
                     $("#modeId").html("");
                     $("#balanceOfSettlement").val("");
-                    $("#mode_div").addClass("hidden");
+                    $("\#mode_div").addClass("hidden");
                 }
             }
         });
