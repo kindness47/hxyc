@@ -582,7 +582,7 @@ var loadInfo = function (isInit) {
                     $("#modeName").text("");
                     $("#modeId").html("");
                     $("#balanceOfSettlement").val("");
-                    $("\#mode_div").addClass("hidden");
+                    $("#mode_div").addClass("hidden");
                 }
             }
         });
