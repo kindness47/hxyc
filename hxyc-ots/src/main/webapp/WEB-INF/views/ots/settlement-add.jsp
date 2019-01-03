@@ -566,14 +566,14 @@ var loadInfo = function (isInit) {
                     for(var i = 0; i<data.result.length; i++){
                         var credit = data.result[i],className,
                             creditType = credit.creditType == 1 ? "大证":"小证";
-						className = $("#balance").val() == credit.restAmount && $("#modeFlag").val()=="1" ? "selected old='old'":"";
+						className = $("#balance").val() == credit.restAmount && $("#modeFlag").val()=="1" ? "selected old='old'":"old";
 
                         htmlStr += "<option value='"+credit.id+"' rest='"+credit.restAmount+"' "+className+">"+creditType+"||余额:"+credit.restAmount+
                             "||开证金额:"+credit.openAmount+"||编码:"+credit.creditCode+"</option>";
                     }
                     //为确保不丢失精度，用扩大倍数法进行计算
 					if(!isInit)
-					    $("#balanceOfSettlement").val(new Decimal(data.result[0].restAmount).mul(new Decimal(10000)).add(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
+					    $("#balanceOfSettlement").val(new Decimal(data.result[0].restAmount).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
                     $("#modeId").html(htmlStr);
                     $("#mode_div").removeClass("hidden");
                 }else{
@@ -646,7 +646,7 @@ var changeModeId = function () {
     //为确保不丢失精度，用扩大倍数法进行计算
     if ($("#settlementMode").val().toString() == '1' || $("#settlementMode").val().toString() == '2')
         if ($("#modeId").find("option:selected").attr("old") != "old") {
-            $("#balanceOfSettlement").val(new Decimal($("#modeId").find("option:selected").attr("rest")).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val()=="")).div(new Decimal(10000)));
+            $("#balanceOfSettlement").val(new Decimal($("#modeId").find("option:selected").attr("rest")).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)));
         }else
             $("#balanceOfSettlement").val(($("#modeId").find("option:selected").attr("rest")));
 

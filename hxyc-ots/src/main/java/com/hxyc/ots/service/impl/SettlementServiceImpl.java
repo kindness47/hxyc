@@ -90,7 +90,8 @@ public class SettlementServiceImpl implements SettlementService {
                     Credit oldCredit = creditService.getCreditById(oldSettlement.getSettlementModeId());
                     //回滚旧信用证余额  newBalance(新余额) = oldBanlance(旧余额) + oldSettlementAamount(旧的需方结算金额)/10000
                     //计算时精确度为元,存储时为万元
-                    updateCreditBalance(oldCredit.getId(),DoubleOperationUtil.div(DoubleOperationUtil.add(DoubleOperationUtil.mul(oldCredit.getRestAmount(),10000),oldSettlement.getSettlementAmount()),10000));
+                    if(oldCredit != null)
+                        updateCreditBalance(oldCredit.getId(),DoubleOperationUtil.div(DoubleOperationUtil.add(DoubleOperationUtil.mul(oldCredit.getRestAmount(),10000),oldSettlement.getSettlementAmount()),10000));
                     //更新新信用证
                     updateCreditBalance(settlement.getSettlementModeId(),settlement.getBalanceOfSettlement());
                 }
@@ -105,10 +106,12 @@ public class SettlementServiceImpl implements SettlementService {
                     Receipt oldReceipt = receiptService.getReceiptById(oldSettlement.getSettlementModeId());
                     //回滚旧收款余额  newBalance(新余额) = oldBanlance(旧余额) + oldSettlementAamount(旧的需方结算金额)/10000
                     //计算时精确度为元,存储时为万元
-                    updateReceiptBalance(oldReceipt.getId(),DoubleOperationUtil.div(DoubleOperationUtil.add(DoubleOperationUtil.mul(oldReceipt.getReceiptBalance(),10000),oldSettlement.getSettlementAmount()),10000));
+                    if(oldReceipt != null)
+                        updateReceiptBalance(oldReceipt.getId(),DoubleOperationUtil.div(DoubleOperationUtil.add(DoubleOperationUtil.mul(oldReceipt.getReceiptBalance(),10000),oldSettlement.getSettlementAmount()),10000));
 
                     //更新新的收款
                     updateReceiptBalance(settlement.getSettlementModeId(),settlement.getBalanceOfSettlement());
+                    settlement.setBalanceOfSettlement(DoubleOperationUtil.sub(0,settlement.getBalanceOfSettlement()));
                 }
             }else if(settlement.getSettlementMode() == 3){
                 settlement.setBalanceOfSettlement(DoubleOperationUtil.sub(0,settlement.getSettlementAmount()));
@@ -122,14 +125,16 @@ public class SettlementServiceImpl implements SettlementService {
                     //还原旧的信用证余额    更新新的代购余额
                     Credit oldCredit = creditService.getCreditById(oldSettlement.getSettlementModeId());
                     //计算时精确度为元,存储时为万元
-                    updateCreditBalance(oldCredit.getId(),DoubleOperationUtil.div(DoubleOperationUtil.add(DoubleOperationUtil.mul(oldCredit.getRestAmount(),10000),oldSettlement.getSettlementAmount()),10000));
+                    if(oldCredit != null)
+                        updateCreditBalance(oldCredit.getId(),DoubleOperationUtil.div(DoubleOperationUtil.add(DoubleOperationUtil.mul(oldCredit.getRestAmount(),10000),oldSettlement.getSettlementAmount()),10000));
 
                     updateReceiptBalance(settlement.getSettlementModeId(),settlement.getBalanceOfSettlement());
                 }else if(settlement.getSettlementMode() ==3){
                     /*信用证转例外*/
                     //还原旧的信用证余额
-                    Credit oldCredit = creditService.getCreditById(oldSettlement.getSettlementModeId());
 
+                    Credit oldCredit = creditService.getCreditById(oldSettlement.getSettlementModeId());
+                    if(oldCredit != null)
                     updateCreditBalance(oldCredit.getId(),DoubleOperationUtil.add(oldCredit.getRestAmount()*10000,oldSettlement.getSettlementAmount())/10000);
                     settlement.setBalanceOfSettlement(DoubleOperationUtil.sub(0,settlement.getSettlementAmount()));
                 }
@@ -139,16 +144,16 @@ public class SettlementServiceImpl implements SettlementService {
                     /*代购转信用证*/
                     //还原旧代购余额   更新新信用证余额
                     Receipt oldReceipt = receiptService.getReceiptById(oldSettlement.getSettlementModeId());
-
-                    updateReceiptBalance(oldReceipt.getId(),DoubleOperationUtil.div(DoubleOperationUtil.add(DoubleOperationUtil.mul(oldReceipt.getReceiptBalance(),10000),oldSettlement.getSettlementAmount()),10000));
+                    if(oldReceipt != null)
+                        updateReceiptBalance(oldReceipt.getId(),DoubleOperationUtil.div(DoubleOperationUtil.add(DoubleOperationUtil.mul(oldReceipt.getReceiptBalance(),10000),oldSettlement.getSettlementAmount()),10000));
 
                     updateCreditBalance(settlement.getSettlementModeId(),settlement.getBalanceOfSettlement());
                 }else if(settlement.getSettlementMode() ==3){
                     /*代购转例外*/
                     //还原旧代购余额
                     Receipt oldReceipt = receiptService.getReceiptById(oldSettlement.getSettlementModeId());
-
-                    updateReceiptBalance(oldReceipt.getId(),DoubleOperationUtil.div(DoubleOperationUtil.add(DoubleOperationUtil.mul(oldReceipt.getReceiptBalance(),10000),oldSettlement.getSettlementAmount()),10000));
+                    if(oldReceipt != null)
+                        updateReceiptBalance(oldReceipt.getId(),DoubleOperationUtil.div(DoubleOperationUtil.add(DoubleOperationUtil.mul(oldReceipt.getReceiptBalance(),10000),oldSettlement.getSettlementAmount()),10000));
                     settlement.setBalanceOfSettlement(DoubleOperationUtil.sub(0,settlement.getSettlementAmount()));
                 }
             }else if(oldSettlement.getSettlementMode() == 3){
