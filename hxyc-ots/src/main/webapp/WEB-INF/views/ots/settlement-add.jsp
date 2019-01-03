@@ -611,11 +611,11 @@ var loadInfo = function (isInit) {
                     $("#mode_div").removeClass("hidden");
                 }else{
                     //alert("该项目没有收款");
-                    $("#settlementMode").val("");
+                    //$("#settlementMode").val("");
                     $("#modeName").text("");
                     $("#modeId").html("");
                     $("#balanceOfSettlement").val("");
-                    $("#mode_div").addClass("hidden");
+                    //$("#mode_div").addClass("hidden");
                 }
             }
         });
