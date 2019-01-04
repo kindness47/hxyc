@@ -10,11 +10,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>hxyc-api</module>
-        <module>hxyc-bdss</module>
         <!--<module>hxyc-web</module>-->
-        <module>hxyc-service</module>
-        <module>hxyc-dao</module>
         <module>hxyc-commons</module>
         <module>hxyc-core</module>
         <module>hxyc-ots</module>
