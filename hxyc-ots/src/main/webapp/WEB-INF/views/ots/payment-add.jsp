@@ -156,7 +156,8 @@
 	</form>
 	<input disabled type="hidden" value="${paymentVO.id}" id="paymentId" >
 	<input type="hidden" value="${paymentVO.projectId}" id="projectId">
-	<input type="hidden" value="${paymentVO.companyName}" id="companyName">
+	<input type="hidden" value="" id="companyId">
+	<input type="hidden" value="" id="settlementAmount">
 </article>
 
 <!-- 弹出框 begin -->
@@ -236,6 +237,10 @@ $(function(){
     });
 
     $("#saveBtn").click(function () {
+        if($("#paymentAmount").val() == ""){
+            alert("支付金额未填，我改付多少?")
+			return;
+		}
         //当付款金额大于供方结算金额，不允许保存
         if($("#supplierSettleAmount").val() != "" && $("#paidSettleAmount").val() != "" ){
             if($("#settlementId").val()!= null){
@@ -489,10 +494,9 @@ var formatDate = function(timestamp){
     ;
     return year+"-"+month+"-"+day;
 }
-/*var changeMode = function () {
-    alert($("#paymentSourceId").find("option:selected").attr("rest")+"--->"+$("#settlementAmount").val());
+var changeMode = function () {
     $("#creditSurplusAmount").val(new Decimal($("#paymentSourceId").find("option:selected").attr("rest")).mul(new Decimal(10000)).sub(new Decimal($("#settlementAmount").val())).div(new Decimal(10000)).toNumber());
-}*/
+}
 
 var initsettlementMode = function (settlementMode,settlementModeId,settlementId) {
     var url ="";
@@ -512,19 +516,19 @@ var initsettlementMode = function (settlementMode,settlementModeId,settlementId)
             });
         }else{
             if(settlementMode == "1"){
-                $.post("credit-select",{"projectId":$("#projectId").val()},function(data) {
-                    if (data.result.length > 0) {
-                        var htmlStr = "";
-                        for(var i = 0; i<data.result.length; i++){
-                            var credit = data.result[i],
-                                creditType = credit.creditType == 1 ? "大证":"小证";
-                            htmlStr += "<option value='"+credit.id+"' rest='"+credit.restAmount+"'>"+creditType+"||余额:"+credit.restAmount+
-                                "||开证金额:"+credit.openAmount+"||编码:"+credit.creditCode+"</option>";
-                        }
-                        $("#paymentSourceId").html(htmlStr);
-                    } else
-                        alert("该项目没有开立信用证");
-                });
+				$.post("credit-select",{"companyId":$("#companyId").val()},function(data) {
+					if (data.result.length > 0) {
+						var htmlStr = "";
+						for(var i = 0; i<data.result.length; i++){
+							var credit = data.result[i],
+								creditType = credit.creditType == 1 ? "大证":"小证";
+							htmlStr += "<option value='"+credit.id+"' rest='"+credit.restAmount+"'>"+creditType+"||余额:"+credit.restAmount+
+								"||开证金额:"+credit.openAmount+"||编码:"+credit.creditCode+"</option>";
+						}
+						$("#paymentSourceId").html(htmlStr);
+					} else
+						alert("该项目没有开立信用证");
+				});
             }else if(settlementMode == "2"){
 			    $.post("receipt-select",{"projectId":$("#projectId").val()},function(data){
                     if(data.result.length >0){
@@ -581,6 +585,10 @@ var initsettlementMode = function (settlementMode,settlementModeId,settlementId)
 			});
         }
 	}
+	if($("#settlementId").val() != null && $("#settlementId").val() != "")
+		$.post("settlement/"+$("#settlementId").val(),function(settlementVO){
+			$("#settlementAmount").val(settlementVO.settlementAmount);
+		});
 }
 
 
@@ -632,23 +640,16 @@ function initSettlementTable2(compnayId) {
             if(obj.event === 'radio'){
                 layer.msg('选择结算单：'+ data.settlementCode );
             }
-            if(data.settlementMode == "1" || data.settlementMode == "2"){
-				$("#settlementCodeSelect").val(data.settlementCode);
-				$("#settlementId").val(data.id);
-				$("#settlementMode").val(data.settlementMode);
-				$("#creditSurplusAmount").val(data.balanceOfSettlement);
-				$("#supplierSettleAmount").val(data.supplierSettleAmount);
-				$("#projectId").val(data.projectId);
-            }else {
-                $("#settlementCodeSelect").val(data.settlementCode);
-                $("#settlementId").val(data.id);
-                $("#settlementMode").val(data.settlementMode);
-				$("#creditSurplusAmount").val(data.balanceOfSettlement);
-                $("#supplierSettleAmount").val(data.supplierSettleAmount);
-                $("#paymentSourceId").val("");
-                $("#projectId").val(data.projectId);
 
-			}
+			$("#settlementCodeSelect").val(data.settlementCode);
+			$("#settlementId").val(data.id);
+			$("#settlementMode").val(data.settlementMode);
+			$("#creditSurplusAmount").val(data.balanceOfSettlement);
+			$("#supplierSettleAmount").val(data.supplierSettleAmount);
+			$("#settlementAmount").val(data.settlementAmount);
+			$("#projectId").val(data.projectId);
+			$("#companyId").val(data.companyId);
+
             paidSettleAmount(data.id);
 
 			//$("#paymentSourceId").val(data.settlementModeId);
@@ -714,13 +715,14 @@ var showSupplierSettleAmount = function () {
 }
 
 
-//初始化付款账户
-initsettlementMode($("#settlementMode").val(),$("#paymentSourceIdDiv").attr("paymentSourceId"),$("#settlementId").val());
 showSupplierSettleAmount();
 //初始化已支付金额
 var settlementId = $("#settlementId").val();
 if(settlementId != null && settlementId != "") {
     paidSettleAmount(settlementId);
+    //初始化付款账户
+    initsettlementMode($("#settlementMode").val(),$("#paymentSourceIdDiv").attr("paymentSourceId"),$("#settlementId").val());
+
 }
 
 

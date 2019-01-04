@@ -116,9 +116,6 @@ public class SettlementController extends BaseController {
         if(settlement.getBalanceOfSettlement() == null)
             settlement.setBalanceOfSettlement(new Double(0));
 
-        if(settlement.getSettlementMode() == 1 && settlement.getBalanceOfSettlement() < 0)
-            return returnValidateError("信用证模式下余额不允许为负");
-
         if (StringUtils.isEmpty(settlement.getId())){
             settlement.setId(UUID.randomUUID().toString().replaceAll("-",""));
             // 新增结算信息为有效 add by joyu 20181206
